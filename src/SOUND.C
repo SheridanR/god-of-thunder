@@ -1,10 +1,11 @@
-//Source code released to the public domain on March 27th, 2020.
+// See LICENSE for details
 
 #include <stdio.h>
 #include <stdlib.h>
 
 #include "define.h"
 #include "proto.h"
+#include "new/new.h"
 
 void play_pc_sound(int index, int priority_override);
 //===========================================================================
@@ -65,7 +66,8 @@ int sound_init(void){
 }
 //===========================================================================
 void sound_exit(void){
-
+    return; // TODO
+    /*
     FX_StopPC();
     while(FX_PCPlaying());
     SB_StopVOC();
@@ -73,10 +75,12 @@ void sound_exit(void){
 
     if(std_sound_start) farfree(std_sounds);
     if(pcstd_sound_start) farfree(pcstd_sounds);
+    */
 }
 //===========================================================================
 void play_sound(int index, int priority_override){
-
+    return; // TODO
+    /*
     if(index>=NUM_SOUNDS) return;
     if(setup.pc_sound){
         play_pc_sound(index,priority_override);
@@ -91,11 +95,11 @@ void play_sound(int index, int priority_override){
 
     SB_PlayVOC((char *) dig_sound[index],1);
     current_priority=sound_priority[index];
+    */
 }
 //===========================================================================
 void play_pc_sound(int index, int priority_override){
-    // TODO for now, this is disabled
-    return;
+    return; // TODO
 
     /*if(FX_PCPlaying()){
         if((!priority_override) && current_priority<sound_priority[index]) return;
@@ -107,6 +111,8 @@ void play_pc_sound(int index, int priority_override){
 }
 //===========================================================================
 int sound_playing(void){
-
+    return 0; // TODO
+    /*
     return SB_VOCPlaying();
+    */
 }

@@ -1,4 +1,4 @@
-//Source code released to the public domain on March 27th, 2020.
+// See LICENSE for details
 
 //=========================== Include Files ===============================
 #include <stdlib.h>
@@ -115,7 +115,7 @@ run_script:                            //jump point for RUN command
 
     memset(gosub_stack,0,52);              //clear gosub stack
     gosub_ptr=0;
-    for(i=0;i<11;i++){
+    for(i=0;i<10;i++){
         for_var[i]=0;
         for_val[i]=0;
         for_stack[i]=0;

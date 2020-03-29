@@ -1,4 +1,4 @@
-//Source code released to the public domain on March 27th, 2020.
+// See LICENSE for details
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -20,31 +20,39 @@ int music_init(void){
 }
 //=========================================================================
 void music_play(int num,int override){
-
+    return; // TODO
+    /*
     if(!setup.music) return;
     if((num!=music_current) || override){
         if(num!=music_current) load_music(num);
         MU_StartMusic(song,1);
         music_current=num;
     }
+    */
 }
 //=========================================================================
 void music_pause(void){
-
+    return; // TODO
+    /*
     if(!setup.music) return;
     MU_MusicOff();
+    */
 }
 //=========================================================================
 void music_resume(void){
-
+    return; // TODO
+    /*
     if(!setup.music) return;
     MU_MusicOn();
+    */
 }
 //=========================================================================
 int music_is_on(void){
-
+    return 0; // TODO
+    /*
     if(!setup.music) return 0;
     return MU_MusicPlaying();
+    */
 }
 
 

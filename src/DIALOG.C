@@ -1,5 +1,5 @@
 // THOR - The God of Thunder
-//Source code released to the public domain on March 27th, 2020.
+// See LICENSE for details
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -116,18 +116,6 @@ char *options_mailphone[]={
     "I want to order by mail",
     "I want to order by phone",
     NULL};
-//===========================================================================
-void d_restore(void){
-
-    xdisplay_actors(&actor[MAX_ACTORS-1],draw_page);
-    xshowpage(draw_page);
-    xcopyd2d(0,0,320,192,0,0,PAGE2,display_page,320,320);
-    xdisplay_actors(&actor[MAX_ACTORS-1],display_page);
-    xshowpage(display_page);
-    xerase_actors(actor,draw_page);
-    //xcopyd2d(0,0,320,192,0,0,PAGE2,display_page,320,320);
-    //xdisplay_actors(&actor[MAX_ACTORS-1],display_page);
-}
 //===========================================================================
 void buy_apples(ACTOR *actr,int num, int amount){
     int flag;

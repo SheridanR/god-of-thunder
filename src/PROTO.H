@@ -1,5 +1,5 @@
 // THOR - The God of Thunder
-//Source code released to the public domain on March 27th, 2020.
+// See LICENSE for details
 
 
 //G_LIB.LIB
@@ -272,3 +272,17 @@ void read_joystick(void);
 void UnLZSS(char *src,char *dest,int len);
 #define REPEAT(a) for(rep=0;rep<a;rep++)
 #define IN_RANGE(v,l,h) (v>=l && v<=h)
+
+//Replace old functions
+#define farfree free
+#define farmalloc malloc
+#define _fstrncpy strncpy
+#define _fmemcpy memcpy
+#define _fmemset memset
+#define _fstrlen strlen
+#define _fstrncmp strncmp
+#define _fstrcpy strcpy
+#define _fstrcat strcat
+#define _fstrcmp strcmp
+#define FP_SEG
+#define FP_OFF

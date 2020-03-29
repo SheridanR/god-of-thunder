@@ -90,6 +90,7 @@
     <ClCompile Include="..\..\..\src\MOVE.C" />
     <ClCompile Include="..\..\..\src\MOVPAT.C" />
     <ClCompile Include="..\..\..\src\MUSIC.C" />
+    <ClCompile Include="..\..\..\src\new\new.c" />
     <ClCompile Include="..\..\..\src\OBJECT.C" />
     <ClCompile Include="..\..\..\src\PANEL.C" />
     <ClCompile Include="..\..\..\src\SBFX.C" />
@@ -101,7 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\DEFINE.H" />
-    <ClInclude Include="..\..\..\src\MASK.H" />
+    <ClInclude Include="..\..\..\src\new\new.h" />
     <ClInclude Include="..\..\..\src\PROTO.H" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,4 +1,4 @@
-//Source code released to the public domain on March 27th, 2020.
+// See LICENSE for details
 
 #include <fcntl.h>
 #include <io.h>
@@ -20,7 +20,9 @@ long TimerDivisor,TimerCount;
 volatile long TickCount2,TickCount;
 //===========================================================================
 void interrupt t0Service(void){
+    return; // DEPRECATED
 
+    /*
     timer_cnt++;
     vbl_cnt++;
     magic_cnt++;
@@ -37,10 +39,14 @@ void interrupt t0Service(void){
         t0OldService();           // Chain to old ISR
     }
     else outportb(0x20,0x20);   // Do the EOI
+    */
 }
 char *SB_DetectAdLib(void);
 //===========================================================================
 int sbfx_init(void){
+    return 0; // TODO
+
+    /*
     unsigned speed;
     char *sberr;
 
@@ -83,9 +89,13 @@ int sbfx_init(void){
         sound_flag=1;
     }
     return 1;
+    */
 }
 //===========================================================================
 void sbfx_exit(void){
+    return; // TODO
+
+    /*
     int i;
 
     if(setup.pc_sound) FX_StopPC();
@@ -98,4 +108,5 @@ void sbfx_exit(void){
     outportb(0x40,0);
     outportb(0x40,0);
     setvect(8,t0OldService);			// Restore old timer 0 ISR
+    */
 }

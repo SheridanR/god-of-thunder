@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\new">
+      <UniqueIdentifier>{2a8c23f3-f494-402d-96e6-f25cb26af078}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\new">
+      <UniqueIdentifier>{50799c02-3b7b-4bd8-a3b7-4dcde0bd4ba4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\BACK.C">
@@ -78,16 +84,19 @@
     <ClCompile Include="..\..\..\src\SPTILE.C">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\new\new.c">
+      <Filter>Source Files\new</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\DEFINE.H">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\MASK.H">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\PROTO.H">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\new\new.h">
+      <Filter>Header Files\new</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,5 +1,5 @@
 // THOR - The God of Thunder
-//Source code released to the public domain on March 27th, 2020.
+// See LICENSE for details
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -176,6 +176,8 @@ void save_game(void){
     }
     d_restore();
 
+    // TODO
+    /*
     if(_dos_open(save_filename,O_RDONLY, &handle)!=0) return;
     _dos_read(handle, buff,32,&total);
     _dos_close(handle);
@@ -186,6 +188,7 @@ void save_game(void){
     _dos_write(handle, &thor_info,sizeof(THOR_INFO),&total);
     _dos_write(handle, sd_data,61440u,&total);
     _dos_close(handle);
+    */
     odin_speaks(2009,0);
 }
 //===========================================================================
@@ -201,12 +204,15 @@ int load_game(int flag){
         }
         d_restore();
     }
+    // TODO
+    /*
     if(_dos_open(save_filename,O_RDONLY, &handle)!=0) return 0;
     _dos_read(handle, buff,32,&total);
     _dos_read(handle, &setup,sizeof(SETUP),&total);
     _dos_read(handle, &thor_info,sizeof(THOR_INFO),&total);
     _dos_read(handle, sd_data,61440u,&total);
     _dos_close(handle);
+    */
 
     current_area=thor_info.last_screen;
     area=setup.area;

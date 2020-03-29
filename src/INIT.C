@@ -1,5 +1,5 @@
 // THOR - The God of Thunder
-//Source code released to the public domain on March 27th, 2020.
+// See LICENSE for details
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -9,6 +9,7 @@
 
 #include "define.h"
 #include "proto.h"
+#include "new/new.h"
 
 
 int setup_level(void);
@@ -118,9 +119,10 @@ int initialize(void){
         boss_sound[i]=(char*) 0;
         boss_pcsound[i]=(char*) 0;
     }
+
     //commandeer the KB int
-    old_keyboard_int=getvect(0x09);
-    setvect(0x09,keyboard_int);
+    //old_keyboard_int=getvect(0x09);
+    //setvect(0x09,keyboard_int);
     break_code=1;
 
     //setup default values
@@ -249,7 +251,7 @@ void exit_code(int ex_flag){
     sound_exit();
     sbfx_exit();
 
-    setvect(0x09,old_keyboard_int);
+    //setvect(0x09,old_keyboard_int);
     if(lzss_buff) farfree(lzss_buff);
     if(bg_pics) farfree(bg_pics);
     if(sd_data) farfree(sd_data);
@@ -275,6 +277,8 @@ void exit_code(int ex_flag){
 }
 //===========================================================================
 void interrupt keyboard_int(){
+    return; // DEPRECATED
+    /*
     char flag;
     int key;
     //static int num=0;
@@ -312,6 +316,7 @@ void interrupt keyboard_int(){
 
 done:
     outportb(0x20,0x20);
+    */
 }
 //===========================================================================
 void demo_key_set(void){

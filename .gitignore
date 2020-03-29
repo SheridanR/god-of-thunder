@@ -11,3 +11,5 @@
 *.db
 *.opendb
 *.FileListAbsolute.txt
+*.ilk
+*.exe

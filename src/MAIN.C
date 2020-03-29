@@ -1,5 +1,5 @@
 // THOR - The God of Thunder
-//Source code released to the public domain on March 27th, 2020.
+// See LICENSE for details
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,6 +10,8 @@
 
 #include "define.h"
 #include "proto.h"
+
+#include "new/new.h"
 
 //========================= Global Declarations ==============================
 unsigned int page[3]={PAGE0,PAGE1,PAGE2};
