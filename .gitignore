@@ -1,0 +1,13 @@
+# git ls-files --others --exclude-from=.gitignore
+# Lines that start with '#' are comments.
+
+*.ipch
+*.obj
+*.tlog
+*.pdb
+*.idb
+*.log
+*.suo
+*.db
+*.opendb
+*.FileListAbsolute.txt
