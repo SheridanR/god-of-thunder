@@ -4,6 +4,7 @@
 
 #undef outportb
 #undef inportb
+#pragma pack(push, 1)
 //==========================================================================
 //typedefs
 //Describes one alignment of a mask-image pair
@@ -442,3 +443,6 @@ enum{
 //#define IDE 1
 //#define CRIPPLED 1
 #define DEMO_LEN 3600
+
+
+#pragma pack(pop)

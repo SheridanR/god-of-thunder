@@ -13,7 +13,7 @@
 #include "new.h"
 
 //===========================================================================
-void* movedata (void* dest0, void* dest1, void* src0, void* src1, size_t bytes) {
+void* movedata(void* src0, void* src1, void* dest0, void* dest1, size_t bytes) {
     assert(dest0 == dest1);
     assert(src0 == src1);
     return memmove(dest0, src0, bytes);
@@ -103,10 +103,50 @@ void pal_fade_out(char *buff) {
     return; // TODO
 }
 //===========================================================================
-void LZSS_decompress(char far *src,char far *dest,int16_t len) {
-    return; // TODO (more like wat do)
-}
-//===========================================================================
-uint16_t LZSS_compress(int32_t origsize,char far *input,char far *output) {
-    return 0; // TODO (more like wat do)
+int32_t lzss_decompress(char *src,char *dest) {
+    int32_t result = 0;
+
+    uint16_t original_size = *(uint16_t*)src;
+    ++src; ++src;
+    uint16_t one = *(uint16_t*)src;
+    ++src; ++src;
+    assert(one == 1);
+
+    char* original_src = src;
+    char* original_dest = dest;
+
+    while (result < original_size) {
+        char b = *src;
+        src++;
+        for (int bit = 0; bit < 8; ++bit) {
+            if (b & (1 << bit)) {
+                *dest = *src;
+                ++dest;
+                ++src;
+                ++result;
+                if (result == original_size) {
+                    goto done;
+                }
+            } else {
+                uint16_t d = *((uint16_t*)src);
+                uint8_t count = (uint8_t)((d >> 12) + 2);
+                uint16_t offset = (d & 0x0fff);
+                char *lookup = dest - (size_t)offset;
+                assert(lookup >= original_dest);
+                for (uint8_t c = 0; c < count; ++c) {
+                    *dest = *lookup;
+                    ++dest;
+                    ++lookup;
+                    ++result;
+                    if (result == original_size) {
+                        goto done;
+                    }
+                }
+                ++src;
+                ++src;
+            }
+        }
+    }
+done:
+    return result;
 }

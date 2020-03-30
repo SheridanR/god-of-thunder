@@ -1,4 +1,5 @@
 #define far
+#pragma pack(push, 1)
 
 #include <stdint.h>
 
@@ -65,3 +66,6 @@ int32_t res_length(char *name);
 int32_t res_original_size(char *name);
 int16_t  res_rename_file(char *oldname,char *newname);
 char *res_error(int16_t num);
+
+
+#pragma pack(pop)

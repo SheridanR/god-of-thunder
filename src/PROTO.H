@@ -1,5 +1,6 @@
 // THOR - The God of Thunder
 // See LICENSE for details
+#pragma pack(push, 1)
 
 
 //G_LIB.LIB
@@ -286,3 +287,5 @@ void UnLZSS(char *src,char *dest,int16_t len);
 #define _fstrcmp strcmp
 #define FP_SEG
 #define FP_OFF
+
+#pragma pack(pop)

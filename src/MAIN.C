@@ -160,7 +160,7 @@ void xdisplay_actors(ACTOR *act,uint16_t page);
 void xerase_actors(ACTOR *act,uint16_t page);
 void setup_load(void);
 //============================================================================
-void main(int16_t argc, char *argv[]){
+void main(int argc, char *argv[]){
     int16_t err,i;
     char s[21];
     int16_t vbl_flag;
@@ -598,6 +598,8 @@ void main(int16_t argc, char *argv[]){
 extern int16_t SBResetCount;
 //===========================================================================
 void run_gotm(void){
+    return; // deprecated
+    /*
     int16_t num;
     char s[36];
     char *args[]={NULL,NULL,NULL,NULL,NULL,NULL,NULL,
@@ -659,6 +661,7 @@ void run_gotm(void){
 
     if(!ide_run) _execv("GOT.EXE",args);
     exit(0);
+    */
 }
 //===========================================================================
 void printt(int16_t val){

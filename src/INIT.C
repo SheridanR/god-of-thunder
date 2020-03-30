@@ -522,8 +522,7 @@ int16_t setup_boss(int16_t num){
     pc_sound[NUM_SOUNDS-3][1]=0;
     num=res_find_name(ress);
     if(num<0) return 0;
-    // TODO what is res_header???
-    //pcsound_length[NUM_SOUNDS-3]=res_header[num].length;
+    pcsound_length[NUM_SOUNDS-3]=res_header[num].length;
 
     strcpy(ress,str);
     strcat(ress,"2");
@@ -534,8 +533,7 @@ int16_t setup_boss(int16_t num){
     pc_sound[NUM_SOUNDS-2][1]=0;
     num=res_find_name(ress);
     if(num<0) return 0;
-    // TODO what is res_header???
-    //pcsound_length[NUM_SOUNDS-2]=res_header[num].length;
+    pcsound_length[NUM_SOUNDS-2]=res_header[num].length;
 
     strcpy(ress,str);
     strcat(ress,"3");
@@ -546,8 +544,7 @@ int16_t setup_boss(int16_t num){
     pc_sound[NUM_SOUNDS-1][1]=0;
     num=res_find_name(ress);
     if(num<0) return 0;
-    // TODO what is res_header???
-    //pcsound_length[NUM_SOUNDS-1]=res_header[num].length;
+    pcsound_length[NUM_SOUNDS-1]=res_header[num].length;
     boss_loaded=(char)num;
     return 1;
 }
