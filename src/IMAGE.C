@@ -9,8 +9,8 @@
 #include "proto.h"
 //===========================================================================
 extern char pge;
-extern unsigned int draw_page,display_page,page3_offset;
-extern int current_level,new_level;
+extern uint16_t draw_page,display_page,page3_offset;
+extern int16_t current_level,new_level;
 extern char *ami_buff;
 extern char abuff[AMI_LEN];
 extern char *mask_buff;
@@ -19,13 +19,13 @@ extern ACTOR actor[MAX_ACTORS];   //current actors
 extern ACTOR enemy[MAX_ENEMIES];  //current enemies
 extern ACTOR shot[MAX_ENEMIES];   //current shots
 extern char enemy_type[MAX_ENEMIES];
-int etype[MAX_ENEMIES];
-unsigned int latch_mem;
+int16_t etype[MAX_ENEMIES];
+uint16_t latch_mem;
 char *enemy_mb;
-unsigned int enemy_lm;
+uint16_t enemy_lm;
 char *enemy_ami;
 
-extern int thor_x1,thor_y1,thor_x2,thor_y2;
+extern int16_t thor_x1,thor_y1,thor_x2,thor_y2;
 extern ACTOR *thor;
 extern ACTOR *hammer;
 extern ACTOR explosion;
@@ -36,10 +36,10 @@ extern char *tmp_buff;
 extern LEVEL scrn;
 extern char *sd_data;
 extern char sd_header[128];
-extern int current_level;
+extern int16_t current_level;
 extern SETUP setup;
 extern char play_speed;
-extern int max_shot;
+extern int16_t max_shot;
 extern ACTOR magic_item[];
 extern char magic_pic[][1024];
 
@@ -49,13 +49,13 @@ char *magic_mask_buff;
 char *ami_store1,*ami_store2;
 char *mask_store1,*mask_store2;
 //===========================================================================
-unsigned int make_mask(MASK_IMAGE * new_image,
-    unsigned int page_start, char *Image, int image_width,
-    int image_height){
-    unsigned int page_offset,size;
-    int align,set;
+uint16_t make_mask(MASK_IMAGE * new_image,
+    uint16_t page_start, char *Image, int16_t image_width,
+    int16_t image_height){
+    uint16_t page_offset,size;
+    int16_t align,set;
     ALIGNED_MASK_IMAGE *work_ami;
-    int scan_line,bit_num,temp_image_width;
+    int16_t scan_line,bit_num,temp_image_width;
     unsigned char mask_temp;
     char *new_mask_ptr;
     char *old_mask_ptr;
@@ -98,7 +98,7 @@ unsigned int make_mask(MASK_IMAGE * new_image,
                 if (++bit_num > 3) {
                     *new_mask_ptr = mask_temp;
                     new_mask_ptr++;
-                    mask_temp = bit_num = 0;
+                    mask_temp = (unsigned char)bit_num = 0;
                 }
             } while (--temp_image_width);
 
@@ -114,7 +114,7 @@ unsigned int make_mask(MASK_IMAGE * new_image,
     return page_offset-page_start;
 }
 //===========================================================================
-void setup_actor(ACTOR *actr,char num,char dir,int x, int y){
+void setup_actor(ACTOR *actr,char num,char dir,int16_t x, int16_t y){
 
     actr->next=0;                    //next frame to be shown
     actr->frame_count=actr->frame_speed;
@@ -155,7 +155,7 @@ void setup_actor(ACTOR *actr,char num,char dir,int x, int y){
 }
 //===========================================================================
 void make_actor_mask(ACTOR *actr){
-    int d,f;
+    int16_t d,f;
 
     for(d=0;d<actr->directions;d++){
         for(f=0;f<actr->frames;f++){
@@ -170,7 +170,7 @@ void make_actor_mask(ACTOR *actr){
     }
 }
 //===========================================================================
-int load_standard_actors(void){
+int16_t load_standard_actors(void){
 
     latch_mem=50160u;
     mask_buff=mask_buff_start;
@@ -237,7 +237,7 @@ int load_standard_actors(void){
 }
 //===========================================================================
 void show_enemies(void){
-    int i,d,r;
+    int16_t i,d,r;
 
     for(i=3;i<MAX_ACTORS;i++) actor[i].used=0;  //was i=3
     for(i=0;i<MAX_ENEMIES;i++) enemy_type[i]=0;
@@ -253,7 +253,7 @@ void show_enemies(void){
                 memcpy(&actor[i+3],&enemy[r],sizeof(ACTOR));
                 d=scrn.actor_dir[i];
                 //       scrn.actor_type[i] &= 0x3f;
-                setup_actor(&actor[i+3],i+3,d,(scrn.actor_loc[i]%20)*16,
+                setup_actor(&actor[i+3],i+3,(char)d,(scrn.actor_loc[i]%20)*16,
                     (scrn.actor_loc[i]/20)*16);
                 actor[i+3].init_dir=scrn.actor_dir[i];
                 actor[i+3].pass_value=scrn.actor_value[i];
@@ -267,8 +267,8 @@ void show_enemies(void){
     }
 }
 //===========================================================================
-int load_enemy(int type){
-    int i,f,d,e;
+int16_t load_enemy(int16_t type){
+    int16_t i,f,d,e;
     ACTOR *enm;
 
     for(i=0;i<MAX_ENEMIES;i++) if(enemy_type[i]==type) return i;
@@ -290,7 +290,7 @@ int load_enemy(int type){
     memcpy(&enemy[e],enm,sizeof(ACTOR_NFO));
 
     make_actor_mask(&enemy[e]);
-    enemy_type[e]=type;
+    enemy_type[e]=(char)type;
     enemy[e].shot_type=0;
 
     if(enemy[e].shots_allowed){
@@ -317,8 +317,8 @@ int load_enemy(int type){
     return e;
 }
 //===========================================================================
-int actor_visible(int invis_num){
-    int i,d;
+int16_t actor_visible(int16_t invis_num){
+    int16_t i,d;
 
     for(i=0;i<MAX_ENEMIES;i++){
         if(scrn.actor_invis[i]==invis_num){
@@ -326,7 +326,7 @@ int actor_visible(int invis_num){
                 memcpy(&actor[i+3],&enemy[etype[i]],sizeof(ACTOR));
                 d=scrn.actor_dir[i];
                 //       scrn.actor_type[i] &= 0x3f;
-                setup_actor(&actor[i+3],i+3,d,(scrn.actor_loc[i]%20)*16,
+                setup_actor(&actor[i+3],i+3,(char)d,(scrn.actor_loc[i]%20)*16,
                     (scrn.actor_loc[i]/20)*16);
                 actor[i+3].init_dir=scrn.actor_dir[i];
                 actor[i+3].pass_value=scrn.actor_value[i];
@@ -338,8 +338,8 @@ int actor_visible(int invis_num){
     return -1;
 }
 //===========================================================================
-void setup_magic_item(int item){
-    int i;
+void setup_magic_item(int16_t item){
+    int16_t i;
     char *ami;
     char *mb;
 
@@ -358,7 +358,7 @@ void setup_magic_item(int item){
 }
 //===========================================================================
 void load_new_thor(void){
-    int rep;
+    int16_t rep;
     char *ami;
     char *mb;
 

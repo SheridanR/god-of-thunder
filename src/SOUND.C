@@ -6,8 +6,9 @@
 #include "define.h"
 #include "proto.h"
 #include "new/new.h"
+#include "res_man.h"
 
-void play_pc_sound(int index, int priority_override);
+void play_pc_sound(int16_t index, int16_t priority_override);
 //===========================================================================
 extern char *std_sounds;
 extern char *pcstd_sounds;
@@ -15,21 +16,21 @@ extern char *pc_sound[NUM_SOUNDS];
 extern char *dig_sound[NUM_SOUNDS];
 extern char *std_sound_start;
 extern char *pcstd_sound_start;
-extern int level;
+extern int16_t level;
 
 //enum{OW,GULP,SWISH,YAH,ELECTRIC,THUNDER,DOOR,FALL,
 //     ANGEL,WOOP,ANGEL,BRAAPP,WIND,PUNCH1,CLANG,EXPLODE
 //     BOSS11,BOSS12,BOSS13
-int  sound_priority[]={1,2,3,3,3,1,4,4,4,5,4,3,1,2,2,5,1,3,1};
-extern long pcsound_length[NUM_SOUNDS];
+int16_t  sound_priority[]={1,2,3,3,3,1,4,4,4,5,4,3,1,2,2,5,1,3,1};
+extern int32_t pcsound_length[NUM_SOUNDS];
 
-int current_priority;
+int16_t current_priority;
 //===========================================================================
 extern SETUP setup;
 extern char ds_file[];
 //===========================================================================
-int sound_init(void){
-    int i;
+int16_t sound_init(void){
+    int16_t i;
     char *p;
     HEADER *header;
 
@@ -42,7 +43,7 @@ int sound_init(void){
     p=std_sounds;
     for(i=0;i<16;i++){
         dig_sound[i]=p;
-        p+=(int) header->length;
+        p+=(int16_t) header->length;
         header++;
     }
 
@@ -58,7 +59,7 @@ int sound_init(void){
         pc_sound[i][0]=0;
         pc_sound[i][1]=0;
         pcsound_length[i]=header->length;
-        p+=(int) header->length;
+        p+=(int16_t) header->length;
         header++;
     }
     current_priority=255;
@@ -78,7 +79,7 @@ void sound_exit(void){
     */
 }
 //===========================================================================
-void play_sound(int index, int priority_override){
+void play_sound(int16_t index, int16_t priority_override){
     return; // TODO
     /*
     if(index>=NUM_SOUNDS) return;
@@ -98,7 +99,7 @@ void play_sound(int index, int priority_override){
     */
 }
 //===========================================================================
-void play_pc_sound(int index, int priority_override){
+void play_pc_sound(int16_t index, int16_t priority_override){
     return; // TODO
 
     /*if(FX_PCPlaying()){
@@ -110,7 +111,7 @@ void play_pc_sound(int index, int priority_override){
     current_priority=sound_priority[index];*/
 }
 //===========================================================================
-int sound_playing(void){
+int16_t sound_playing(void){
     return 0; // TODO
     /*
     return SB_VOCPlaying();

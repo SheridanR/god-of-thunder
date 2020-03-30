@@ -10,14 +10,15 @@
 #include "define.h"
 #include "proto.h"
 #include "new/new.h"
+#include "res_man.h"
 
 
-int setup_level(void);
-int setup_player(void);
+int16_t setup_level(void);
+int16_t setup_player(void);
 void ask_joystick(void);
 void display_copyright(void);
 //===========================================================================
-extern volatile unsigned int timer_cnt,extra_cnt;
+extern volatile uint16_t timer_cnt,extra_cnt;
 extern char text[94][72];
 extern union REGS in,out;
 extern char *bg_pics;
@@ -33,7 +34,7 @@ extern volatile char joy_flag[100];
 extern volatile char tmp_flag[100];
 extern char break_code,scan_code,last_scan_code;
 extern char slow_mode;
-extern unsigned int page3_offset;
+extern uint16_t page3_offset;
 extern ACTOR actor[MAX_ACTORS];
 extern ACTOR *thor;
 extern char boss_loaded;
@@ -48,16 +49,16 @@ extern char *music_start;
 extern char *music;
 extern char *music_buffer;
 extern char *song;
-extern int  rnd_array[];
+extern int16_t  rnd_array[];
 extern char demo_key[];
 
 extern THOR_INFO thor_info;
-extern unsigned int joy_x,joy_y;
+extern uint16_t joy_x,joy_y;
 extern char joy_b1,joy_b2;
-extern int  joystick,joylx,joyly,joyhx,joyhy;
+extern int16_t  joystick,joylx,joyly,joyhx,joyhy;
 
 extern char *tmp_buff;
-extern int  key_fire,key_up,key_down,key_left,key_right,key_magic,key_select;
+extern int16_t  key_fire,key_up,key_down,key_left,key_right,key_magic,key_select;
 extern char level_type;
 extern char *lzss_buff;
 
@@ -71,19 +72,19 @@ extern char *boss_pcsound[3];
 extern char res_file[];
 extern char *pc_sound[NUM_SOUNDS];
 extern char *dig_sound[NUM_SOUNDS];
-extern int current_level;
+extern int16_t current_level;
 extern char odin[4][262];
 extern char hampic[4][262];
-extern int load_game_flag;
-extern int music_flag,sound_flag,pcsound_flag;
-extern long pcsound_length[NUM_SOUNDS];
+extern int16_t load_game_flag;
+extern int16_t music_flag,sound_flag,pcsound_flag;
+extern int32_t pcsound_length[NUM_SOUNDS];
 extern char demo_key[];
-extern int  demo_cnt;
+extern int16_t  demo_cnt;
 extern char demo,record;
 extern char demo_enable;
-extern int exit_flag;
+extern int16_t exit_flag;
 extern char story_flag;
-extern unsigned int display_page;
+extern uint16_t display_page;
 extern char music_current;
 extern char tempstr[];
 extern char area,cheat;
@@ -92,7 +93,7 @@ extern char pbuff[768];
 //char scanc [100];
 char spic1,spic2;
 char byte;
-unsigned int word;
+uint16_t word;
 void print_mem(void);
 //===========================================================================
 char *err_msg[]={"(null)","Can't Load GOTRES.DAT","Can't Read Font",
@@ -105,8 +106,8 @@ char *err_msg[]={"(null)","Can't Load GOTRES.DAT","Can't Read Font",
 };
 
 //===========================================================================
-int initialize(void){
-    int i;
+int16_t initialize(void){
+    int16_t i;
 
     lzss_buff=(char*) 0;
     bg_pics=(char*) 0;
@@ -120,24 +121,24 @@ int initialize(void){
         boss_pcsound[i]=(char*) 0;
     }
 
-    //commandeer the KB int
+    //commandeer the KB int16_t
     //old_keyboard_int=getvect(0x09);
     //setvect(0x09,keyboard_int);
     break_code=1;
 
     //setup default values
     memset(&setup,0,sizeof(SETUP));
-    setup.music=music_flag;
-    setup.dig_sound=sound_flag;
-    setup.pc_sound=pcsound_flag;
+    setup.music=(char)music_flag;
+    setup.dig_sound=(char)sound_flag;
+    setup.pc_sound=(char)pcsound_flag;
     if(sound_flag) setup.pc_sound=0;
     setup.scroll_flag=1;
     setup.speed=slow_mode;
     setup.skill=1;
 
-    memset(key_flag,0,100);
-    memset(joy_flag,0,100);
-    memset(tmp_flag,0,100);
+    memset((void*)key_flag,0,100);
+    memset((void*)joy_flag,0,100);
+    memset((void*)tmp_flag,0,100);
     sd_data=(char*) 0;
 
     key_fire=ALT;
@@ -244,8 +245,8 @@ int initialize(void){
     return 0;
 }
 //===========================================================================
-void exit_code(int ex_flag){
-    int i;
+void exit_code(int16_t ex_flag){
+    int16_t i;
 
     res_close();
     sound_exit();
@@ -280,8 +281,8 @@ void interrupt keyboard_int(){
     return; // DEPRECATED
     /*
     char flag;
-    int key;
-    //static int num=0;
+    int16_t key;
+    //static int16_t num=0;
 
     scan_code=inportb(0x60);
     byte=inportb(0x61);
@@ -349,7 +350,7 @@ void wait_not_response(void){
     }
 }
 //===========================================================================
-int wait_response(void){
+int16_t wait_response(void){
 
     wait_not_response();
     while(1){
@@ -367,7 +368,7 @@ int wait_response(void){
     }
 }
 //===========================================================================
-int get_response(void){
+int16_t get_response(void){
 
     if(joystick){
         joy_key();
@@ -382,7 +383,7 @@ int get_response(void){
     return 0;
 }
 //===========================================================================
-void wait_not_key(int index){
+void wait_not_key(int16_t index){
 
     while(key_flag[index]){
         if(cheat && key_flag[_K]) screen_dump();
@@ -429,7 +430,7 @@ void merge_keys(void){
     key_flag[key_magic]=tmp_flag[key_magic] | joy_flag[key_magic];
 }
 //===========================================================================
-int setup_level(void){
+int16_t setup_level(void){
 
     if(!load_bg_data()) return 0;
     if(load_game_flag!=1) if(!load_sd_data()) return 0;
@@ -437,7 +438,7 @@ int setup_level(void){
     return 1;
 }
 //===========================================================================
-int setup_player(void){
+int16_t setup_player(void){
 
     memset(&thor_info,0,sizeof(THOR_INFO));
     thor_info.inventory=0;  //511;
@@ -470,8 +471,8 @@ int setup_player(void){
     return 1;
 }
 //===========================================================================
-int setup_boss(int num){
-    int rep;
+int16_t setup_boss(int16_t num){
+    int16_t rep;
     char s[21];
     char str[21];
     char ress[21];
@@ -547,7 +548,7 @@ int setup_boss(int num){
     if(num<0) return 0;
     // TODO what is res_header???
     //pcsound_length[NUM_SOUNDS-1]=res_header[num].length;
-    boss_loaded=num;
+    boss_loaded=(char)num;
     return 1;
 }
 //===========================================================================
@@ -579,7 +580,7 @@ void set_joy(void){
 }
 //===========================================================================
 void story_animate(void){
-    //static int cnt=0;
+    //static int16_t cnt=0;
 
     return;
     /*
@@ -603,8 +604,8 @@ void story_animate(void){
     */
 }
 //===========================================================================
-int story_wait(void){
-    int key;
+int16_t story_wait(void){
+    int16_t key;
 
     while(1){
         story_animate();
@@ -618,7 +619,7 @@ int story_wait(void){
 }
 //===========================================================================
 void set_palette(void){
-    int i;
+    int16_t i;
     char r,g,b,n;
 #define DAC_READ_INDEX	03c7h
 #define DAC_WRITE_INDEX 03c8h
@@ -626,7 +627,7 @@ void set_palette(void){
 
 
     for(i=0;i<256;i++){
-        n=i;
+        n=(char)i;
         r=pbuff[i*3];
         g=pbuff[(i*3)+1];
         b=pbuff[(i*3)+2];
@@ -654,14 +655,14 @@ void set_palette(void){
 }
 //===========================================================================
 void story(void){
-    int i,x,y,color;
+    int16_t i,x,y,color;
     char s[21];
     char str[40];
     char back[4][262];
     char *p;
-    unsigned int pg;
-    unsigned int add;
-    int key;
+    uint16_t pg;
+    uint16_t add;
+    int16_t key;
     char *buff;
 
     fade_out();

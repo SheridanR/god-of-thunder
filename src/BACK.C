@@ -13,40 +13,40 @@
 #include "new/new.h"
 //===========================================================================
 extern char *bg_pics;
-extern int warp_flag;
+extern int16_t warp_flag;
 
 extern LEVEL scrn;
 extern char *scrnp;
 extern char *sd_data;
-extern int current_level;
-extern unsigned int display_page,draw_page;
+extern int16_t current_level;
+extern uint16_t display_page,draw_page;
 extern struct sup setup;
 extern THOR_INFO thor_info;
 extern ACTOR actor[MAX_ACTORS];
 extern ACTOR *thor;
 extern volatile char key_flag[100];
 extern char *dig_sound[10];
-extern int restore_screen;
-extern int key_fire,key_up,key_down,key_left,key_right,key_magic,key_select;
+extern int16_t restore_screen;
+extern int16_t key_fire,key_up,key_down,key_left,key_right,key_magic,key_select;
 extern char *tmp_buff;
 extern char text[94][72];
-extern volatile unsigned int timer_cnt;
+extern volatile uint16_t timer_cnt;
 extern char *bleep;
-extern int last_oracle;
+extern int16_t last_oracle;
 extern char objects[NUM_OBJECTS][262];
-extern int lightning_used,tornado_used,thunder_flag;
-extern int hourglass_flag,shield_on,bomb_flag;
-extern int joystick;
+extern int16_t lightning_used,tornado_used,thunder_flag;
+extern int16_t hourglass_flag,shield_on,bomb_flag;
+extern int16_t joystick;
 extern char level_type;
 extern char *song;
 extern char music_current;
 extern char odin[4][262];
-extern unsigned int page[3];
-extern int boss_dead,boss_active;
+extern uint16_t page[3];
+extern int16_t boss_dead,boss_active;
 extern ACTOR explosion;
 extern char pge,slow_mode,scroll_flag;
-extern volatile unsigned int magic_cnt;
-extern int exit_flag;
+extern volatile uint16_t magic_cnt;
+extern int16_t exit_flag;
 extern char object_map[240];
 extern char object_index[240];
 extern char warp_scroll;
@@ -64,22 +64,22 @@ char *item_name[]={"Enchanted Apple","Lightning Power",
 "Winged Boots","Wind Power",
 "Amulet of Protection","Thunder Power"};
 //===========================================================================
-void build_screen(unsigned int pg){
-    int x,y;
+void build_screen(uint16_t pg){
+    int16_t x,y;
 
     xfillrectangle(0,0,320,192,pg,0);
     for(y=0;y<12;y++){
         for(x=0;x<20;x++){
             if(scrn.icon[y][x]!=0){
-                xfput(x*16,y*16,pg,(char *) (bg_pics+(scrn.bg_color*262)));
-                xfput(x*16,y*16,pg,(char *) (bg_pics+(scrn.icon[y][x]*262)));
+                xfput(x*16,y*16,pg,(char *) (bg_pics+((size_t)scrn.bg_color*262)));
+                xfput(x*16,y*16,pg,(char *) (bg_pics+((size_t)scrn.icon[y][x]*262)));
             }
         }
     }
 }
 //===========================================================================
-void show_level(int new_level){
-    int f,save_d;
+void show_level(int16_t new_level){
+    int16_t f,save_d;
 
     boss_active=0;
     if(!shield_on) actor[2].used=0;
@@ -90,14 +90,14 @@ void show_level(int new_level){
 
     //copy object data to main screen buffer
     movedata(FP_SEG(&scrn.static_obj),FP_OFF(&scrn.static_obj),
-        FP_SEG(sd_data+(current_level*512)+322),FP_OFF(sd_data+(current_level*512)+322),
+        FP_SEG(sd_data+((size_t)current_level*512)+322),FP_OFF(sd_data+((size_t)current_level*512)+322),
         130);
 
     movedata(FP_SEG(&scrn),FP_OFF(&scrn),
-        FP_SEG(sd_data+(current_level*512)),FP_OFF(sd_data+(current_level*512)),
+        FP_SEG(sd_data+((size_t)current_level*512)),FP_OFF(sd_data+((size_t)current_level*512)),
         sizeof(LEVEL));
 
-    movedata(FP_SEG(sd_data+(new_level*512)),FP_OFF(sd_data+(new_level*512)),
+    movedata(FP_SEG(sd_data+((size_t)new_level*512)),FP_OFF(sd_data+((size_t)new_level*512)),
         FP_SEG(&scrn),FP_OFF(&scrn),sizeof(LEVEL));
 
     scrnp=(char *) &scrn;
@@ -113,7 +113,7 @@ void show_level(int new_level){
 
     if(scrn.icon[thor->center_y][thor->center_x]==154) thor->dir=0;
     xdisplay_actors(&actor[MAX_ACTORS-1],draw_page);
-    thor->dir=save_d;
+    thor->dir=(char)save_d;
 
     if(warp_flag) current_level=new_level-5;   //force phase
     warp_flag=0;
@@ -148,7 +148,7 @@ void show_level(int new_level){
     thor_info.last_keys=thor_info.keys;
     thor_info.last_score=thor_info.score;
     thor_info.last_item=thor_info.item;
-    thor_info.last_screen=current_level;
+    thor_info.last_screen=(char)current_level;
     thor_info.last_icon=((thor->x+8)/16)+(((thor->y+14)/16)*20);
     thor_info.last_dir=thor->dir;
     thor_info.last_inventory=thor_info.inventory;
@@ -168,7 +168,7 @@ void show_level(int new_level){
 }
 //===========================================================================
 void scroll_level_left(void){
-    int i;
+    int16_t i;
 
     for(i=10;i>0;i--){
         xshowpage(display_page);
@@ -180,7 +180,7 @@ void scroll_level_left(void){
 }
 //===========================================================================
 void scroll_level_up(void){
-    int i;
+    int16_t i;
 
     for(i=12;i>0;i--){
         xshowpage(display_page);
@@ -192,7 +192,7 @@ void scroll_level_up(void){
 }
 //===========================================================================
 void scroll_level_right(void){
-    int i;
+    int16_t i;
 
     for(i=10;i>0;i--){
         xshowpage(display_page);
@@ -204,7 +204,7 @@ void scroll_level_right(void){
 }
 //===========================================================================
 void scroll_level_down(void){
-    int i;
+    int16_t i;
 
     for(i=12;i>0;i--){
         xshowpage(display_page);
@@ -216,7 +216,7 @@ void scroll_level_down(void){
 }
 //===========================================================================
 void phase_level(void){
-    int r,cnt;
+    int16_t r,cnt;
     char done[240];
 
     memset(done,0,240);
@@ -235,17 +235,17 @@ void phase_level(void){
     }
 }
 //===========================================================================
-void copy_bg_icon(int num,unsigned int src_page,unsigned int dst_page){
-    int x,y;
+void copy_bg_icon(int16_t num,uint16_t src_page,uint16_t dst_page){
+    int16_t x,y;
 
     y=(num/20)*16;
     x=(num%20)*16;
     xcopyd2d(x,y,x+16,y+16,x,y,src_page,dst_page,320,320);
 }
 //===========================================================================
-int odin_speaks(int index,int item){
+int16_t odin_speaks(int16_t index,int16_t item){
 
-    execute_script((long) index,(char *) odin);
+    execute_script((int32_t) index,(char *) odin);
     if(!thor->health){
         thor->show=0;
         exit_flag=2;
@@ -264,13 +264,13 @@ void d_restore(void){
     xerase_actors(actor,draw_page);
 }
 //===========================================================================
-int actor_speaks(ACTOR *actr,int index,int item){
+int16_t actor_speaks(ACTOR *actr,int16_t index,int16_t item){
     char *p;
     char str[21];
     char s[21];
-    int  v;
+    int16_t  v;
     char *pic;
-    long lind;
+    int32_t lind;
 
     if(actr->type!=4) return 0;
     v=atoi(actr->name);
@@ -285,9 +285,9 @@ int actor_speaks(ACTOR *actr,int index,int item){
     if(res_read(str,(char*)p)<0) pic=(char *) odin;
     else pic=p;
 
-    lind=(long)current_level;
+    lind=(int32_t)current_level;
     lind=lind*1000;
-    lind+=(long) actr->actor_num;
+    lind+=(int32_t) actr->actor_num;
     execute_script(lind,pic);
     if(!thor->health){
         thor->show=0;
@@ -300,11 +300,11 @@ int actor_speaks(ACTOR *actr,int index,int item){
     return 1;
 }
 //===========================================================================
-int display_speech(int item, char *pic,int tf){
-    int l,x,color,lc,pn,pc,key;
-    unsigned int pg;
+int16_t display_speech(int16_t item, char *pic,int16_t tf){
+    int16_t l,x,color,lc,pn,pc,key;
+    uint16_t pg;
     char *p;
-    unsigned int magic_str;
+    uint16_t magic_str;
     char ch;
 
     magic_str=magic_cnt;
@@ -333,7 +333,7 @@ int display_speech(int item, char *pic,int tf){
     color=14;
     pn=0;
     pc=0;
-    xput(152,65,pg,(pic+(pn*262)));
+    xput(152,65,pg,(pic+((size_t)pn*262)));
     if(item) xfput(176,65,pg,(char *) objects[item]);
 
     wait_not_response();
@@ -387,15 +387,17 @@ int display_speech(int item, char *pic,int tf){
             p++;
             continue;
         }
-        xtext1(x+12,83+(lc*10),pg,text[(*p)-32],0);
-        xtext(x+12,83+(lc*10),pg,text[(*p)-32],color);
+        if (p && *p > 31 && *p < 126) {
+            xtext1(x+12,83+(lc*10),pg,text[(*p)-32],0);
+            xtext(x+12,83+(lc*10),pg,text[(*p)-32],color);
+        }
         timer_cnt=0;
         pc++;
         if(pc>1){
             pc=0;
             pn++;
             if(pn>3) pn=0;
-            xput(152,65,pg,(pic+(pn*262)));
+            xput(152,65,pg,(pic+((size_t)pn*262)));
         }
         if(!key_flag[key_fire] && !key_flag[ENTER] && !key_flag[SPACE]
             && !key_flag[key_magic]){
@@ -417,8 +419,8 @@ int display_speech(int item, char *pic,int tf){
 }
 //===========================================================================
 void select_item(void){
-    int l,b,p,op;
-    unsigned int pg;
+    int16_t l,b,p,op;
+    uint16_t pg;
     char *objn;
 
 #define _HRZSP 24
@@ -469,7 +471,7 @@ void select_item(void){
     if(p<6) objn=item_name[p];
     else objn=thor_info.object_name;
 
-    xprint((320-(strlen(objn)*8))/2,114,objn,pg,12);
+    xprint((int16_t)(320-(strlen(objn)*8))/2,114,objn,pg,12);
     xbox(78+(p*_HRZSP),70,98+(p*_HRZSP),90,pg,15);
     op=p;
     wait_not_key(key_left);
@@ -519,15 +521,15 @@ void select_item(void){
         xfillrectangle(78,114,249,125,pg,215);
         if(p<6) objn=item_name[p];
         else objn=thor_info.object_name;
-        xprint((320-(strlen(objn)*8))/2,114,objn,pg,12);
+        xprint((int16_t)(320-(strlen(objn)*8))/2,114,objn,pg,12);
         timer_cnt=0;
         play_sound(WOOP,1);
         while(timer_cnt<30) rotate_pal();
     }
 }
 //===========================================================================
-int switch_icons(void){
-    int x,y,ix,iy;
+int16_t switch_icons(void){
+    int16_t x,y,ix,iy;
 
     play_sound(WOOP,0);
     for(y=0;y<12;y++){
@@ -549,8 +551,8 @@ int switch_icons(void){
     return 0;
 }
 //===========================================================================
-int rotate_arrows(void){
-    int x,y;
+int16_t rotate_arrows(void){
+    int16_t x,y;
 
     play_sound(WOOP,0);
     for(y=0;y<12;y++){
@@ -564,8 +566,8 @@ int rotate_arrows(void){
     return 0;
 }
 //===========================================================================
-void kill_enemies(int iy,int ix){
-    int i,x1,y1,x2,y2;
+void kill_enemies(int16_t iy,int16_t ix){
+    int16_t i,x1,y1,x2,y2;
 
     for(i=3;i<MAX_ACTORS;i++){
         if(actor[i].used){
@@ -595,37 +597,37 @@ dead:
     exit_flag=2;
 }
 //===========================================================================
-void remove_objects(int y,int x){
-    int p,ix,iy;
+void remove_objects(int16_t y,int16_t x){
+    int16_t p,ix,iy;
 
     p=(y*20)+x;
     ix=x*16;
     iy=y*16;
 
     if(object_map[p]>0){
-        xfput(ix,iy,PAGE2,(char *) (bg_pics+(scrn.bg_color*262)));
-        xfput(ix,iy,PAGE2,(char *) (bg_pics+(scrn.icon[y][x]*262)));
+        xfput(ix,iy,PAGE2,(char *) (bg_pics+((size_t)scrn.bg_color*262)));
+        xfput(ix,iy,PAGE2,(char *) (bg_pics+((size_t)scrn.icon[y][x]*262)));
         xcopyd2d(ix,iy,ix+16,iy+16,ix,iy,PAGE2,draw_page,320,320);
         object_map[p]=0;
         object_index[p]=0;
     }
 }
 //==========================================================================
-void place_tile(int x,int y,int tile){
-    int ix,iy;
+void place_tile(int16_t x,int16_t y,int16_t tile){
+    int16_t ix,iy;
 
     ix=x*16;
     iy=y*16;
 
-    xfput(ix,iy,PAGE2,(char *) (bg_pics+(scrn.bg_color*262)));
-    xfput(ix,iy,PAGE2,(char *) (bg_pics+(tile*262)));
+    xfput(ix,iy,PAGE2,(char *) (bg_pics+((size_t)scrn.bg_color*262)));
+    xfput(ix,iy,PAGE2,(char *) (bg_pics+((size_t)tile*262)));
     xcopyd2d(ix,iy,ix+16,iy+16,ix,iy,PAGE2,draw_page,320,320);
     xcopyd2d(ix,iy,ix+16,iy+16,ix,iy,PAGE2,display_page,320,320);
-    scrn.icon[y][x]=tile;
+    scrn.icon[y][x]=(char)tile;
     remove_objects(y,x);
 }
 //==========================================================================
-int bgtile(int x,int y){
+int16_t bgtile(int16_t x,int16_t y){
 
     if(x<0 || x>319 || y<0 || y>191) return 0;  //303 , 175
 

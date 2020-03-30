@@ -9,6 +9,7 @@
 #include "define.h"
 #include "proto.h"
 #include "new/new.h"
+#include "res_man.h"
 
 #define STAT_COLOR 206
 
@@ -16,17 +17,17 @@ extern ACTOR *thor;
 extern THOR_INFO thor_info;
 extern char *tmp_buff;
 extern char objects[NUM_OBJECTS][262];
-extern unsigned int page[3];
+extern uint16_t page[3];
 extern volatile char key_flag[100];
-extern int  key_fire,key_up,key_down,key_left,key_right,key_magic,key_select;
-extern unsigned int display_page,draw_page;
+extern int16_t  key_fire,key_up,key_down,key_left,key_right,key_magic,key_select;
+extern uint16_t display_page,draw_page;
 extern char *bg_pics;
-extern int  restore_screen;
+extern int16_t  restore_screen;
 extern char hampic[4][262];
-extern volatile unsigned int timer_cnt,extra_cnt;
+extern volatile uint16_t timer_cnt,extra_cnt;
 extern char level_type,slow_mode;
 extern struct sup setup;
-extern int music_flag,sound_flag,pcsound_flag,boss_active;
+extern int16_t music_flag,sound_flag,pcsound_flag,boss_active;
 extern char *options_yesno[];
 char *options_onoff[]={"On","Off",NULL};
 char *options_sound[]={"None","PC Speaker","Digitized",NULL};
@@ -37,12 +38,12 @@ char *options_menu[]={"Sound/Music","Skill Level","Save Game","Load Game",
 char *options_quit[]={"Continue Game","Quit to Opening Screen","Quit to DOS",NULL};
 extern char *scr;
 extern char last_setup[32];
-extern int exit_flag;
+extern int16_t exit_flag;
 extern char cheat;
 //===========================================================================
 //void status_panel(void){
-//int i;
-//int c[]={23,25,27,29,20};
+//int16_t i;
+//int16_t c[]={23,25,27,29,20};
 
 //for(i=0;i<5;i++) xfillrectangle(0+i,0+i,320-i,48-i,PAGES,c[i]);
 //xprint(8,6,"Health",PAGES,6);
@@ -54,7 +55,7 @@ extern char cheat;
 //}
 //===========================================================================
 void display_health(void){
-    int b;
+    int16_t b;
 
     b=59+thor->health;
     xfillrectangle(59,8,b,12,PAGES,32);
@@ -62,7 +63,7 @@ void display_health(void){
 }
 //===========================================================================
 void display_magic(void){
-    int b;
+    int16_t b;
 
     b=59+thor_info.magic;
     xfillrectangle(59,20,b,24,PAGES,96);
@@ -71,10 +72,10 @@ void display_magic(void){
 //===========================================================================
 void display_jewels(void){
     char s[21];
-    int x,l;
+    int16_t x,l;
 
     _itoa(thor_info.jewels,s,10);
-    l=strlen(s);
+    l=(int16_t)strlen(s);
 
     if (l==1) x=70;
     else if (l==2) x=66;
@@ -86,11 +87,11 @@ void display_jewels(void){
 //===========================================================================
 void display_score(void){
     char s[21];
-    int x,l;
+    int16_t x,l;
 
     _ultoa(thor_info.score,s,10);
 
-    l=strlen(s);
+    l=(int16_t)strlen(s);
     x=276-(l*8);
 
     xfillrectangle(223,32,279,42,PAGES,STAT_COLOR);
@@ -99,10 +100,10 @@ void display_score(void){
 //===========================================================================
 void display_keys(void){
     char s[21];
-    int x,l;
+    int16_t x,l;
 
     _itoa(thor_info.keys,s,10);
-    l=strlen(s);
+    l=(int16_t)strlen(s);
 
     if (l==1) x=150;
     else if (l==2) x=146;
@@ -121,7 +122,7 @@ void display_item(void){
     }
 }
 //===========================================================================
-int init_status_panel(void){
+int16_t init_status_panel(void){
     char *sp;
 
     sp=res_falloc_read("STATUS");
@@ -136,8 +137,8 @@ int init_status_panel(void){
     return 1;
 }
 //===========================================================================
-void add_jewels(int num){
-    int n;
+void add_jewels(int16_t num){
+    int16_t n;
 
     n=thor_info.jewels+num;
     if(n>999) n=999;
@@ -146,44 +147,44 @@ void add_jewels(int num){
     display_jewels();
 }
 //===========================================================================
-void add_score(int num){
-    long n;
+void add_score(int16_t num){
+    int32_t n;
 
-    n=thor_info.score+(long) num;
+    n=thor_info.score+(int32_t) num;
     if(n>999999l) n=999999l;
     else if(n<0) n=0;
     thor_info.score=n;
     display_score();
 }
 //===========================================================================
-void add_magic(int num){
-    int n;
+void add_magic(int16_t num){
+    int16_t n;
 
     n=thor_info.magic+num;
     if(n>150) n=150;
     else if(n<0) n=0;
-    thor_info.magic=n;
+    thor_info.magic=(char)n;
     display_magic();
 }
 //===========================================================================
-void add_health(int num){
-    int n;
+void add_health(int16_t num){
+    int16_t n;
 
     n=thor->health+num;
     if(n>150) n=150;
     else if(n<0) n=0;
-    thor->health=n;
+    thor->health=(char)n;
     display_health();
     if(thor->health<1) exit_flag=2;
 }
 //===========================================================================
-void add_keys(int num){
-    int n;
+void add_keys(int16_t num){
+    int16_t n;
 
     n=thor_info.keys+num;
     if(n>99) n=99;
     else if(n<0) n=0;
-    thor_info.keys=n;
+    thor_info.keys=(char)n;
     display_keys();
 }
 //===========================================================================
@@ -205,7 +206,7 @@ void fill_magic(void){
     //}
 }
 //===========================================================================
-void fill_score(int num){
+void fill_score(int16_t num){
 
     while(num){
         num--;
@@ -240,8 +241,8 @@ void score_for_inv(void){
     }
 }
 //===========================================================================
-void boss_status(int health){
-    int rep,i,c;
+void boss_status(int16_t health){
+    int16_t rep,i,c;
 
     if(health==-1){
         REPEAT(3){
@@ -261,18 +262,18 @@ void boss_status(int health){
     }
 }
 //===========================================================================
-int select_option(char *option[],char *title,int ipos){
-    int num_opts,x1,y1,x2,y2,w,h;
-    int s,i,pic,pos,key,y,kf,ret;
-    unsigned int pg;
+int16_t select_option(char *option[],char *title,int16_t ipos){
+    int16_t num_opts,x1,y1,x2,y2,w,h;
+    int16_t s,i,pic,pos,key,y,kf,ret;
+    uint16_t pg;
     char **op;
 
     show_all_actors();
     num_opts=0;
-    w=strlen(title);
+    w=(int16_t)strlen(title);
     op=option;
     while(*op){
-        if(strlen(*op)>w) w=strlen(*op);
+        if(strlen(*op)>w) w=(int16_t)strlen(*op);
         num_opts++;
         op++;
     }
@@ -303,7 +304,7 @@ int select_option(char *option[],char *title,int ipos){
         xfput(x1-16,y1+(i*16),pg,(char *) (bg_pics+(198*262)));
         xfput(x2,y1+(i*16),pg,(char *) (bg_pics+(199*262)));
     }
-    s=strlen(title)*8;
+    s=(int16_t)strlen(title)*8;
     i=(320-s)/2;
     xprint(i,y1+4,title,pg,54);
 
@@ -370,18 +371,18 @@ int select_option(char *option[],char *title,int ipos){
     return ret;
 }
 //===========================================================================
-int option_menu(void){
+int16_t option_menu(void){
 
     return select_option(options_menu,"Options Menu",0);
 }
 //===========================================================================
-int ask_exit(void){
+int16_t ask_exit(void){
 
     return select_option(options_quit,"Quit Game?",0);
 }
 //===========================================================================
-int select_sound(void){
-    int ret,sel;
+int16_t select_sound(void){
+    int16_t ret,sel;
 
     sel=0;
     if(setup.pc_sound) sel=1;
@@ -410,8 +411,8 @@ int select_sound(void){
     return 1;
 }
 //===========================================================================
-int select_music(void){
-    int ret;
+int16_t select_music(void){
+    int16_t ret;
 
     if(!music_flag) return 1;
     //if(!setup.music) return 1;
@@ -436,8 +437,8 @@ int select_music(void){
     return 1;
 }
 //===========================================================================
-int select_slow(void){
-    int ret;
+int16_t select_slow(void){
+    int16_t ret;
 
     ret=select_option(options_slow,"Fast Mode",1-slow_mode);
     if(!ret) return 0;
@@ -448,8 +449,8 @@ int select_slow(void){
     return 1;
 }
 //===========================================================================
-int select_scroll(void){
-    int ret;
+int16_t select_scroll(void){
+    int16_t ret;
 
     ret=select_option(options_yesno,"Scroll Between Screens?",1-setup.scroll_flag);
     if(!ret) return 0;
@@ -465,7 +466,7 @@ void select_fastmode(void){
 }
 //===========================================================================
 void select_skill(void){
-    int ret,sel;
+    int16_t ret,sel;
 
     sel=setup.skill;
     ret=select_option(options_skill,"  Set Skill Level ",sel);
@@ -474,8 +475,8 @@ void select_skill(void){
     memcpy(last_setup,&setup,32);
 }
 //===========================================================================
-void hammer_smack(int x,int y){
-    int i;
+void hammer_smack(int16_t x,int16_t y){
+    int16_t i;
 
     for(i=0;i<4;i++){
         xfillrectangle(x-4,y-4,x+16,y+16,display_page,215);

@@ -17,27 +17,27 @@ extern char *tmp_buff;
 //extern char file_str[10];
 extern char res_file[];
 extern THOR_INFO thor_info;
-extern int current_area;
+extern int16_t current_area;
 extern ACTOR *thor;
 extern char *save_filename;
 extern union REGS in,out;
 extern SETUP setup;
 extern char level_type,slow_mode;
-extern int  boss_active;
+extern int16_t  boss_active;
 extern char area;
 extern char test_sdf[];
 extern char *song;
 extern char *lzss_buff;
 extern char *options_yesno[];
-extern int music_flag,sound_flag,pcsound_flag;
+extern int16_t music_flag,sound_flag,pcsound_flag;
 extern char game_over;
-extern unsigned int display_page,draw_page;
+extern uint16_t display_page,draw_page;
 extern volatile char key_flag[100];
 
 char *gotres="GOTRES.00";
 //===========================================================================
-long file_size(char *path){
-    long tmpl;
+int32_t file_size(char *path){
+    int32_t tmpl;
     FILE *tmp_fp;
 
     tmp_fp=fopen(path,"rb");
@@ -48,7 +48,7 @@ long file_size(char *path){
     return tmpl;
 }
 //===========================================================================
-int load_bg_data(void){
+int16_t load_bg_data(void){
 
     bg_pics=farmalloc(60460l);
     if(!bg_pics) return 0;
@@ -56,7 +56,7 @@ int load_bg_data(void){
     return 1;
 }
 //===========================================================================
-int load_sd_data(void){
+int16_t load_sd_data(void){
     char s[21];
     char str[21];
 
@@ -70,13 +70,13 @@ int load_sd_data(void){
     return 1;
 }
 //===========================================================================
-int load_objects(void){
+int16_t load_objects(void){
 
     if(res_read("OBJECTS",(char *)objects)<0) return 0;
     return 1;
 }
 //===========================================================================
-int load_actor(int file,int num){
+int16_t load_actor(int16_t file,int16_t num){
     char s[21];
     char rs[21];
 
@@ -88,8 +88,8 @@ int load_actor(int file,int num){
     return 1;
 }
 //===========================================================================
-int load_speech(int index){
-    int  cnt;
+int16_t load_speech(int16_t index){
+    int16_t  cnt;
     char tmps[30];
     char str[30];
     char *p;
@@ -147,7 +147,7 @@ int load_speech(int index){
     return 1;
 }
 //===========================================================================
-void setup_filenames(int level){
+void setup_filenames(int16_t level){
     //char s[21];
 
     //strcpy(res_file,gotres);
@@ -163,10 +163,6 @@ void help(void){
 }
 //===========================================================================
 void save_game(void){
-    int handle;
-    unsigned int total;
-    char buff[32];
-
     if(game_over) return;
     setup.area=area;
     setup.game_over=game_over;
@@ -192,11 +188,7 @@ void save_game(void){
     odin_speaks(2009,0);
 }
 //===========================================================================
-int load_game(int flag){
-    int handle;
-    unsigned int total;
-    char buff[32];
-
+int16_t load_game(int16_t flag){
     if(flag){
         if(select_option(options_yesno,"Load Game?",0)!=1){
             d_restore();
@@ -254,14 +246,14 @@ int load_game(int flag){
 }
 //==========================================================================
 /*
-long res_read(char *name,char *buff){
-int num,bytes;
+int32_t res_read(char *name,char *buff){
+int16_t num,bytes;
 size_t len;
 size_t total;
 char bf[256];
 char *p;
-unsigned int clen;
-unsigned int *up;
+uint16_t clen;
+uint16_t *up;
 
 if(!res_active) return RES_NOT_ACTIVE;
 if(!res_fp) return RES_NOT_OPEN;
@@ -286,7 +278,7 @@ p+=bytes;
 if(res_header[num].key) res_decode(buff,len,res_header[num].key);
 else{
 p=lzss_buff;
-up=(unsigned int *) p;
+up=(uint16_t *) p;
 clen=*up;
 p+=4;
 UnLZSS(p,buff,clen);
@@ -295,7 +287,7 @@ return res_header[num].length;
 }
 */
 //==========================================================================
-int load_music(int num){
+int16_t load_music(int16_t num){
 
     switch(num){
     case 0:

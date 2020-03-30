@@ -12,98 +12,98 @@
 #define TILE_FLY     140
 #define TILE_SPECIAL 200
 //===========================================================================
-extern volatile unsigned int timer_cnt;
-extern int new_level,current_level;
+extern volatile uint16_t timer_cnt;
+extern int16_t new_level,current_level;
 extern LEVEL scrn;
 extern ACTOR actor[MAX_ACTORS];
 extern ACTOR *thor;
-extern int thor_x1,thor_y1,thor_x2,thor_y2,thor_real_y1;
-extern int exit_flag;
+extern int16_t thor_x1,thor_y1,thor_x2,thor_y2,thor_real_y1;
+extern int16_t exit_flag;
 extern volatile char key_flag[100];
 extern char diag;
 extern ACTOR *hammer;
-extern int key_fire,key_up,key_down,key_left,key_right,key_magic,key_select;
-extern int lightning_used,tornado_used,hourglass_flag;
-extern int switch_flag;
-extern unsigned int display_page,draw_page;
+extern int16_t key_fire,key_up,key_down,key_left,key_right,key_magic,key_select;
+extern int16_t lightning_used,tornado_used,hourglass_flag;
+extern int16_t switch_flag;
+extern uint16_t display_page,draw_page;
 extern char *bg_pics;
 extern char objects[NUM_OBJECTS][262];
 extern char object_map[240];
 extern char object_index[240];
 extern char thor_icon1,thor_icon2,thor_icon3,thor_icon4;
 extern THOR_INFO thor_info;
-extern int boss_dead;
-extern int boss_active;
-extern int rand1,rand2;
-extern int thor_x1,thor_y1,thor_x2,thor_y2,thor_real_y1;
-extern int bomb_flag,shield_on;
+extern int16_t boss_dead;
+extern int16_t boss_active;
+extern int16_t rand1,rand2;
+extern int16_t thor_x1,thor_y1,thor_x2,thor_y2,thor_real_y1;
+extern int16_t bomb_flag,shield_on;
 extern ACTOR magic_item[];
 extern char cheat;
 extern char *options_yesno[];
 extern SETUP setup;
-extern int thunder_flag;
+extern int16_t thunder_flag;
 extern char odin[4][262];
 extern char area;
 
 char diag_flag;
 char thor_special_flag;
-int  bomb_x[]={0,-16,32,-32,32,-16,-16, 32,-16};
-int  bomb_y[]={0,-16,16,  0,16,-32, 32,-32, 32};
+int16_t  bomb_x[]={0,-16,32,-32,32,-16,-16, 32,-16};
+int16_t  bomb_y[]={0,-16,16,  0,16,-32, 32,-32, 32};
 char rotate_pat[]={0,3,1,2};
 //===========================================================================
-extern int (*dialog_func[]) (ACTOR *actr);
+extern int16_t (*dialog_func[]) (ACTOR *actr);
 
-int check_special_move1(int x,int y, ACTOR *actr);
+int16_t check_special_move1(int16_t x,int16_t y, ACTOR *actr);
 
-int  check_move0(int x,int y, ACTOR *actr);
-int  check_move1(int x,int y, ACTOR *actr);
-int  check_move2(int x,int y, ACTOR *actr);
-int  check_move3(int x,int y, ACTOR *actr);
-int  check_move4(int x,int y, ACTOR *actr);
+int16_t  check_move0(int16_t x,int16_t y, ACTOR *actr);
+int16_t  check_move1(int16_t x,int16_t y, ACTOR *actr);
+int16_t  check_move2(int16_t x,int16_t y, ACTOR *actr);
+int16_t  check_move3(int16_t x,int16_t y, ACTOR *actr);
+int16_t  check_move4(int16_t x,int16_t y, ACTOR *actr);
 
-int movement_zero(ACTOR *actr);
-int movement_one(ACTOR *actr);
-int movement_two(ACTOR *actr);
-int movement_three(ACTOR *actr);
-int movement_four(ACTOR *actr);
-int movement_five(ACTOR *actr);
-int movement_six(ACTOR *actr);
-int movement_seven(ACTOR *actr);
-int movement_eight(ACTOR *actr);
-int movement_nine(ACTOR *actr);
-int movement_ten(ACTOR *actr);
-int movement_eleven(ACTOR *actr);
-int movement_twelve(ACTOR *actr);         //horz straight until bump
-int movement_thirteen(ACTOR *actr);       //pause-seek (mushroom)
-int movement_fourteen(ACTOR *actr);       //move-bump-stop (boulder)
-int movement_fifteen(ACTOR *actr);        //no move, no frame cycle
-int movement_sixteen(ACTOR *actr);        //tornado 1
-int movement_seventeen(ACTOR *actr);      //tornado 2
-int movement_eighteen(ACTOR *actr);       //random-seek-bite-run
-int movement_nineteen(ACTOR *actr);       //tornado 2
-int movement_twenty(ACTOR *actr);         //tornado 2
-int movement_twentyone(ACTOR *actr);      //eyeball
-int movement_twentytwo(ACTOR *actr);      //spear
-int movement_twentythree(ACTOR *actr);    //spinball cw
-int movement_twentyfour(ACTOR *actr);     //spinball ccw
-int movement_twentyfive(ACTOR *actr);     //
-int movement_twentysix(ACTOR *actr);      //
-int movement_twentyseven(ACTOR *actr);    //
-int movement_twentyeight(ACTOR *actr);    //tree boss
-int movement_twentynine(ACTOR *actr);     //horz or vert (pass_val)
-int movement_thirty(ACTOR *actr);         //vert straight
-int movement_thirtyone(ACTOR *actr);      //drop (stalagtite)
-int movement_thirtytwo(ACTOR *actr);      //bomb 1
-int movement_thirtythree(ACTOR *actr);    //bomb 2
-int movement_thirtyfour(ACTOR *actr);     //gun (4-dir)
-int movement_thirtyfive(ACTOR *actr);     //gun (4-dir)
-int movement_thirtysix(ACTOR *actr);      //acid drop
-int movement_thirtyseven(ACTOR *actr);    //4-way rnd,rnd len
-int movement_thirtyeight(ACTOR *actr);    //timed darting
-int movement_thirtynine(ACTOR *actr);    //troll 1
-int movement_forty(ACTOR *actr);         //troll 2
+int16_t movement_zero(ACTOR *actr);
+int16_t movement_one(ACTOR *actr);
+int16_t movement_two(ACTOR *actr);
+int16_t movement_three(ACTOR *actr);
+int16_t movement_four(ACTOR *actr);
+int16_t movement_five(ACTOR *actr);
+int16_t movement_six(ACTOR *actr);
+int16_t movement_seven(ACTOR *actr);
+int16_t movement_eight(ACTOR *actr);
+int16_t movement_nine(ACTOR *actr);
+int16_t movement_ten(ACTOR *actr);
+int16_t movement_eleven(ACTOR *actr);
+int16_t movement_twelve(ACTOR *actr);         //horz straight until bump
+int16_t movement_thirteen(ACTOR *actr);       //pause-seek (mushroom)
+int16_t movement_fourteen(ACTOR *actr);       //move-bump-stop (boulder)
+int16_t movement_fifteen(ACTOR *actr);        //no move, no frame cycle
+int16_t movement_sixteen(ACTOR *actr);        //tornado 1
+int16_t movement_seventeen(ACTOR *actr);      //tornado 2
+int16_t movement_eighteen(ACTOR *actr);       //random-seek-bite-run
+int16_t movement_nineteen(ACTOR *actr);       //tornado 2
+int16_t movement_twenty(ACTOR *actr);         //tornado 2
+int16_t movement_twentyone(ACTOR *actr);      //eyeball
+int16_t movement_twentytwo(ACTOR *actr);      //spear
+int16_t movement_twentythree(ACTOR *actr);    //spinball cw
+int16_t movement_twentyfour(ACTOR *actr);     //spinball ccw
+int16_t movement_twentyfive(ACTOR *actr);     //
+int16_t movement_twentysix(ACTOR *actr);      //
+int16_t movement_twentyseven(ACTOR *actr);    //
+int16_t movement_twentyeight(ACTOR *actr);    //tree boss
+int16_t movement_twentynine(ACTOR *actr);     //horz or vert (pass_val)
+int16_t movement_thirty(ACTOR *actr);         //vert straight
+int16_t movement_thirtyone(ACTOR *actr);      //drop (stalagtite)
+int16_t movement_thirtytwo(ACTOR *actr);      //bomb 1
+int16_t movement_thirtythree(ACTOR *actr);    //bomb 2
+int16_t movement_thirtyfour(ACTOR *actr);     //gun (4-dir)
+int16_t movement_thirtyfive(ACTOR *actr);     //gun (4-dir)
+int16_t movement_thirtysix(ACTOR *actr);      //acid drop
+int16_t movement_thirtyseven(ACTOR *actr);    //4-way rnd,rnd len
+int16_t movement_thirtyeight(ACTOR *actr);    //timed darting
+int16_t movement_thirtynine(ACTOR *actr);    //troll 1
+int16_t movement_forty(ACTOR *actr);         //troll 2
 
-int (*movement_func[]) (ACTOR *actr) =
+int16_t (*movement_func[]) (ACTOR *actr) =
 { movement_zero,
 movement_one,
 movement_two,
@@ -147,18 +147,18 @@ movement_thirtynine,
 movement_forty,
 };
 
-int special_movement_one(ACTOR *actr);
-int special_movement_two(ACTOR *actr);
-int special_movement_three(ACTOR *actr);
-int special_movement_four(ACTOR *actr);
-int special_movement_five(ACTOR *actr);
-int special_movement_six(ACTOR *actr);
-int special_movement_seven(ACTOR *actr);
-int special_movement_eight(ACTOR *actr);
-int special_movement_nine(ACTOR *actr);
-int special_movement_ten(ACTOR *actr);
+int16_t special_movement_one(ACTOR *actr);
+int16_t special_movement_two(ACTOR *actr);
+int16_t special_movement_three(ACTOR *actr);
+int16_t special_movement_four(ACTOR *actr);
+int16_t special_movement_five(ACTOR *actr);
+int16_t special_movement_six(ACTOR *actr);
+int16_t special_movement_seven(ACTOR *actr);
+int16_t special_movement_eight(ACTOR *actr);
+int16_t special_movement_nine(ACTOR *actr);
+int16_t special_movement_ten(ACTOR *actr);
 
-int (*special_movement_func[]) (ACTOR *actr) =
+int16_t (*special_movement_func[]) (ACTOR *actr) =
 { NULL,
 special_movement_one,
 special_movement_two,
@@ -172,10 +172,10 @@ special_movement_nine,
 special_movement_ten,
 };
 //==========================================================================
-int check_move0(int x,int y, ACTOR *actr){   //check thor move
-    int x1,x2,y1,y2;
-    int x3,x4,y3,y4;
-    int i,ti;
+int16_t check_move0(int16_t x,int16_t y, ACTOR *actr){   //check thor move
+    int16_t x1,x2,y1,y2;
+    int16_t x3,x4,y3,y4;
+    int16_t i,ti;
     ACTOR *act;
     char icn1,icn2,icn3,icn4;
 
@@ -294,8 +294,8 @@ int check_move0(int x,int y, ACTOR *actr){   //check thor move
         if(overlap(x1,y1,x2,y2,x3,y3,x4,y4)){
             if(act->func_num>0){ //255=explosion
                 if(act->func_num==255) return 0;
-                act->temp1=x;
-                act->temp2=y;
+                act->temp1=(char)x;
+                act->temp2=(char)y;
                 thor_special_flag=1;
                 return special_movement_func[act->func_num](act);
             }
@@ -317,10 +317,10 @@ int check_move0(int x,int y, ACTOR *actr){   //check thor move
     return 1;
 }
 //==========================================================================
-int check_move1(int x,int y, ACTOR *actr){   //check hammer move
-    int  x1,x2,y1,y2,i;
-    int  x3,y3,x4,y4;
-    int  icn,f;
+int16_t check_move1(int16_t x,int16_t y, ACTOR *actr){   //check hammer move
+    int16_t  x1,x2,y1,y2,i;
+    int16_t  x3,y3,x4,y4;
+    int16_t  icn,f;
     char icn1,icn2,icn3,icn4;
 
     ACTOR *act;
@@ -387,10 +387,10 @@ int check_move1(int x,int y, ACTOR *actr){   //check hammer move
     return 1;
 }
 //==========================================================================
-int check_move2(int x,int y, ACTOR *actr){   //check enemy move
-    int x1,x2,y1,y2,i;
-    int x3,y3,x4,y4;
-    int icn;
+int16_t check_move2(int16_t x,int16_t y, ACTOR *actr){   //check enemy move
+    int16_t x1,x2,y1,y2,i;
+    int16_t x3,y3,x4,y4;
+    int16_t icn;
     char icn1,icn2,icn3,icn4;
 
     ACTOR *act;
@@ -460,13 +460,13 @@ int check_move2(int x,int y, ACTOR *actr){   //check enemy move
     return 1;
 }
 //==========================================================================
-int check_move3(int x,int y, ACTOR *actr){   //check enemy shot move
-    int x1,x2,y1,y2;
-    int x3,x4,y3,y4,i;
+int16_t check_move3(int16_t x,int16_t y, ACTOR *actr){   //check enemy shot move
+    int16_t x1,x2,y1,y2;
+    int16_t x3,x4,y3,y4,i;
     char icn1,icn2,icn3,icn4;
     ACTOR *act;
 
-    int icn;
+    int16_t icn;
 
     if(x<0 || x>(319-actr->size_x) || y<0 || y>175) return 0;
 
@@ -521,7 +521,7 @@ int check_move3(int x,int y, ACTOR *actr){   //check enemy shot move
     return 1;
 }
 //==========================================================================
-int check_move4(int x,int y, ACTOR *actr){   //flying enemies
+int16_t check_move4(int16_t x,int16_t y, ACTOR *actr){   //flying enemies
 
     if(x<0 || x>(319-actr->size_x) || y<0 || y>175) return 0;
     if(overlap(x,y,x+actr->size_x-1,y+actr->size_y-1,
@@ -536,7 +536,7 @@ int check_move4(int x,int y, ACTOR *actr){   //flying enemies
 //===========================================================================
 #define THOR_PAD1 2
 #define THOR_PAD2 4
-int  check_thor_move(int x,int y, ACTOR *actr){
+int16_t  check_thor_move(int16_t x,int16_t y, ACTOR *actr){
 
     if(check_move0(x,y,actr)) return 1;
     if(diag_flag || thor_special_flag) return 0;
@@ -596,8 +596,8 @@ int  check_thor_move(int x,int y, ACTOR *actr){
     return 0;
 }
 //===========================================================================
-int movement_zero(ACTOR *actr){       //player control
-    int d,x,y,od;
+int16_t movement_zero(ACTOR *actr){       //player control
+    int16_t d,x,y,od;
     d=actr->dir;
     od=d;
 
@@ -617,7 +617,7 @@ int movement_zero(ACTOR *actr){       //player control
     if(actr->move_counter) actr->move_counter--;
     if(key_flag[key_up] && key_flag[key_left]){
         d=2;
-        actr->dir=d;
+        actr->dir=(char)d;
         diag=1;
         diag_flag=1;
         if(check_thor_move(x-2,y-2,actr)){
@@ -627,7 +627,7 @@ int movement_zero(ACTOR *actr){       //player control
     }
     else if(key_flag[key_up] && key_flag[key_right]){
         d=3;
-        actr->dir=d;
+        actr->dir=(char)d;
         diag=2;
         diag_flag=1;
         if(check_thor_move(x+2,y-2,actr)){
@@ -637,7 +637,7 @@ int movement_zero(ACTOR *actr){       //player control
     }
     else if(key_flag[key_down] && key_flag[key_left]){
         d=2;
-        actr->dir=d;
+        actr->dir=(char)d;
         diag=4;
         diag_flag=1;
         if(check_thor_move(x-2,y+2,actr)){
@@ -647,7 +647,7 @@ int movement_zero(ACTOR *actr){       //player control
     }
     else if(key_flag[key_down] && key_flag[key_right]){
         d=3;
-        actr->dir=d;
+        actr->dir=(char)d;
         diag=3;
         diag_flag=1;
         if(check_thor_move(x+2,y+2,actr)){
@@ -659,7 +659,7 @@ int movement_zero(ACTOR *actr){       //player control
     if(key_flag[key_right]){
         if(!key_flag[key_left]){
             d=3;
-            actr->dir=d;
+            actr->dir=(char)d;
             if(check_thor_move(x+2,y,actr)){
                 next_frame(actr);
                 return d;
@@ -669,7 +669,7 @@ int movement_zero(ACTOR *actr){       //player control
     if(key_flag[key_left]){
         if(!key_flag[key_right]){
             d=2;
-            actr->dir=d;
+            actr->dir=(char)d;
             if(check_thor_move(x-2,y,actr)){
                 next_frame(actr);
                 return d;
@@ -679,7 +679,7 @@ int movement_zero(ACTOR *actr){       //player control
     if(key_flag[key_down]){
         if(!key_flag[key_up]){
             d=1;
-            actr->dir=d;
+            actr->dir=(char)d;
             if(check_thor_move(x,y+2,actr)){
                 next_frame(actr);
                 return d;
@@ -689,7 +689,7 @@ int movement_zero(ACTOR *actr){       //player control
     if(key_flag[key_up]){
         if(!key_flag[key_down]){
             d=0;
-            actr->dir=d;
+            actr->dir=(char)d;
             if(check_thor_move(x,y-2,actr)){
                 next_frame(actr);
                 return d;
@@ -698,14 +698,14 @@ int movement_zero(ACTOR *actr){       //player control
     }
     actr->move_counter=5;
     actr->next=0;
-    actr->dir=od;
+    actr->dir=(char)od;
     return d;
 }
 //==========================================================================
-int check_special_move1(int x,int y, ACTOR *actr){
-    int x1,x2,y1,y2,i;
-    int x3,y3,x4,y4;
-    int icn;
+int16_t check_special_move1(int16_t x,int16_t y, ACTOR *actr){
+    int16_t x1,x2,y1,y2,i;
+    int16_t x3,y3,x4,y4;
+    int16_t icn;
     char icn1,icn2,icn3,icn4;
 
     ACTOR *act;
@@ -773,54 +773,54 @@ int check_special_move1(int x,int y, ACTOR *actr){
 //===========================================================================
 //*==========================================================================
 //===========================================================================
-int special_movement_one(ACTOR *actr){   //block
-    int d,x1,y1,sd;
+int16_t special_movement_one(ACTOR *actr){   //block
+    int16_t d,x1,y1,sd;
 
     if(diag_flag) return 0;
     d=thor->dir;
     x1=actr->x;
     y1=actr->y;
     sd=actr->last_dir;
-    actr->last_dir=d;
+    actr->last_dir=(char)d;
 
     switch(d){
     case 0:
         y1-=2;
         if(!check_special_move1(x1,y1,actr)){
-            actr->last_dir=sd;
+            actr->last_dir=(char)sd;
             return 0;
         }
         break;
     case 1:
         y1+=2;
         if(!check_special_move1(x1,y1,actr)){
-            actr->last_dir=sd;
+            actr->last_dir=(char)sd;
             return 0;
         }
         break;
     case 2:
         x1-=2;
         if(!check_special_move1(x1,y1,actr)){
-            actr->last_dir=sd;
+            actr->last_dir=(char)sd;
             return 0;
         }
         break;
     case 3:
         x1+=2;
         if(!check_special_move1(x1,y1,actr)){
-            actr->last_dir=sd;
+            actr->last_dir=(char)sd;
             return 0;
         }
         break;
     }
     next_frame(actr);
-    actr->last_dir=d;
+    actr->last_dir=(char)d;
     return 1;
 }
 //===========================================================================
-int special_movement_two(ACTOR *actr){   //angle
-    int x1,y1,x2,y2,i;
-    int x3,y3,x4,y4;
+int16_t special_movement_two(ACTOR *actr){   //angle
+    int16_t x1,y1,x2,y2,i;
+    int16_t x3,y3,x4,y4;
     ACTOR *act;
 
     x1=actr->temp1;       //calc thor pos
@@ -857,21 +857,21 @@ int special_movement_two(ACTOR *actr){   //angle
     return 1;
 }
 //===========================================================================
-int special_movement_three(ACTOR *actr){  //yellow globe
-    long lind;
+int16_t special_movement_three(ACTOR *actr){  //yellow globe
+    int32_t lind;
 
     if(thunder_flag) return 0;
     //if(GAME1) odin_speaks(actr->pass_value,0);
     //else{
-    lind=(long)current_level;
+    lind=(int32_t)current_level;
     lind=lind*1000;
-    lind+=(long) actr->actor_num;
+    lind+=(int32_t) actr->actor_num;
     execute_script(lind,(char *) odin);
     //}
     return 0;
 }
 //===========================================================================
-int special_movement_four(ACTOR *actr){   //peg switch
+int16_t special_movement_four(ACTOR *actr){   //peg switch
 
     if(actr->shot_cnt!=0) return 0;
     actr->shot_cnt=30;
@@ -879,11 +879,11 @@ int special_movement_four(ACTOR *actr){   //peg switch
     switch_flag=1;
     return 0;
 }
-void kill_enemies(int ix,int iy);
-void remove_objects(int iy,int ix);
+void kill_enemies(int16_t ix,int16_t iy);
+void remove_objects(int16_t iy,int16_t ix);
 //===========================================================================
-int special_movement_five(ACTOR *actr){    //boulder roll
-    int d;
+int16_t special_movement_five(ACTOR *actr){    //boulder roll
+    int16_t d;
 
     d=thor->dir;
 
@@ -908,18 +908,18 @@ int special_movement_five(ACTOR *actr){    //boulder roll
         }
     }
 
-    actr->last_dir=d;
+    actr->last_dir=(char)d;
     actr->move=14;
     return 0;
 }
 //===========================================================================
-int special_movement_six(ACTOR *actr){
+int16_t special_movement_six(ACTOR *actr){
 
     thor_damaged(actr);
     return 0;
 }
 //===========================================================================
-int special_movement_seven(ACTOR *actr){
+int16_t special_movement_seven(ACTOR *actr){
 
     if(actr->shot_cnt!=0) return 0;
     actr->shot_cnt=30;
@@ -928,7 +928,7 @@ int special_movement_seven(ACTOR *actr){
     return 0;
 }
 //===========================================================================
-int special_movement_eight(ACTOR *actr){
+int16_t special_movement_eight(ACTOR *actr){
 
     if(thor->dir<2 || diag_flag) return 0;
     actr->last_dir=thor->dir;
@@ -936,7 +936,7 @@ int special_movement_eight(ACTOR *actr){
     return 0;
 }
 //===========================================================================
-int special_movement_nine(ACTOR *actr){
+int16_t special_movement_nine(ACTOR *actr){
 
     if(thor->dir>1 || diag_flag) return 0;
     actr->last_dir=thor->dir;
@@ -944,7 +944,7 @@ int special_movement_nine(ACTOR *actr){
     return 0;
 }
 //===========================================================================
-int special_movement_ten(ACTOR *actr){
+int16_t special_movement_ten(ACTOR *actr){
 
     if(actr->temp6){
         actr->temp6--;
@@ -967,14 +967,14 @@ int special_movement_ten(ACTOR *actr){
 //===========================================================================
 //*==========================================================================
 //===========================================================================
-int movement_one(ACTOR *actr){    //no movement - frame cycle
+int16_t movement_one(ACTOR *actr){    //no movement - frame cycle
 
     next_frame(actr);
     return actr->dir;
 }
 //===========================================================================
-int movement_two(ACTOR *actr){     //hammer only
-    int d,x1,y1;
+int16_t movement_two(ACTOR *actr){     //hammer only
+    int16_t d,x1,y1;
 
     d=actr->last_dir;
     x1=actr->x;
@@ -998,7 +998,7 @@ int movement_two(ACTOR *actr){     //hammer only
         if(actr->actor_num==1){
             hammer->move=5;
             d=reverse_direction(hammer);
-            hammer->dir=d;
+            hammer->dir=(char)d;
         }
         if(actr->actor_num==2){
             actr->used=0;
@@ -1008,13 +1008,13 @@ int movement_two(ACTOR *actr){     //hammer only
         }
     }
     next_frame(actr);
-    actr->last_dir=d;
+    actr->last_dir=(char)d;
     if(actr->directions==1) return 0;
     return d;
 }
 //===========================================================================
-int movement_three(ACTOR *actr){         //walk-bump-random turn
-    int d,x1,y1;
+int16_t movement_three(ACTOR *actr){         //walk-bump-random turn
+    int16_t d,x1,y1;
 
     d=actr->last_dir;
     x1=actr->x;
@@ -1047,13 +1047,13 @@ int movement_three(ACTOR *actr){         //walk-bump-random turn
         break;
     }
     next_frame(actr);
-    actr->last_dir=d;
+    actr->last_dir=(char)d;
     if(actr->directions==1) return 0;
     return d;
 }
 //===========================================================================
-int movement_four(ACTOR *actr){         //simple tracking
-    int d,x1,y1,f;
+int16_t movement_four(ACTOR *actr){         //simple tracking
+    int16_t d,x1,y1,f;
 
     d=actr->last_dir;
 
@@ -1085,13 +1085,13 @@ int movement_four(ACTOR *actr){         //simple tracking
         if(!f) check_move2(actr->x,actr->y,actr);
     }
     next_frame(actr);
-    actr->last_dir=d;
+    actr->last_dir=(char)d;
     if(actr->directions==1) return 0;
     return d;
 }
 //===========================================================================
-int movement_five(ACTOR *actr){
-    int x1,y1,xd,yd,d;
+int16_t movement_five(ACTOR *actr){
+    int16_t x1,y1,xd,yd,d;
 
     x1=actr->x;
     y1=actr->y;
@@ -1119,7 +1119,7 @@ int movement_five(ACTOR *actr){
         y1+=yd;
         if(check_move2(x1,y1,actr)){
             next_frame(actr);
-            actr->last_dir=d;
+            actr->last_dir=(char)d;
             if(actr->directions==1) return 0;
             return d;
         }
@@ -1141,7 +1141,7 @@ int movement_five(ACTOR *actr){
                 if(xd>0) d=3;
                 else d=2;
                 next_frame(actr);
-                actr->last_dir=d;
+                actr->last_dir=(char)d;
                 if(actr->directions==1) return 0;
                 return d;
             }
@@ -1153,7 +1153,7 @@ int movement_five(ACTOR *actr){
                 if(yd>0) d=1;
                 else d=0;
                 next_frame(actr);
-                actr->last_dir=d;
+                actr->last_dir=(char)d;
                 if(actr->directions==1) return 0;
                 return d;
             }
@@ -1167,7 +1167,7 @@ int movement_five(ACTOR *actr){
                 if(yd>0) d=1;
                 else d=0;
                 next_frame(actr);
-                actr->last_dir=d;
+                actr->last_dir=(char)d;
                 if(actr->directions==1) return 0;
                 return d;
             }
@@ -1179,7 +1179,7 @@ int movement_five(ACTOR *actr){
                 if(xd>0) d=3;
                 else d=2;
                 next_frame(actr);
-                actr->last_dir=d;
+                actr->last_dir=(char)d;
                 if(actr->directions==1) return 0;
                 return d;
             }
@@ -1187,12 +1187,12 @@ int movement_five(ACTOR *actr){
     }
     check_move2(actr->x,actr->y,actr);
     next_frame(actr);
-    actr->last_dir=d;
+    actr->last_dir=(char)d;
     if(actr->directions==1) return 0;
     return d;
 }
 //===========================================================================
-int movement_six(ACTOR *actr){   //explosion only
+int16_t movement_six(ACTOR *actr){   //explosion only
 
     if(actr->num_shots>0){
         actr->next++;
@@ -1212,16 +1212,16 @@ int movement_six(ACTOR *actr){   //explosion only
     return 0;
 }
 //===========================================================================
-int movement_seven(ACTOR *actr){         //walk-bump-random turn (pause also)
+int16_t movement_seven(ACTOR *actr){         //walk-bump-random turn (pause also)
 
     if(actr->next==0 && actr->frame_count==actr->frame_speed){
         actr->speed_count=12;
-        actr->last_dir=rnd(4);
+        actr->last_dir=(char)rnd(4);
     }
     return movement_three(actr);
 }
 //==========================================================================
-int movement_eight(ACTOR *actr){         //follow thor
+int16_t movement_eight(ACTOR *actr){         //follow thor
 
     if(thor->x>0) actr->x=thor->x-1;
     else actr->x=thor->x;
@@ -1230,8 +1230,8 @@ int movement_eight(ACTOR *actr){         //follow thor
     return 0;
 }
 //===========================================================================
-int movement_nine(ACTOR *actr){         //4-way straight (random length) change
-    int d,x1,y1,f;
+int16_t movement_nine(ACTOR *actr){         //4-way straight (random length) change
+    int16_t d,x1,y1,f;
 
     d=actr->last_dir;
     x1=actr->x;
@@ -1266,13 +1266,13 @@ int movement_nine(ACTOR *actr){         //4-way straight (random length) change
         d=rnd(4);
     }
     next_frame(actr);
-    actr->last_dir=d;
+    actr->last_dir=(char)d;
     if(actr->directions==1) return 0;
     return d;
 }
 //===========================================================================
-int movement_ten(ACTOR *actr){         //vert straight (random length) change
-    int d,x1,y1,f;
+int16_t movement_ten(ACTOR *actr){         //vert straight (random length) change
+    int16_t d,x1,y1,f;
 
     d=actr->last_dir;
     x1=actr->x;
@@ -1308,13 +1308,13 @@ int movement_ten(ACTOR *actr){         //vert straight (random length) change
     }
     if(d>1) d-=2;
     next_frame(actr);
-    actr->last_dir=d;
+    actr->last_dir=(char)d;
     if(actr->directions==1) return 0;
     return d;
 }
 //===========================================================================
-int movement_eleven(ACTOR *actr){         //horz only (bats)
-    int d;
+int16_t movement_eleven(ACTOR *actr){         //horz only (bats)
+    int16_t d;
 
     d=actr->last_dir;
 
@@ -1346,13 +1346,13 @@ int movement_eleven(ACTOR *actr){         //horz only (bats)
     }
 
     next_frame(actr);
-    actr->last_dir=d;
+    actr->last_dir=(char)d;
     if(actr->directions==1) return 0;
     return d;
 }
 //===========================================================================
-int movement_twelve(ACTOR *actr){         //horz straight until bump
-    int d;
+int16_t movement_twelve(ACTOR *actr){         //horz straight until bump
+    int16_t d;
 
     d=actr->last_dir;
 
@@ -1369,13 +1369,13 @@ int movement_twelve(ACTOR *actr){         //horz straight until bump
         break;
     }
     next_frame(actr);
-    actr->last_dir=d;
+    actr->last_dir=(char)d;
     if(actr->directions==1) return 0;
     return d;
 }
 //===========================================================================
-int movement_thirteen(ACTOR *actr){         //pause-seek (mushroom)
-    int d;
+int16_t movement_thirteen(ACTOR *actr){         //pause-seek (mushroom)
+    int16_t d;
 
     d=actr->last_dir;
 
@@ -1399,11 +1399,11 @@ int movement_thirteen(ACTOR *actr){         //pause-seek (mushroom)
     return d;
 }
 //===========================================================================
-int movement_fourteen(ACTOR *actr){         //move-bump-stop (boulder)
-    int d,x1,y1;
+int16_t movement_fourteen(ACTOR *actr){         //move-bump-stop (boulder)
+    int16_t d,x1,y1;
 
     d=actr->last_dir;
-    actr->dir=d;
+    actr->dir=(char)d;
     x1=actr->x;
     y1=actr->y;
 
@@ -1438,18 +1438,18 @@ int movement_fourteen(ACTOR *actr){         //move-bump-stop (boulder)
         break;
     }
     next_frame(actr);
-    actr->last_dir=d;
+    actr->last_dir=(char)d;
     if(actr->directions==1) return 0;
     return d;
 }
 //===========================================================================
-int movement_fifteen(ACTOR *actr){    //no movement - no frame cycle
+int16_t movement_fifteen(ACTOR *actr){    //no movement - no frame cycle
 
     return actr->dir;
 }
 //===========================================================================
-int movement_sixteen(ACTOR *actr){     //tornado 1
-    int d,x1,y1;
+int16_t movement_sixteen(ACTOR *actr){     //tornado 1
+    int16_t d,x1,y1;
 
     d=actr->last_dir;
     x1=actr->x;
@@ -1475,13 +1475,13 @@ int movement_sixteen(ACTOR *actr){     //tornado 1
     }
 
     next_frame(actr);
-    actr->last_dir=d;
+    actr->last_dir=(char)d;
     if(actr->directions==1) return 0;
     return d;
 }
 //===========================================================================
-int movement_seventeen(ACTOR *actr){         //tornado 2
-    int d;
+int16_t movement_seventeen(ACTOR *actr){         //tornado 2
+    int16_t d;
 
     d=actr->last_dir;
 
@@ -1512,13 +1512,13 @@ int movement_seventeen(ACTOR *actr){         //tornado 2
         break;
     }
     next_frame(actr);
-    actr->last_dir=d;
+    actr->last_dir=(char)d;
     if(actr->directions==1) return 0;
     return d;
 }
 //===========================================================================
-int movement_eighteen(ACTOR *actr){    //no movement - frame cycle
-    int d;
+int16_t movement_eighteen(ACTOR *actr){    //no movement - frame cycle
+    int16_t d;
 
     if(actr->temp5){
         actr->temp5--;
@@ -1532,7 +1532,7 @@ int movement_eighteen(ACTOR *actr){    //no movement - frame cycle
                 actr->temp5=50;
                 actr->num_moves=2;
                 actr->hit_thor=0;
-                actr->dir=d;
+                actr->dir=(char)d;
                 d=reverse_direction(actr);
             }
             actr->temp1=0;
@@ -1551,7 +1551,7 @@ int movement_eighteen(ACTOR *actr){    //no movement - frame cycle
             actr->temp5=50;
             actr->num_moves=2;
             actr->hit_thor=0;
-            actr->dir=d;
+            actr->dir=(char)d;
             d=reverse_direction(actr);
         }
     }
@@ -1559,23 +1559,23 @@ int movement_eighteen(ACTOR *actr){    //no movement - frame cycle
     return d;
 }
 //===========================================================================
-int movement_nineteen(ACTOR *actr){    //no movement - frame cycle
+int16_t movement_nineteen(ACTOR *actr){    //no movement - frame cycle
 
     return movement_seven(actr);
 }
 //===========================================================================
-int movement_twenty(ACTOR *actr){    //boss - snake
+int16_t movement_twenty(ACTOR *actr){    //boss - snake
 
     return boss1_movement(actr);
 }
 //===========================================================================
-int movement_twentyone(ACTOR *actr){    //no movement - frame cycle
+int16_t movement_twentyone(ACTOR *actr){    //no movement - frame cycle
 
     return movement_three(actr);
 }
 //===========================================================================
-int movement_twentytwo(ACTOR *actr){    //spear
-    int d;
+int16_t movement_twentytwo(ACTOR *actr){    //spear
+    int16_t d;
 
     d=actr->last_dir;
     if(actr->directions==1) d=0;
@@ -1650,15 +1650,15 @@ redo:
             if(bgtile(actr->x,actr->y)<TILE_SOLID) goto redo;
             break;
         }
-        actr->dir=d;
-        actr->last_dir=d;
+        actr->dir=(char)d;
+        actr->last_dir=(char)d;
         break;
     }
     return d;
 }
 //===========================================================================
-int movement_twentythree(ACTOR *actr){    //spinball counter-clockwise
-    int d;
+int16_t movement_twentythree(ACTOR *actr){    //spinball counter-clockwise
+    int16_t d;
 
     d=actr->last_dir;
     next_frame(actr);
@@ -1755,13 +1755,13 @@ int movement_twentythree(ACTOR *actr){    //spinball counter-clockwise
         break;
     }
     check_move2(actr->x,actr->y,actr);
-    actr->last_dir=d;
+    actr->last_dir=(char)d;
     if(actr->directions==1) return 0;
     return d;
 }
 //===========================================================================
-int movement_twentyfour(ACTOR *actr){    //spinball  clockwise
-    int d;
+int16_t movement_twentyfour(ACTOR *actr){    //spinball  clockwise
+    int16_t d;
 
     d=actr->last_dir;
     next_frame(actr);
@@ -1858,13 +1858,13 @@ int movement_twentyfour(ACTOR *actr){    //spinball  clockwise
         break;
     }
     check_move2(actr->x,actr->y,actr);
-    actr->last_dir=d;
+    actr->last_dir=(char)d;
     if(actr->directions==1) return 0;
     return d;
 }
 //===========================================================================
-int movement_twentyfive(ACTOR *actr){         //acid puddle
-    int i,ret;
+int16_t movement_twentyfive(ACTOR *actr){         //acid puddle
+    int16_t i,ret;
 
     if(actr->temp2){
         actr->temp2--;
@@ -1872,7 +1872,7 @@ int movement_twentyfive(ACTOR *actr){         //acid puddle
     }
     if(!actr->temp1){
         //  actr->temp2=12;
-        actr->last_dir=rnd(4);
+        actr->last_dir=(char)rnd(4);
         i=4;
         while(i--){
             ret=movement_three(actr);
@@ -1886,12 +1886,12 @@ int movement_twentyfive(ACTOR *actr){         //acid puddle
     return movement_three(actr);
 }
 //===========================================================================
-int movement_twentysix(ACTOR *actr){         //
+int16_t movement_twentysix(ACTOR *actr){         //
 
     return movement_one(actr);
 }
 //===========================================================================
-int movement_twentyseven(ACTOR *actr){         //
+int16_t movement_twentyseven(ACTOR *actr){         //
 
     return movement_one(actr);
 }
@@ -1906,8 +1906,8 @@ void set_thor_vars(void){
     thor_y2=thor->y+15;
 }
 //===========================================================================
-int movement_twentyeight(ACTOR *actr){         //fish
-    int d,x1,y1,ret;
+int16_t movement_twentyeight(ACTOR *actr){         //fish
+    int16_t d,x1,y1,ret;
 
     d=actr->last_dir;
     x1=actr->x;
@@ -1988,15 +1988,15 @@ done:
     return d;
 }
 //===========================================================================
-int movement_twentynine(ACTOR *actr){  //horz or vert (pass_val)
+int16_t movement_twentynine(ACTOR *actr){  //horz or vert (pass_val)
 
                                        //if(actr->actor_num==3) printt(actr->last_dir);
     if(!actr->pass_value) return movement_thirty(actr);
     else return movement_twelve(actr);
 }
 //===========================================================================
-int movement_thirty(ACTOR *actr){         //vert straight
-    int d,x1,y1;
+int16_t movement_thirty(ACTOR *actr){         //vert straight
+    int16_t d,x1,y1;
 
     d=actr->last_dir;
     x1=actr->x;
@@ -2013,13 +2013,13 @@ int movement_thirty(ACTOR *actr){         //vert straight
     if(!check_move2(x1,y1,actr)) d^=1;
 
     next_frame(actr);
-    actr->last_dir=d;
+    actr->last_dir=(char)d;
     if(actr->directions==1) return 0;
     return d;
 }
 //===========================================================================
-int movement_thirtyone(ACTOR *actr){         //drop (stalagtite)
-    int d,x1,y1,cx,cy,ty,i;
+int16_t movement_thirtyone(ACTOR *actr){         //drop (stalagtite)
+    int16_t d,x1,y1,cx,cy,ty,i;
 
     d=actr->last_dir;
     x1=actr->x;
@@ -2044,36 +2044,36 @@ int movement_thirtyone(ACTOR *actr){         //drop (stalagtite)
 
 done:
     next_frame(actr);
-    actr->last_dir=d;
+    actr->last_dir=(char)d;
     if(actr->directions==1) return 0;
     return d;
 }
 //===========================================================================
-int movement_thirtytwo(ACTOR *actr){      //unused
+int16_t movement_thirtytwo(ACTOR *actr){      //unused
 
     actr=actr;
     return 0;
 }
 //===========================================================================
-int movement_thirtythree(ACTOR *actr){    //unused
+int16_t movement_thirtythree(ACTOR *actr){    //unused
 
     actr=actr;
     return 0;
 }
 //===========================================================================
-int movement_thirtyfour(ACTOR *actr){    //unused
+int16_t movement_thirtyfour(ACTOR *actr){    //unused
 
     actr=actr;
     return 0;
 }
 //===========================================================================
-int movement_thirtyfive(ACTOR *actr){    //gun (single)
+int16_t movement_thirtyfive(ACTOR *actr){    //gun (single)
 
     actr->next=actr->last_dir;
     return actr->dir;
 }
 //===========================================================================
-int movement_thirtysix(ACTOR *actr){    //acid drop
+int16_t movement_thirtysix(ACTOR *actr){    //acid drop
 
     actr->speed=actr->pass_value;
     next_frame(actr);
@@ -2085,8 +2085,8 @@ int movement_thirtysix(ACTOR *actr){    //acid drop
 }
 //===========================================================================
 //4-way straight (random length) change
-int movement_thirtyseven(ACTOR *actr){
-    int d,x1,y1,f;
+int16_t movement_thirtyseven(ACTOR *actr){
+    int16_t d,x1,y1,f;
 
     d=actr->last_dir;
     x1=actr->x;
@@ -2121,7 +2121,7 @@ int movement_thirtyseven(ACTOR *actr){
         d=rnd(4);
     }
     next_frame(actr);
-    actr->last_dir=d;
+    actr->last_dir=(char)d;
     if(actr->directions==1) return 0;
     return d;
 }
@@ -2134,8 +2134,8 @@ int movement_thirtyseven(ACTOR *actr){
 #define OX        actr->i2
 #define OY        actr->i3
 #define CNT       actr->i4
-int movement_thirtyeight(ACTOR *actr){
-    int d,x1,y1;
+int16_t movement_thirtyeight(ACTOR *actr){
+    int16_t d,x1,y1;
 
     d=actr->last_dir;
     x1=actr->x;
@@ -2187,7 +2187,7 @@ int movement_thirtyeight(ACTOR *actr){
         if(!check_move2(x1,y1,actr)){
             if(CNT){
                 d=OTHER_DIR;
-                actr->last_dir=d;
+                actr->last_dir=(char)d;
                 FLAG=2;
             }
             else{
@@ -2203,7 +2203,7 @@ int movement_thirtyeight(ACTOR *actr){
         if(x1==OX && y1==OY){
             FLAG=0;
             d=INIT_DIR;
-            actr->last_dir=d;
+            actr->last_dir=(char)d;
             actr->next=0;
             goto done;
         }
@@ -2211,12 +2211,12 @@ int movement_thirtyeight(ACTOR *actr){
     next_frame(actr);
 
 done:
-    actr->last_dir=d;
+    actr->last_dir=(char)d;
     if(actr->directions==1) return 0;
     return d;
 }
 //===========================================================================
-int movement_thirtynine(ACTOR *actr){    //troll 1
+int16_t movement_thirtynine(ACTOR *actr){    //troll 1
 
     if(setup.skill==0){actr->speed=3;actr->num_moves=1;}
     else if(setup.skill==1){actr->speed=2;actr->num_moves=1;}
@@ -2250,8 +2250,8 @@ int movement_thirtynine(ACTOR *actr){    //troll 1
     return actr->dir;
 }
 //===========================================================================
-int movement_forty(ACTOR *actr){    //troll 2
-    int x1,x2,a,d,f;
+int16_t movement_forty(ACTOR *actr){    //troll 2
+    int16_t x1,x2,a,d,f;
 
     if(overlap(actr->x+1,actr->y+1,actr->x+actr->size_x+3,
         actr->y+actr->size_y-1,thor_x1,thor_y1,thor_x2,thor_y2)){
@@ -2300,10 +2300,10 @@ int movement_forty(ACTOR *actr){    //troll 2
     actor[a-2].next=actr->next;
     actor[a-1].next=actr->next;
     actor[a+1].next=actr->next;
-    actor[a-2].last_dir=d;
-    actor[a-1].last_dir=d;
-    actor[a+1].last_dir=d;
-    actr->last_dir=d;
+    actor[a-2].last_dir=(char)d;
+    actor[a-1].last_dir=(char)d;
+    actor[a+1].last_dir=(char)d;
+    actr->last_dir=(char)d;
     if(actr->directions==1) return 0;
     return d;
 }

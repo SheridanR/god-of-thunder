@@ -8,13 +8,13 @@
 #include "define.h"
 #include "proto.h"
 //===========================================================================
-extern unsigned int draw_page,display_page;
+extern uint16_t draw_page,display_page;
 extern char pge;
-extern int exit_flag;
+extern int16_t exit_flag;
 extern volatile char key_flag[100];
 extern char break_code;
 extern char scan_code;
-extern int new_level,current_level;
+extern int16_t new_level,current_level;
 extern LEVEL scrn;
 extern char *scrnp;
 
@@ -22,7 +22,7 @@ extern char *sd_data;
 extern char *bg_pics;
 extern char diag;
 extern ACTOR *thor;
-extern int thor_x1,thor_y1,thor_x2,thor_y2;
+extern int16_t thor_x1,thor_y1,thor_x2,thor_y2;
 extern ACTOR *hammer;
 extern ACTOR actor[MAX_ACTORS];
 extern ACTOR enemy[MAX_ENEMIES];  //current enemies
@@ -33,18 +33,18 @@ extern ACTOR explosion;
 extern ACTOR sparkle;
 extern char shot_ok;
 extern char *std_sound_start;
-extern int max_shot;
+extern int16_t max_shot;
 extern THOR_INFO thor_info;
 extern char object_map[240];
-extern int shield_on,hourglass_flag;
+extern int16_t shield_on,hourglass_flag;
 extern char cheat;
-extern int killgg_inform;
+extern int16_t killgg_inform;
 extern SETUP setup;
-extern int thunder_flag;
+extern int16_t thunder_flag;
 
-extern int (*movement_func[]) (ACTOR *actr);
-extern int (*shot_movement_func[]) (ACTOR *actr);
-extern int (*shot_pattern_func[]) (ACTOR *actr);
+extern int16_t (*movement_func[]) (ACTOR *actr);
+extern int16_t (*shot_movement_func[]) (ACTOR *actr);
+extern int16_t (*shot_pattern_func[]) (ACTOR *actr);
 //===========================================================================
 void next_frame(ACTOR *actr){
 
@@ -57,13 +57,13 @@ void next_frame(ACTOR *actr){
     }
 }
 /*=========================================================================*/
-int point_within(int x,int y,int x1,int y1,int x2,int y2){
+int16_t point_within(int16_t x,int16_t y,int16_t x1,int16_t y1,int16_t x2,int16_t y2){
 
     if((x>=x1) && (x<=x2) && (y>=y1) && (y<=y2)) return 1;
     return 0;
 }
 //===========================================================================
-int  overlap(int x1,int y1,int x2,int y2,int x3,int y3,int x4,int y4){
+int16_t  overlap(int16_t x1,int16_t y1,int16_t x2,int16_t y2,int16_t x3,int16_t y3,int16_t x4,int16_t y4){
 
     if((x1>=x3) && (x1<=x4) && (y1>=y3) && (y1<=y4)) return 1;
     if((x2>=x3) && (x2<=x4) && (y2>=y3) && (y2<=y4)) return 1;
@@ -76,7 +76,7 @@ int  overlap(int x1,int y1,int x2,int y2,int x3,int y3,int x4,int y4){
     return 0;
 }
 //===========================================================================
-int reverse_direction(ACTOR *actr){
+int16_t reverse_direction(ACTOR *actr){
 
     if(actr->dir==1) return 0;
     if(actr->dir==2) return 3;
@@ -103,7 +103,7 @@ void thor_shoots(void){
     }
 }
 //===========================================================================
-int kill_good_guy(void){
+int16_t kill_good_guy(void){
 
     if(!killgg_inform && !thunder_flag){
         odin_speaks(2010,0);
@@ -113,7 +113,7 @@ int kill_good_guy(void){
     return 0;
 }
 //===========================================================================
-void actor_damaged(ACTOR *actr,int damage){
+void actor_damaged(ACTOR *actr,int16_t damage){
 
     if(!setup.skill) damage*=2;
     else if(setup.skill==2) damage/=2;
@@ -147,7 +147,7 @@ void actor_damaged(ACTOR *actr,int damage){
 }
 //===========================================================================
 void thor_damaged(ACTOR *actr){
-    int damage;
+    int16_t damage;
 
     actr->hit_thor=1;
     if(cheat) if(key_flag[_FOUR]) return;
@@ -175,7 +175,7 @@ void thor_damaged(ACTOR *actr){
 }
 //===========================================================================
 void actor_destroyed(ACTOR *actr){
-    int x,y,x1,y1,r,n,t;
+    int16_t x,y,x1,y1,r,n,t;
 
     if(actr->actor_num>2){
         x=actr->last_x[pge^1];
@@ -187,9 +187,9 @@ void actor_destroyed(ACTOR *actr){
         t=actr->type;
         if(actr->func_num==255) memcpy(actr,&explosion,sizeof(ACTOR));
         else memcpy(actr,&sparkle,sizeof(ACTOR));
-        actr->type=t;
-        actr->actor_num=n;
-        actr->rating=r;
+        actr->type=(char)t;
+        actr->actor_num=(char)n;
+        actr->rating=(char)r;
         actr->x=x;
         actr->y=y;
         actr->last_x[pge]=x1;
@@ -207,8 +207,8 @@ void actor_destroyed(ACTOR *actr){
     }
 }
 //===========================================================================
-int _actor_shoots(ACTOR *actr,int dir){
-    int t,i,cx,cy;
+int16_t _actor_shoots(ACTOR *actr,int16_t dir){
+    int16_t t,i,cx,cy;
     ACTOR *act;
 
     t=actr->shot_type-1;
@@ -224,12 +224,12 @@ int _actor_shoots(ACTOR *actr,int dir){
             if(cx>304) cx=304;
             act->x=cx;
             act->y=cy;
-            act->last_dir=dir;
+            act->last_dir=(char)dir;
             act->next=0;
-            act->dir=dir;
+            act->dir=(char)dir;
             if(act->directions==1) act->dir=0;
             else if(act->directions==4 && act->frames==1){
-                act->next=dir;
+                act->next=(char)dir;
                 act->dir=0;
             }
             act->frame_count=act->frame_speed;
@@ -244,7 +244,7 @@ int _actor_shoots(ACTOR *actr,int dir){
             act->creator=actr->actor_num;
             act->move_count=act->num_moves;
             act->dead=0;
-            actr->shot_actor=i;
+            actr->shot_actor=(char)i;
             actr->num_shots++;
             actr->shot_cnt=20;
             shot_ok=0;
@@ -254,15 +254,15 @@ int _actor_shoots(ACTOR *actr,int dir){
     return 0;
 }
 //===========================================================================
-void actor_always_shoots(ACTOR *actr,int dir){
+void actor_always_shoots(ACTOR *actr,int16_t dir){
 
 
     _actor_shoots(actr,dir);
 }
 //===========================================================================
-int actor_shoots(ACTOR *actr,int dir){
-    int i,cx,cy,tx,ty;
-    int icn;
+int16_t actor_shoots(ACTOR *actr,int16_t dir){
+    int16_t i,cx,cy,tx,ty;
+    int16_t icn;
 
     cx=(actr->x+(actr->size_x/2)) >> 4;
     cy=((actr->y+actr->size_y)-2) >> 4;
@@ -295,7 +295,7 @@ int actor_shoots(ACTOR *actr,int dir){
 }
 //===========================================================================
 void move_actor(ACTOR *actr){
-    int i;
+    int16_t i;
 
     if(actr->vunerable!=0) actr->vunerable--;
     if(actr->shot_cnt!=0) actr->shot_cnt--;
@@ -316,7 +316,7 @@ void move_actor(ACTOR *actr){
         if(actr->type==3) i=shot_movement_func[actr->move] (actr);
         else i=movement_func[actr->move] (actr);
         if(actr->directions==2) i&=1;
-        if(i!=actr->dir) actr->dir=i;
+        if(i!=actr->dir) actr->dir=(char)i;
 
         if(actr->move==0 && current_level!=new_level && shield_on){
             actor[2].x=actr->x-2;

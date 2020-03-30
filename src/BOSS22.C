@@ -9,26 +9,26 @@
 #include "proto.h"
 
 //===========================================================================
-extern int new_level,current_level;
+extern int16_t new_level,current_level;
 extern char *bg_pics;
 extern LEVEL scrn;
 extern ACTOR actor[MAX_ACTORS];
 extern ACTOR *thor;
-extern int thor_x1,thor_y1,thor_x2,thor_y2,thor_real_y1;
+extern int16_t thor_x1,thor_y1,thor_x2,thor_y2,thor_real_y1;
 extern ACTOR *hammer;
-extern int key_fire,key_up,key_down,key_left,key_right,key_magic,key_select;
-extern int lightning_used,tornado_used,hourglass_flag;
-extern unsigned int display_page,draw_page;
+extern int16_t key_fire,key_up,key_down,key_left,key_right,key_magic,key_select;
+extern int16_t lightning_used,tornado_used,hourglass_flag;
+extern uint16_t display_page,draw_page;
 extern THOR_INFO thor_info;
-extern int boss_dead;
-extern int boss_active;
+extern int16_t boss_dead;
+extern int16_t boss_active;
 extern char pge;
 extern ACTOR explosion;
 extern volatile char key_flag[100];
-extern volatile unsigned int timer_cnt;
+extern volatile uint16_t timer_cnt;
 extern SETUP setup;
-extern int rand1,rand2;
-extern int thunder_flag;
+extern int16_t rand1,rand2;
+extern int16_t thunder_flag;
 //===========================================================================
 char exp[]={ 61, 62, 65, 66, 69, 70, 73, 74, 77, 78,
 81, 82, 85, 86, 89, 90, 93, 94, 97, 98,
@@ -39,9 +39,9 @@ char exp[]={ 61, 62, 65, 66, 69, 70, 73, 74, 77, 78,
 char expf[60];
 
 //===========================================================================
-int boss22_movement(ACTOR *actr){    //boss - skull
-    int d,f,x;
-    static int drop_flag=0;
+int16_t boss22_movement(ACTOR *actr){    //boss - skull
+    int16_t d,f,x;
+    static int16_t drop_flag=0;
 
     if(boss_dead) return boss_dead22();
     if(actr->i1){
@@ -103,20 +103,19 @@ int boss22_movement(ACTOR *actr){    //boss - skull
 
     boss22_set(d,x,actr->y);
 
-done:
     if(actr->directions==1) return 0;
     return d;
 }
 //===========================================================================
-void boss22_set(int d,int x,int y){
+void boss22_set(int16_t d,int16_t x,int16_t y){
 
     actor[4].next=actor[3].next;
     actor[5].next=actor[3].next;
     actor[6].next=actor[3].next;
-    actor[3].last_dir=d;
-    actor[4].last_dir=d;
-    actor[5].last_dir=d;
-    actor[6].last_dir=d;
+    actor[3].last_dir=(char)d;
+    actor[4].last_dir=(char)d;
+    actor[5].last_dir=(char)d;
+    actor[6].last_dir=(char)d;
     actor[4].x=x+16;
     actor[4].y=y;
     actor[5].x=x;
@@ -125,8 +124,8 @@ void boss22_set(int d,int x,int y){
     actor[6].y=y+16;
 }
 //===========================================================================
-void check_boss22_hit(ACTOR *actr,int x1,int y1,int x2,int y2,int act_num){
-    int rep;
+void check_boss22_hit(ACTOR *actr,int16_t x1,int16_t y1,int16_t x2,int16_t y2,int16_t act_num){
+    int16_t rep;
 
     if((!actor[3].vunerable)){
         actor_damaged(&actor[3],hammer->strength);
@@ -168,11 +167,11 @@ void check_boss22_hit(ACTOR *actr,int x1,int y1,int x2,int y2,int act_num){
 }
 //===========================================================================
 void boss_level22(void){
-    int x;
+    int16_t x;
     char s[41];
 
     strcpy(s,"Are You Ready for Nognir?");
-    x=((40-strlen(s))/2)*8;
+    x=(int16_t)((40-strlen(s))/2)*8;
     xprint(x,35,s,PAGE0,14);
     xprint(x,35,s,PAGE1,14);
     xprint(x,35,s,PAGE2,14);
@@ -200,8 +199,8 @@ void boss_level22(void){
     //music_play(4,1);
 }
 //===========================================================================
-int boss_dead22(void){
-    int rep,n,x,y,r,x1,y1;
+int16_t boss_dead22(void){
+    int16_t rep,n,x,y,r,x1,y1;
 
     hourglass_flag=0;
     thunder_flag=0;
@@ -214,8 +213,8 @@ int boss_dead22(void){
             n=actor[3+rep].actor_num;
             r=actor[3+rep].rating;
             memcpy(&actor[3+rep],&explosion,sizeof(ACTOR));
-            actor[3+rep].actor_num=n;
-            actor[3+rep].rating=r;
+            actor[3+rep].actor_num=(char)n;
+            actor[3+rep].rating=(char)r;
             actor[3+rep].x=x;
             actor[3+rep].y=y;
             actor[3+rep].last_x[pge]=x1;
@@ -225,7 +224,7 @@ int boss_dead22(void){
             actor[3+rep].used=1;
             actor[3+rep].vunerable=255;
             actor[3+rep].move=6;
-            actor[3+rep].next=rep;
+            actor[3+rep].next=(char)rep;
             actor[3+rep].speed=rnd(3)+6;
             actor[3+rep].num_shots=(10-actor[3+rep].speed)*10;
             actor[3+rep].speed_count=actor[3+rep].speed;
@@ -237,7 +236,7 @@ int boss_dead22(void){
 }
 //===========================================================================
 void closing_sequence22(void){
-    int rep;
+    int16_t rep;
 
     music_play(0,1);
     odin_speaks(1003,16);
@@ -250,8 +249,8 @@ void closing_sequence22(void){
     show_level(BOSS_LEVEL22);
 }
 //===========================================================================
-int boss22a_movement(ACTOR *actr){    //boss - skull (explode)
-    int an,x,y,r;
+int16_t boss22a_movement(ACTOR *actr){    //boss - skull (explode)
+    int16_t an,x,y,r;
 
     next_frame(actr);
     actor[4].next=actr->next;
@@ -277,9 +276,9 @@ int boss22a_movement(ACTOR *actr){    //boss - skull (explode)
     actor[an].x=x;
     actor[an].y=y;
 
-    xfput(x,y,display_page,(char *) (bg_pics+(scrn.bg_color*262)));
-    xfput(x,y,draw_page,(char *) (bg_pics+(scrn.bg_color*262)));
-    xfput(x,y,PAGE2,(char *) (bg_pics+(scrn.bg_color*262)));
+    xfput(x,y,display_page,(char *) (bg_pics+((size_t)scrn.bg_color*262)));
+    xfput(x,y,draw_page,(char *) (bg_pics+((size_t)scrn.bg_color*262)));
+    xfput(x,y,PAGE2,(char *) (bg_pics+((size_t)scrn.bg_color*262)));
     scrn.icon[y/16][x/16]=scrn.bg_color;
 
     actor[3].i2++;
@@ -291,8 +290,8 @@ int boss22a_movement(ACTOR *actr){    //boss - skull (explode)
     return 0;
 }
 //===========================================================================
-int boss22b_movement(ACTOR *actr){    //boss - skull - shake
-    int rep,an,hx,hy,d;
+int16_t boss22b_movement(ACTOR *actr){    //boss - skull - shake
+    int16_t rep,an,hx,hy,d;
     char su[]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
     if(hammer->used && hammer->move!=5){
@@ -304,7 +303,7 @@ int boss22b_movement(ACTOR *actr){    //boss - skull - shake
                 actor[rep].x+actor[rep].size_x-1,actor[rep].y+actor[rep].size_y-1)){
                 hammer->move=5;
                 d=reverse_direction(hammer);
-                hammer->dir=d;
+                hammer->dir=(char)d;
                 break;
             }
         }
@@ -344,7 +343,7 @@ int boss22b_movement(ACTOR *actr){    //boss - skull - shake
         actor[an].x=thor->x;  //hx*16;
         actor[an].y=rnd(16);
         su[hx]=1;
-        actor[an].next=rnd(4);
+        actor[an].next=(char)rnd(4);
         REPEAT(7){
             while(1){
                 hx=rnd(18);
@@ -353,7 +352,7 @@ int boss22b_movement(ACTOR *actr){    //boss - skull - shake
             su[hx]=1;
             actor_always_shoots(&actor[4],1);
             an=actor[4].shot_actor;
-            actor[an].next=rnd(4);
+            actor[an].next=(char)rnd(4);
             actor[an].x=16+hx*16;
             actor[an].y=rnd(16);
         }

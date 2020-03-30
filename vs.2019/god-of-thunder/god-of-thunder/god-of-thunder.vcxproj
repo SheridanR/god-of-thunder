@@ -93,6 +93,11 @@
     <ClCompile Include="..\..\..\src\new\new.c" />
     <ClCompile Include="..\..\..\src\OBJECT.C" />
     <ClCompile Include="..\..\..\src\PANEL.C" />
+    <ClCompile Include="..\..\..\src\RES_ENCO.C" />
+    <ClCompile Include="..\..\..\src\RES_FALL.C" />
+    <ClCompile Include="..\..\..\src\RES_FIND.C" />
+    <ClCompile Include="..\..\..\src\RES_INIT.C" />
+    <ClCompile Include="..\..\..\src\RES_READ.C" />
     <ClCompile Include="..\..\..\src\SBFX.C" />
     <ClCompile Include="..\..\..\src\SCRIPT.C" />
     <ClCompile Include="..\..\..\src\SHTMOV.C" />
@@ -104,6 +109,7 @@
     <ClInclude Include="..\..\..\src\DEFINE.H" />
     <ClInclude Include="..\..\..\src\new\new.h" />
     <ClInclude Include="..\..\..\src\PROTO.H" />
+    <ClInclude Include="..\..\..\src\RES_MAN.H" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

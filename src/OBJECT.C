@@ -14,37 +14,37 @@ extern char objects[NUM_OBJECTS][262];
 extern char object_map[240];
 extern char object_index[240];
 extern char *object_sound[26];
-extern int ox,oy,of;
+extern int16_t ox,oy,of;
 extern LEVEL scrn;
 extern char *bg_pics;
-extern unsigned int display_page,draw_page;
-extern int rand1,rand2;
+extern uint16_t display_page,draw_page;
+extern int16_t rand1,rand2;
 extern THOR_INFO thor_info;
-extern int current_level;
-extern volatile unsigned int magic_cnt;
+extern int16_t current_level;
+extern volatile uint16_t magic_cnt;
 extern ACTOR *thor,*hammer;
 extern ACTOR actor[MAX_ACTORS];  //current actors
 extern ACTOR magic_item[];
-extern int key_fire,key_up,key_down,key_left,key_right,key_magic,key_select;
+extern int16_t key_fire,key_up,key_down,key_left,key_right,key_magic,key_select;
 extern volatile char key_flag[100];
-extern int hourglass_flag,thunder_flag,shield_on,lightning_used,tornado_used;
-extern int apple_flag,bomb_flag;
-extern volatile unsigned int timer_cnt;
-extern int magic_inform,carry_inform;
+extern int16_t hourglass_flag,thunder_flag,shield_on,lightning_used,tornado_used;
+extern int16_t apple_flag,bomb_flag;
+extern volatile uint16_t timer_cnt;
+extern int16_t magic_inform,carry_inform;
 extern char *object_names[];
-extern int exit_flag;
+extern int16_t exit_flag;
 extern SETUP setup;
 
-int  pixel_x[8][25];
-int  pixel_y[8][25];
+int16_t  pixel_x[8][25];
+int16_t  pixel_y[8][25];
 char pixel_p[8][25];
 char pixel_c[8];
 void throw_lightning(void);
 void not_enough_magic(void);
 void cannot_carry_more(void);
 //===========================================================================
-void show_objects(int level,unsigned int pg){
-    int i,p;
+void show_objects(int16_t level,uint16_t pg){
+    int16_t i,p;
 
     level=level;
     //memset(object_pos,255,38);
@@ -55,14 +55,14 @@ void show_objects(int level,unsigned int pg){
             xfput(scrn.static_x[i]*16,scrn.static_y[i]*16,pg,
                 objects[scrn.static_obj[i]-1]);
             p=scrn.static_x[i]+(scrn.static_y[i]*20);
-            object_index[p]=i;
+            object_index[p]=(char)i;
             object_map[p]=scrn.static_obj[i];
         }
     }
 }
 //===========================================================================
-void pick_up_object(int p){
-    int r,x,y,s;
+void pick_up_object(int16_t p){
+    int16_t r,x,y,s;
 
     switch(object_map[p]){
     case 1:           //red jewel
@@ -182,8 +182,8 @@ void pick_up_object(int p){
     ox=x*16;
     oy=y*16;
     of=1;
-    xfput(ox,oy,PAGE2,(char *) (bg_pics+(scrn.bg_color*262)));
-    xfput(ox,oy,PAGE2,(char *) (bg_pics+(scrn.icon[y][x]*262)));
+    xfput(ox,oy,PAGE2,(char *) (bg_pics+((size_t)scrn.bg_color*262)));
+    xfput(ox,oy,PAGE2,(char *) (bg_pics+((size_t)scrn.icon[y][x]*262)));
     xcopyd2d(ox,oy,ox+16,oy+16,ox,oy,PAGE2,draw_page,320,320);
     //xcopyd2d(ox,oy,ox+16,oy+16,ox,oy,PAGE2,draw_page,320,320);
 
@@ -197,8 +197,8 @@ void pick_up_object(int p){
     }
 }
 //===========================================================================
-int drop_object(ACTOR *actr){
-    int o,rnd1,rnd2;
+int16_t drop_object(ACTOR *actr){
+    int16_t o,rnd1,rnd2;
 
     rnd1=rnd(100);
     rnd2=rnd(100);
@@ -216,12 +216,12 @@ int drop_object(ACTOR *actr){
     return 1;
 }
 //===========================================================================
-int _drop_obj(ACTOR *actr,int o){
-    int x,y,p;
+int16_t _drop_obj(ACTOR *actr,int16_t o){
+    int16_t x,y,p;
 
     p=(actr->x+(actr->size_x/2))/16+(((actr->y+(actr->size_y/2))/16)*20);
     if(!object_map[p] && scrn.icon[p/20][p%20]>=140){  //nothing there and solid
-        object_map[p]=o;
+        object_map[p]=(char)o;
         object_index[p]=27+actr->actor_num;  //actor is 3-15
         x=(p%20)*16;
         y=(p/20)*16;
@@ -233,7 +233,7 @@ int _drop_obj(ACTOR *actr,int o){
     return 0;
 }
 //===========================================================================
-int use_apple(int flag){
+int16_t use_apple(int16_t flag){
 
     if(thor->health==150) return 0;
 
@@ -260,7 +260,7 @@ int use_apple(int flag){
     return 0;
 }
 //===========================================================================
-int use_thunder(int flag){
+int16_t use_thunder(int16_t flag){
 
     if(flag && thor_info.magic>29){
         if(!thunder_flag){
@@ -276,8 +276,8 @@ int use_thunder(int flag){
     return 0;
 }
 //===========================================================================
-int use_hourglass(int flag){
-    int hour_time[]={0,60,120,180,240,300,360,420,480,
+int16_t use_hourglass(int16_t flag){
+    int16_t hour_time[]={0,60,120,180,240,300,360,420,480,
         510,540,570,600,630,660,690};
 
     if(hourglass_flag){
@@ -309,7 +309,7 @@ int use_hourglass(int flag){
     return 0;
 }
 //===========================================================================
-int use_boots(int flag){
+int16_t use_boots(int16_t flag){
 
     if(flag){
         if(thor_info.magic>0){
@@ -338,8 +338,8 @@ int use_boots(int flag){
     return 0;
 }
 //===========================================================================
-int use_shield(int flag){
-    int f;
+int16_t use_shield(int16_t flag){
+    int16_t f;
 
     f=0;
     if(flag){
@@ -377,7 +377,7 @@ int use_shield(int flag){
     return 0;
 }
 //===========================================================================
-int use_lightning(int flag){
+int16_t use_lightning(int16_t flag){
 
     if(flag){
         if(thor_info.magic>14){
@@ -392,7 +392,7 @@ int use_lightning(int flag){
     return 1;
 }
 //===========================================================================
-int use_tornado(int flag){
+int16_t use_tornado(int16_t flag){
 
     if(flag){
         if(thor_info.magic > 10){
@@ -429,10 +429,10 @@ int use_tornado(int flag){
     return 0;
 }
 //===========================================================================
-int use_object(int flag){
+int16_t use_object(int16_t flag){
 
     if(!flag) return 0;
-    if(!thor_info.inventory & 64) return 0;
+    if(!(thor_info.inventory & 64)) return 0;
 
     //xdisplay_actors(&actor[MAX_ACTORS-1],draw_page);
     xshowpage(draw_page);
@@ -446,8 +446,10 @@ int use_object(int flag){
 }
 //===========================================================================
 void use_item(void){
-    static int flag=0;
-    int kf,ret,mf;
+    static int16_t flag=0;
+    int16_t kf,ret,mf;
+
+    ret = 0;
 
     kf=key_flag[key_magic];
 
@@ -490,7 +492,7 @@ void use_item(void){
     else flag=0;
 }
 //===========================================================================
-void place_pixel(int dir,int num){
+void place_pixel(int16_t dir,int16_t num){
 
     switch(dir){
     case 0:
@@ -553,12 +555,12 @@ void place_pixel(int dir,int num){
         return;
     }
     if(point_within(pixel_x[dir][num],pixel_y[dir][num],0,0,319,191)){
-        pixel_p[dir][num]=xpoint(pixel_x[dir][num],pixel_y[dir][num],draw_page);
+        pixel_p[dir][num]=(char)xpoint(pixel_x[dir][num],pixel_y[dir][num],draw_page);
         xpset(pixel_x[dir][num],pixel_y[dir][num],draw_page,pixel_c[dir]);
     }
 }
 //===========================================================================
-void replace_pixel(int dir,int num){
+void replace_pixel(int16_t dir,int16_t num){
 
     if(point_within(pixel_x[dir][num],pixel_y[dir][num],0,0,319,191)){
         xpset(pixel_x[dir][num],pixel_y[dir][num],draw_page,pixel_p[dir][num]);
@@ -566,7 +568,7 @@ void replace_pixel(int dir,int num){
 }
 //===========================================================================
 void throw_lightning(void){
-    int i,r,loop,x,y,ax,ay;
+    int16_t i,r,loop,x,y,ax,ay;
 
     for(i=0;i<MAX_ACTORS;i++) actor[i].show=0;
 

@@ -14,11 +14,11 @@
 #include "new/new.h"
 
 //========================= Global Declarations ==============================
-unsigned int page[3]={PAGE0,PAGE1,PAGE2};
-unsigned int display_page,draw_page;
-unsigned int page3_offset;
+uint16_t page[3]={PAGE0,PAGE1,PAGE2};
+uint16_t display_page,draw_page;
+uint16_t page3_offset;
 char pge;
-int exit_flag;
+int16_t exit_flag;
 
 volatile char key_flag[100];
 volatile char joy_flag[100];
@@ -28,11 +28,11 @@ char scan_code,last_scan_code;
 char diag;
 char slow_mode,startup;
 char shot_ok;
-int thor_x1,thor_y1,thor_x2,thor_y2,thor_real_y1;
-int thor_pos;
-int max_shot;
+int16_t thor_x1,thor_y1,thor_x2,thor_y2,thor_real_y1;
+int16_t thor_pos;
+int16_t max_shot;
 
-volatile unsigned int timer_cnt,vbl_cnt,magic_cnt,extra_cnt;
+volatile uint16_t timer_cnt,vbl_cnt,magic_cnt,extra_cnt;
 
 char text[94][72];
 // DEPRECATED
@@ -41,7 +41,7 @@ char text[94][72];
 char *bg_pics;
 //char bg_header[200];
 char objects[NUM_OBJECTS][262];
-int ox,oy,of;
+int16_t ox,oy,of;
 char object_map[240];
 char object_index[240];
 char *bleep;
@@ -59,12 +59,12 @@ LEVEL scrn;
 char *scrnp;
 
 char *sd_data;
-int current_level,new_level,new_level_tile,current_area;
+int16_t current_level,new_level,new_level_tile,current_area;
 //char file_str[10];
 
 SETUP setup;
 char *tmp_buff;
-int reps;
+int16_t reps;
 
 char *mask_buff;
 char *mask_buff_start;
@@ -82,12 +82,12 @@ char magic_pic[2][1024];
 //char enemy_used[4];
 //char enemy_type[4];
 //char enemy_complex[4];
-//unsigned int enemy_buff[4];
-//int enemy_mask_offset[4];
+//uint16_t enemy_buff[4];
+//int16_t enemy_mask_offset[4];
 
 //ACTOR shot[4];    //4 shots
-//unsigned int shot_buff[4];
-//int shot_mask_offset[4];
+//uint16_t shot_buff[4];
+//int16_t shot_mask_offset[4];
 char warp_scroll;
 
 //char *enemy_data;     //points to four actors/sounds
@@ -97,10 +97,10 @@ ACTOR *hammer;
 ACTOR explosion;
 ACTOR sparkle;
 THOR_INFO thor_info;
-int key_fire,key_up,key_down,key_left,key_right,key_magic,key_select;
-int boss_dead;
+int16_t key_fire,key_up,key_down,key_left,key_right,key_magic,key_select;
+int16_t boss_dead;
 
-int warp_flag;
+int16_t warp_flag;
 
 char *std_sound_start;
 char *pcstd_sound_start;
@@ -108,39 +108,39 @@ char *std_sound;
 char *pcstd_sounds;
 char *boss_sound[3];
 char *boss_pcsound[3];
-long pcsound_length[NUM_SOUNDS];
-int rand1,rand2;
-int restore_screen;
-int last_oracle;
-int hourglass_flag,thunder_flag,shield_on,lightning_used,tornado_used;
-int apple_flag,bomb_flag;
-int switch_flag;
-unsigned int joy_x,joy_y;
+int32_t pcsound_length[NUM_SOUNDS];
+int16_t rand1,rand2;
+int16_t restore_screen;
+int16_t last_oracle;
+int16_t hourglass_flag,thunder_flag,shield_on,lightning_used,tornado_used;
+int16_t apple_flag,bomb_flag;
+int16_t switch_flag;
+uint16_t joy_x,joy_y;
 char joy_b1,joy_b2;
-int joystick,joylx,joyly,joyhx,joyhy;
+int16_t joystick,joylx,joyly,joyhx,joyhy;
 char res_file[16];
 char odin[4][262];
 char hampic[4][262];
-int load_game_flag;
-int music_flag,sound_flag,pcsound_flag;
-int cash1_inform,cash2_inform,door_inform,magic_inform,carry_inform;
-int killgg_inform;
+int16_t load_game_flag;
+int16_t music_flag,sound_flag,pcsound_flag;
+int16_t cash1_inform,cash2_inform,door_inform,magic_inform,carry_inform;
+int16_t killgg_inform;
 char dialog_color[]={14,54,120,138,15,0,0,0,0,0,0,0,0,0,0,0};
 //norm,good,bad,sign,white
 
 char *std_sounds;
 char *pc_sound[NUM_SOUNDS];
 char *dig_sound[NUM_SOUNDS];
-int  boss_active;
+int16_t  boss_active;
 char story_flag;
 char *save_filename="XXXXXXXX.XXX";
 char *scr;
 char demo_key[DEMO_LEN];
-int  demo_cnt;
+int16_t  demo_cnt;
 char demo,record;
 char demo_enable;
-int  rnd_index;
-int  rnd_array[100];
+int16_t  rnd_index;
+int16_t  rnd_array[100];
 char rdemo;
 char test_sdf[80];
 char *options_yesno[]={"Yes","No",NULL};
@@ -156,18 +156,18 @@ char end_tile;
 void interrupt (*old_timer_int)(void);   // interrupt function pointer
 void interrupt timer_int(void);
 
-void xdisplay_actors(ACTOR *act,unsigned int page);
-void xerase_actors(ACTOR *act,unsigned int page);
+void xdisplay_actors(ACTOR *act,uint16_t page);
+void xerase_actors(ACTOR *act,uint16_t page);
 void setup_load(void);
 //============================================================================
-void main(int argc, char *argv[]){
-    int err,i;
+void main(int16_t argc, char *argv[]){
+    int16_t err,i;
     char s[21];
-    int vbl_flag;
-    int ma,rp;
-    int po[4]={-1,1,-80,80};
-    int loop,vl;
-    int opt;
+    int16_t vbl_flag;
+    int16_t ma,rp;
+    int16_t po[4]={-1,1,-80,80};
+    int16_t loop,vl;
+    int16_t opt;
     FILE *fp;
 
     //chdir("\\gottest");
@@ -323,7 +323,7 @@ void main(int argc, char *argv[]){
 
     }
     new_level=current_level;
-    movedata(FP_SEG(sd_data+(new_level*512)),FP_OFF(sd_data+(new_level*512)),
+    movedata(FP_SEG(sd_data+((size_t)new_level*512)),FP_OFF(sd_data+((size_t)new_level*512)),
         FP_SEG(&scrn),FP_OFF(&scrn),sizeof(LEVEL));
     show_level(current_level);
     exit_flag=0;
@@ -499,7 +499,7 @@ void main(int argc, char *argv[]){
             else if(opt==6) select_fastmode();
             else if(opt==7) help();
             else if(opt==8){
-                xdos=ask_exit();
+                xdos=(char)ask_exit();
                 if(xdos==2 || xdos==3) break;
             }
             opt=0;
@@ -595,10 +595,10 @@ void main(int argc, char *argv[]){
     run_gotm();
     exit(0);
 }
-extern int SBResetCount;
+extern int16_t SBResetCount;
 //===========================================================================
 void run_gotm(void){
-    int num;
+    int16_t num;
     char s[36];
     char *args[]={NULL,NULL,NULL,NULL,NULL,NULL,NULL,
         NULL,NULL,NULL,NULL,NULL};
@@ -661,7 +661,7 @@ void run_gotm(void){
     exit(0);
 }
 //===========================================================================
-void printt(int val){
+void printt(int16_t val){
     char s[21];
 
     _itoa(val,s,10);
@@ -670,7 +670,7 @@ void printt(int val){
 }
 //===========================================================================
 void thor_dies(void){
-    int li,ln;
+    int16_t li,ln;
 
     for(li=0;li<MAX_ACTORS;li++) actor[li].show=0;
 
@@ -703,7 +703,7 @@ void thor_dies(void){
     thor_info.object=thor_info.last_object;
     thor_info.object_name=thor_info.last_object_name;
     if(ln==thor_info.last_inventory){
-        thor_info.item=li;
+        thor_info.item=(char)li;
     }
     else{
         thor_info.item=thor_info.last_item;
@@ -724,7 +724,7 @@ void thor_dies(void){
     actor[1].used=0;
     actor[2].used=0;
     thor->speed_count=6;
-    movedata(FP_SEG(sd_data+(new_level*512)),FP_OFF(sd_data+(new_level*512)),
+    movedata(FP_SEG(sd_data+((size_t)new_level*512)),FP_OFF(sd_data+((size_t)new_level*512)),
         FP_SEG(&scrn),FP_OFF(&scrn),sizeof(LEVEL));
     display_health();
     display_magic();
@@ -736,9 +736,9 @@ void thor_dies(void){
     set_thor_vars();
 }
 //===========================================================================
-void thor_spins(int flag){
-    int i,d,c;
-    unsigned int dr,di,sw;
+void thor_spins(int16_t flag){
+    int16_t i,d,c;
+    uint16_t dr,di,sw;
     char da[]={0,2,1,3};
 
     if(of){  //replace tile after object is picked up
@@ -809,7 +809,7 @@ void setup_load(void){
     actor[1].used=0;
     actor[2].used=0;
     thor->speed_count=6;
-    movedata(FP_SEG(sd_data+(new_level*512)),FP_OFF(sd_data+(new_level*512)),
+    movedata(FP_SEG(sd_data+((size_t)new_level*512)),FP_OFF(sd_data+((size_t)new_level*512)),
         FP_SEG(&scrn),FP_OFF(&scrn),sizeof(LEVEL));
     display_health();
     display_magic();
@@ -821,7 +821,7 @@ void setup_load(void){
     show_level(new_level);
 }
 //===========================================================================
-void pause(int delay){
+void pause(int16_t delay){
 
     timer_cnt=0;
     while(timer_cnt<delay) rotate_pal();
@@ -837,8 +837,8 @@ void rotate_pal(void){
     xshowpage(display_page);
 }
 //===========================================================================
-int rnd(int max){
-    int r;
+int16_t rnd(int16_t max){
+    int16_t r;
 
     if(demo || rdemo || record){
         r=rnd_array[rnd_index] % max;

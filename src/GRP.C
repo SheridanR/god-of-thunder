@@ -14,11 +14,11 @@ extern union REGS in,out;
 char pbuff[768];
 extern char dialog_color[16];
 extern char cheat;
-extern unsigned int display_page,draw_page;
+extern uint16_t display_page,draw_page;
 extern volatile char key_flag[100];
 extern ACTOR actor[MAX_ACTORS];
 //===========================================================================
-void xprint(int x,int y,char *string,unsigned int page,int color){
+void xprint(int16_t x,int16_t y,char *string,uint16_t page,int16_t color){
     char ch;
     char str[4];
 
@@ -35,7 +35,7 @@ void xprint(int x,int y,char *string,unsigned int page,int color){
             color=dialog_color[ch];
             continue;
         }
-        if(ch>31 && ch<127){
+        if(ch>31 && ch<126){
             xtext1(x,y,page,text[ch-32],0);
             xtext(x,y,page,text[ch-32],color);
         }
@@ -43,10 +43,10 @@ void xprint(int x,int y,char *string,unsigned int page,int color){
     }
 }
 //===========================================================================
-void xprintx(int x,int y,char *string,unsigned int page,int color){
+void xprintx(int16_t x,int16_t y,char *string,uint16_t page,int16_t color){
     char ch;
     char str[4];
-    int c;
+    int16_t c;
 
     c=26;
     str[3]=0;
@@ -62,7 +62,7 @@ void xprintx(int x,int y,char *string,unsigned int page,int color){
             color=dialog_color[ch];
             continue;
         }
-        if(ch>31 && ch<127){
+        if(ch>31 && ch<126){
             xtextx(x,y-1,page,text[ch-32],c);
             xtextx(x,y+1,page,text[ch-32],c);
             xtextx(x+1,y,page,text[ch-32],c);
@@ -113,10 +113,10 @@ void split_screen(void){
     }*/
 }
 //===========================================================================
-int load_palette(void){
+int16_t load_palette(void){
     return 1; // deprecated
 
-    /*int i;
+    /*int16_t i;
     char r,g,b,n;
 
 #define DAC_READ_INDEX	03c7h
@@ -164,7 +164,7 @@ int load_palette(void){
     return 1;*/
 }
 /*=========================================================================*/
-void xbox(int x1,int y1,int x2,int y2,unsigned page,int color){
+void xbox(int16_t x1,int16_t y1,int16_t x2,int16_t y2,unsigned page,int16_t color){
 
     xline(x1,y1,x2,y1,page,color);
     xline(x1,y2,x2,y2,page,color);
@@ -172,8 +172,8 @@ void xbox(int x1,int y1,int x2,int y2,unsigned page,int color){
     xline(x2,y1,x2,y2,page,color);
 }
 /*=========================================================================*/
-void xline(int x0,int y0,int x1,int y1,int page,int color){
-    int x,y;
+void xline(int16_t x0,int16_t y0,int16_t x1,int16_t y1,int16_t page,int16_t color){
+    int16_t x,y;
 
     if(x0==x1 && y0==y1) xpset(x0, y0, page, color);
 
@@ -187,7 +187,7 @@ void xline(int x0,int y0,int x1,int y1,int page,int color){
             y0=y;
         }
         for(x=x0;x<=x1;x++){
-            y=(int) (y0+((x-x0)*(long)(y1-y0))/(x1-x0));
+            y=(int16_t) (y0+((x-x0)*(int32_t)(y1-y0))/(x1-x0));
             xpset(x, y, page, color);
         }
     }
@@ -201,7 +201,7 @@ void xline(int x0,int y0,int x1,int y1,int page,int color){
             y0=y;
         }
         for(y=y0;y<=y1;y++){
-            x=(int) (x0+((y-y0)*(long)(x1-x0))/(y1-y0));
+            x=(int16_t) (x0+((y-y0)*(int32_t)(x1-x0))/(y1-y0));
             xpset(x, y, page, color);
         }
     }
@@ -262,7 +262,7 @@ void screen_dump(void){
 }
 //==========================================================================
 void show_all_actors(void){
-    int i;
+    int16_t i;
 
     for(i=0;i<MAX_ACTORS;i++) actor[i].show=0;
     xdisplay_actors(&actor[MAX_ACTORS-1],display_page);

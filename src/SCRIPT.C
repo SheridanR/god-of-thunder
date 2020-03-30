@@ -10,59 +10,59 @@
 #include "define.h"
 #include "proto.h"
 //====================== Functions Declarations============================
-int  read_script_file(void);
-void script_error(int err_num);
-int  get_command(void);
-int  skip_colon(void);
-int  calc_value(void);
-int  get_next_val(void);
-int  calc_string(int mode);
+int16_t  read_script_file(void);
+void script_error(int16_t err_num);
+int16_t  get_command(void);
+int16_t  skip_colon(void);
+int16_t  calc_value(void);
+int16_t  get_next_val(void);
+int16_t  calc_string(int16_t mode);
 void get_str(void);
-int  get_internal_variable(void);
-int  exec_command(int num);
+int16_t  get_internal_variable(void);
+int16_t  exec_command(int16_t num);
 void script_entry(void);
 void script_exit(void);
 //============================ Externals ==================================
 extern ACTOR *thor;
 extern THOR_INFO thor_info;
-extern int current_level;
+extern int16_t current_level;
 extern char odin[4][262];
 extern char  *tmp_buff;
 extern char *sd_data;
 extern char cheat;
 extern volatile char key_flag[100];
-extern int key_magic;
+extern int16_t key_magic;
 extern char *object_names[];
 extern SETUP setup;
 extern char area;
-extern unsigned int display_page,draw_page;
+extern uint16_t display_page,draw_page;
 extern ACTOR actor[MAX_ACTORS];
-extern int new_level,current_level,new_level_tile;
+extern int16_t new_level,current_level,new_level_tile;
 extern LEVEL scrn;
 extern char objects[NUM_OBJECTS][262];
 extern char object_map[240];
 extern char object_index[240];
-extern int thunder_flag;
+extern int16_t thunder_flag;
 //============================= Globals ==================================
-long  num_var[26];        //numeric variables
+int32_t  num_var[26];        //numeric variables
 char  str_var[26][81];    //string vars
 char  line_label[32][9];  //line label look up table
 char  *line_ptr[32];      //line label pointers
 char  *new_ptr;
-int   num_labels;             //number of labels
+int16_t   num_labels;             //number of labels
 char  *gosub_stack[32];   //stack for GOSUB return addresses
 char  gosub_ptr;              //GOSUB stack pointer
 char  *for_stack[10];     //FOR stack
-long  for_val[10];            //current FOR value
+int32_t  for_val[10];            //current FOR value
 char  for_var[10];            //ending FOR value (target var)
 char  for_ptr;	              //FOR stack pointer
 char  *buff_ptr;          //pointer to current command
 char  *buff_end;	      //pointer to end of buffer
 char  *buffer;            //buffer space (malloc'ed)
-long  scr_index;
+int32_t  scr_index;
 char  *scr_pic;
-long  lvalue;
-long  ltemp;
+int32_t  lvalue;
+int32_t  ltemp;
 char  temps[255];
 
 #define SCR_BUFF_SIZE 5000
@@ -89,8 +89,8 @@ char  *scr_error[]={"!@#$%","Out of Memory","Can't Read Script",
 "NEXT Without FOR",NULL};
 #define ERROR_MAX 10
 //============================ Functions ==================================
-void execute_script(long index,char *pic){
-    int i,ret,re_execute;
+void execute_script(int32_t index,char *pic){
+    int16_t i,ret,re_execute;
 
 
     for(i=0;i<MAX_ACTORS;i++) actor[i].show=0;
@@ -122,6 +122,7 @@ run_script:                            //jump point for RUN command
     }
     for_ptr=0;
 
+    buffer = NULL;
     i=read_script_file();
     if(i!=0){
         script_error(i);
@@ -163,7 +164,7 @@ void script_exit(void){
     if(buffer) farfree(buffer);
 }
 //=========================================================================
-int  skip_colon(void){
+int16_t  skip_colon(void){
 
     while(*buff_ptr==0 || *buff_ptr==':'){
         buff_ptr++;
@@ -172,15 +173,15 @@ int  skip_colon(void){
     return 1;
 }
 //=========================================================================
-int get_command(void){
-    int ret,i,len;
+int16_t get_command(void){
+    int16_t ret,i,len;
 
     if(!skip_colon()) return -1;
 
     i=0;
     while(1){
         if(!scr_command[i]) break;           //lookup command
-        len=_fstrlen(scr_command[i]);
+        len=(int16_t)_fstrlen(scr_command[i]);
         if(!_fstrncmp(buff_ptr,(char *) scr_command[i],len)){
             buff_ptr+=len;
             return i;
@@ -209,7 +210,7 @@ int get_command(void){
     return -2;
 }
 //=========================================================================
-int  calc_string(int mode){   //if mode==1 stop at comma
+int16_t  calc_string(int16_t mode){   //if mode==1 stop at comma
     char varstr[255];
     char varnum;
 
@@ -255,7 +256,7 @@ strdone:
 }
 //=========================================================================
 void get_str(void){
-    int t;
+    int16_t t;
 
     buff_ptr++;
     t=0;
@@ -270,8 +271,8 @@ void get_str(void){
     }
 }
 //=========================================================================
-int calc_value(void){
-    long tmpval2;
+int16_t calc_value(void){
+    int32_t tmpval2;
     char exptype;
     char ch;
 
@@ -316,10 +317,10 @@ int calc_value(void){
     }
 }
 //=========================================================================
-int get_next_val(void){
+int16_t get_next_val(void){
     char ch;
     char tmpstr[25];
-    int t;
+    int16_t t;
 
     ch=*buff_ptr;
     if(ch==0 || ch==':') return 0;
@@ -348,15 +349,15 @@ int get_next_val(void){
     return 0;
 }
 //=========================================================================
-int get_internal_variable(void){
-    int i,len;
+int16_t get_internal_variable(void){
+    int16_t i,len;
     char b;
     char *sp;
 
     i=0;
     while(1){
         if(!internal_variable[i]) return 0;         //lookup internal variable
-        len=_fstrlen(internal_variable[i]);
+        len=(int16_t)_fstrlen(internal_variable[i]);
         if(!_fstrncmp(buff_ptr,internal_variable[i],len)){
             buff_ptr+=len;
             break;
@@ -398,11 +399,11 @@ int get_internal_variable(void){
     case 19:
     case 20:
     case 21:
-        ltemp=(long) (i-5l);
+        ltemp=(int32_t) (i-5l);
         break;
     case 22:
         if(!calc_value()) return 0;
-        i=(int) lvalue;
+        i=(int16_t) lvalue;
         if(i<1 || i>64) return 0;
         sp=(char *) &setup;
         sp+=(i/8);
@@ -427,8 +428,8 @@ int get_internal_variable(void){
     return 1;
 }
 //=========================================================================
-int get_line(char *src,char *dst){
-    int cnt;
+int16_t get_line(char *src,char *dst){
+    int16_t cnt;
 
     cnt=0;
     while(*src!=13){
@@ -445,10 +446,10 @@ int get_line(char *src,char *dst){
     return cnt;
 }
 //=========================================================================
-int read_script_file(void){
+int16_t read_script_file(void){
     char temp_buff[255];
     char quote_flag;
-    int  i,len,p,ret,cnt;
+    int16_t  i,len,p,ret,cnt;
     char ch;
     char tmps[255];
     char *sb;
@@ -489,7 +490,7 @@ int read_script_file(void){
             goto done;
         }
         sb+=cnt;
-        len=_fstrlen(tmps);
+        len=(int16_t)_fstrlen(tmps);
         if(len<2){
             *buff_ptr=0;
             buff_ptr++;
@@ -515,7 +516,7 @@ int read_script_file(void){
         }
         temp_buff[p]=0;
 
-        len=strlen(temp_buff);
+        len=(int16_t)strlen(temp_buff);
         if(len<10 && temp_buff[len-1]==':'){       //line label
             temp_buff[len-1]=0;
             line_ptr[num_labels]=buff_ptr;
@@ -535,8 +536,8 @@ done:
     return ret;
 }
 //=========================================================================
-void script_error(int err_num){
-    int  line_num;
+void script_error(int16_t err_num){
+    int16_t  line_num;
     char s[17];
     char *tb;
     char ts[81];
@@ -564,7 +565,7 @@ void script_error(int err_num){
     }
 }
 //=========================================================================
-int get_string(void){
+int16_t get_string(void){
 
     _fmemset(temps,0,255);
     if(*buff_ptr=='"'){
@@ -582,8 +583,8 @@ int get_string(void){
     return 0;
 }
 //=========================================================================
-int cmd_goto(void){
-    int i,len;
+int16_t cmd_goto(void){
+    int16_t i,len;
     char s[255];
     char *p;
 
@@ -592,7 +593,7 @@ int cmd_goto(void){
     if(p) *p=0;
 
     for(i=0;i<num_labels;i++){
-        len=strlen(s);
+        len=(int16_t)strlen(s);
         if(len==0) break;
         if(!_fstrcmp((char *) s,line_label[i])){
             new_ptr=line_ptr[i];
@@ -603,8 +604,8 @@ int cmd_goto(void){
     return 8;
 }
 //=========================================================================
-int cmd_if(void){
-    long tmpval1,tmpval2;
+int16_t cmd_if(void){
+    int32_t tmpval1,tmpval2;
     char exptype,ch;
 
     if(!calc_value()) return 5;
@@ -654,7 +655,7 @@ iftrue:
     return 0;
 }
 //=========================================================================
-int cmd_run(void){
+int16_t cmd_run(void){
 
     if(!calc_value()) return 5;
     buff_ptr++;
@@ -662,54 +663,54 @@ int cmd_run(void){
     return -100;
 }
 //=========================================================================
-int cmd_addjewels(void){
+int16_t cmd_addjewels(void){
 
     if(!calc_value()) return 5;
     buff_ptr++;
-    add_jewels((int) lvalue);
+    add_jewels((int16_t) lvalue);
     return 0;
 }
 //=========================================================================
-int cmd_addhealth(void){
+int16_t cmd_addhealth(void){
 
     if(!calc_value()) return 5;
     buff_ptr++;
-    add_health((int) lvalue);
+    add_health((int16_t) lvalue);
     return 0;
 }
 //=========================================================================
-int cmd_addmagic(void){
+int16_t cmd_addmagic(void){
 
     if(!calc_value()) return 5;
     buff_ptr++;
-    add_magic((int) lvalue);
+    add_magic((int16_t) lvalue);
     return 0;
 }
 //=========================================================================
-int cmd_addkeys(void){
+int16_t cmd_addkeys(void){
 
     if(!calc_value()) return 5;
     buff_ptr++;
-    add_keys((int) lvalue);
+    add_keys((int16_t) lvalue);
     return 0;
 }
 //=========================================================================
-int cmd_addscore(void){
+int16_t cmd_addscore(void){
 
     if(!calc_value()) return 5;
     buff_ptr++;
-    add_score((int) lvalue);
+    add_score((int16_t) lvalue);
     return 0;
 }
 //=========================================================================
-int cmd_say(int mode,int type){
+int16_t cmd_say(int16_t mode,int16_t type){
     char *p;
-    int obj;
+    int16_t obj;
 
     if(mode){
         if(!calc_value()) return 5;
         buff_ptr++;
-        obj=(int) lvalue;
+        obj=(int16_t) lvalue;
         if(obj<0 || obj>32) return 6;
         if(obj) obj+=10;
     }
@@ -729,8 +730,8 @@ int cmd_say(int mode,int type){
     return 0;
 }
 //=========================================================================
-int cmd_ask(void){
-    int i,v,p;
+int16_t cmd_ask(void){
+    int16_t i,v,p;
     char title[41];
     char *op[]={NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL};
     char opts[10][41];
@@ -756,7 +757,7 @@ int cmd_ask(void){
         buff_ptr++;
         if(!calc_value()) return 5;
         buff_ptr++;
-        p=(int) lvalue;
+        p=(int16_t) lvalue;
     }
     else return 5;
 
@@ -774,27 +775,27 @@ int cmd_ask(void){
     return 0;
 }
 //=========================================================================
-int cmd_sound(void){
+int16_t cmd_sound(void){
 
     if(!calc_value()) return 5;
     buff_ptr++;
     if(lvalue<1 || lvalue>16) return 6;
-    play_sound((int) lvalue-1,1);
+    play_sound((int16_t) lvalue-1,1);
     return 0;
 }
 //=========================================================================
-int cmd_settile(void){
-    int screen,pos,tile;
+int16_t cmd_settile(void){
+    int16_t screen,pos,tile;
     LEVEL *lvl;
 
     if(!calc_value()) return 5;
     buff_ptr++;
-    screen=(int) lvalue;
+    screen=(int16_t) lvalue;
     if(!calc_value()) return 5;
     buff_ptr++;
-    pos=(int) lvalue;
+    pos=(int16_t) lvalue;
     if(!calc_value()) return 5;
-    tile=(int) lvalue;
+    tile=(int16_t) lvalue;
     if(screen<0 || screen>119) return 6;
     if(pos<0 || pos>239) return 6;
     if(tile<0 || tile>230) return 6;
@@ -802,41 +803,41 @@ int cmd_settile(void){
         place_tile(pos%20,pos/20,tile);
     }
     else{
-        lvl=(LEVEL *) (sd_data+(screen*512));
-        lvl->icon[pos/20][pos%20]=tile;
+        lvl=(LEVEL *) (sd_data+((size_t)screen*512));
+        lvl->icon[pos/20][pos%20]=(char)tile;
     }
     return 0;
 }
 //=========================================================================
-int cmd_itemgive(void){
-    int i;
+int16_t cmd_itemgive(void){
+    int16_t i;
 
     if(!calc_value()) return 5;
     buff_ptr++;
-    i=(int) lvalue;
+    i=(int16_t) lvalue;
     if(i<1 || i > 15) return 6;
 
     thor_info.inventory|=64;
     thor_info.item=7;
-    thor_info.object=i;
+    thor_info.object=(char)i;
     display_item();
     thor_info.object_name=object_names[thor_info.object-1];
     return 0;
 }
 //=========================================================================
-int cmd_itemtake(void){
+int16_t cmd_itemtake(void){
 
     delete_object();
     return 0;
 }
 //=========================================================================
-int cmd_setflag(void){
-    int i;
+int16_t cmd_setflag(void){
+    int16_t i;
     char b;
     char *sp;
 
     if(!calc_value()) return 5;
-    i=(int) lvalue;
+    i=(int16_t) lvalue;
     if(i<1 || i>64) return 6;
     sp=(char *) &setup;
     sp+=(i/8);
@@ -846,8 +847,8 @@ int cmd_setflag(void){
     return 0;
 }
 //=========================================================================
-int cmd_ltoa(void){
-    int sv;
+int16_t cmd_ltoa(void){
+    int16_t sv;
     char str[21];
 
     if(!calc_value()) return 5;
@@ -867,28 +868,28 @@ int cmd_ltoa(void){
     return 0;
 }
 //=========================================================================
-int cmd_pause(void){
+int16_t cmd_pause(void){
 
     if(!calc_value()) return 5;
     buff_ptr++;
     if(lvalue<1 || lvalue>65535l) return 6;
 
-    pause((int) lvalue);
+    pause((int16_t) lvalue);
     return 0;
 }
 //=========================================================================
-int cmd_visible(void){
+int16_t cmd_visible(void){
 
     if(!calc_value()) return 5;
     buff_ptr++;
     if(lvalue<1 || lvalue>16) return 6;
 
-    actor_visible((int) lvalue);
+    actor_visible((int16_t) lvalue);
     return 0;
 }
 //=========================================================================
-int cmd_random(void){
-    int v,r;
+int16_t cmd_random(void){
+    int16_t v,r;
 
     if(isalpha(*buff_ptr)){
         v=*buff_ptr-65;
@@ -900,7 +901,7 @@ int cmd_random(void){
 
     if(!calc_value()) return 5;
     buff_ptr++;
-    r=(int) lvalue;
+    r=(int16_t) lvalue;
     if(r<1 || r>1000) return 6;
 
     num_var[v]=rand() % r;
@@ -937,7 +938,7 @@ char *reason[]={"We heard you say 'Booger'.",
 };
 //=========================================================================
 void scr_func2(void){
-    int r;
+    int16_t r;
 
     r=rnd(6);
     _fstrcpy(str_var[0],offense[r]);
@@ -945,7 +946,7 @@ void scr_func2(void){
 }
 //=========================================================================
 void scr_func3(void){
-    int p,x,y,o;
+    int16_t p,x,y,o;
 
     p=(((thor->y+8)/16)*20)+((thor->x+7)/16);
     y=p/20;
@@ -974,7 +975,7 @@ void scr_func3(void){
         if(!object_map[p] && scrn.icon[y][x]>=140){  //nothing there and solid
             o=(rand()%5)+1;
             if(current_level==13 && p==150 && !setup.f26 && setup.f28) o=20;
-            object_map[p]=o;
+            object_map[p]=(char)o;
             object_index[p]=31;  //actor is 3-15
             x=(p%20)*16;
             y=(p/20)*16;
@@ -1010,18 +1011,18 @@ scr_func4,
 scr_func5,
 };
 //=========================================================================
-int cmd_exec(void){
+int16_t cmd_exec(void){
 
     if(!calc_value()) return 5;
     buff_ptr++;
     if(lvalue<1 || lvalue>10) return 6;
 
-    scr_func[(int) (lvalue-1)]();
+    scr_func[(int16_t) (lvalue-1)]();
     return 0;
 }
 //=========================================================================
-int exec_command(int num){
-    int ret;
+int16_t exec_command(int16_t num){
+    int16_t ret;
     char ch;
 
     ret=0;
@@ -1047,7 +1048,7 @@ int exec_command(int num){
         break;
     case 5:                         //for
         for_ptr++;
-        if(for_ptr>10) {ret=10;break;}
+        if(for_ptr>=10) {ret=10;break;}
         ch=*buff_ptr;
         if(!isalpha(ch)){ret=5;break;}
         ch-=65;

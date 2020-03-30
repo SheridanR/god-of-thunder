@@ -8,26 +8,26 @@
 #include "define.h"
 #include "proto.h"
 //===========================================================================
-extern int new_level,current_level,new_level_tile;
-extern int warp_flag;
+extern int16_t new_level,current_level,new_level_tile;
+extern int16_t warp_flag;
 extern LEVEL scrn;
 extern ACTOR actor[MAX_ACTORS];
 extern ACTOR *thor;
 extern char *bg_pics;
 extern THOR_INFO thor_info;
-extern int thor_x1,thor_y1,thor_x2,thor_y2,thor_real_y1;
-extern unsigned int display_page,draw_page;
-extern int cash1_inform,cash2_inform,door_inform;
+extern int16_t thor_x1,thor_y1,thor_x2,thor_y2,thor_real_y1;
+extern uint16_t display_page,draw_page;
+extern int16_t cash1_inform,cash2_inform,door_inform;
 extern char diag;
 extern char warp_scroll;
-extern int exit_flag;
+extern int16_t exit_flag;
 extern char end_tile;
 //===========================================================================
-int open_door1(int y,int x);
-int cash_door1(int y,int x,int amount);
+int16_t open_door1(int16_t y,int16_t x);
+int16_t cash_door1(int16_t y,int16_t x,int16_t amount);
 //===========================================================================
-int special_tile_thor(int x,int y,int icon){
-    int cx,cy,f;
+int16_t special_tile_thor(int16_t x,int16_t y,int16_t icon){
+    int16_t cx,cy,f;
 
     f=0;
     switch(icon){
@@ -122,7 +122,7 @@ int special_tile_thor(int x,int y,int icon){
     return 0;
 }
 //===========================================================================
-int special_tile(ACTOR *actr,int x,int y,int icon){
+int16_t special_tile(ACTOR *actr,int16_t x,int16_t y,int16_t icon){
 
     switch(icon){
     case 201:
@@ -161,7 +161,7 @@ int special_tile(ACTOR *actr,int x,int y,int icon){
     return 0;
 }
 //===========================================================================
-void erase_door(int x,int y){
+void erase_door(int16_t x,int16_t y){
 
     play_sound(DOOR,0);
     scrn.icon[y][x]=scrn.bg_color;
@@ -172,7 +172,7 @@ void erase_door(int x,int y){
     xcopyd2d(x,y,x+16,y+16,x,y,PAGE2,display_page,320,320);
 }
 //===========================================================================
-int open_door1(int y,int x){
+int16_t open_door1(int16_t y,int16_t x){
 
     if(thor_info.keys>0){
         erase_door(x,y);
@@ -189,7 +189,7 @@ int open_door1(int y,int x){
     return 0;
 }
 //===========================================================================
-int cash_door1(int y,int x,int amount){
+int16_t cash_door1(int16_t y,int16_t x,int16_t amount){
 
     if(thor_info.jewels>=amount){
         erase_door(x,y);

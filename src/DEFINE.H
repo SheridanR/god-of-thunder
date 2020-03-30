@@ -1,5 +1,7 @@
 // See LICENSE for details
 
+#include <stdint.h>
+
 #undef outportb
 #undef inportb
 //==========================================================================
@@ -7,8 +9,8 @@
 //Describes one alignment of a mask-image pair
 
 typedef struct {
-    int          image_width;   //image width in addresses in display memory
-    unsigned int image_ptr;     //offset of image bitmap in display mem
+    int16_t          image_width;   //image width in addresses in display memory
+    uint16_t image_ptr;     //offset of image bitmap in display mem
     char     *mask_ptr;     //pointer to mask bitmap
 } ALIGNED_MASK_IMAGE;
 
@@ -29,8 +31,8 @@ typedef struct{                 //size=512
     char actor_invis[16];
     char extra[13];
     char static_obj[30];     //302 static objects (treasure, keys,etc)
-    int  static_x[30];       //332 X coor of static objects
-    int  static_y[30];       //392 Y coor of static objects
+    int16_t  static_x[30];       //332 X coor of static objects
+    int16_t  static_y[30];       //392 Y coor of static objects
     char new_level[10];      //452 level jump for icon 200-204
     char new_level_loc[10];  //462 grid location to jump in to
     char area;               //472 game area (1=forest,etc)
@@ -63,7 +65,7 @@ typedef struct{                    //size=256
     char name[9];               //actors name
     char func_num;              //special function when thor touches
     char func_pass;             //value to pass to func
-    int  magic_hurts;           //bitwise magic hurts flags
+    int16_t  magic_hurts;           //bitwise magic hurts flags
     char future1[4];
 
     //the rest is dynamic    //size=216
@@ -71,11 +73,11 @@ typedef struct{                    //size=256
     char frame_count;           //count to switch frames
     char dir;                   //direction of travel
     char last_dir;              //last direction of travel
-    int  x;                     //actual X coor
-    int  y;                     //actual Y coor
-    int  center;                //center of object
-    int  last_x[2];             //last X coor on each page
-    int  last_y[2];             //last Y coor on each page
+    int16_t  x;                     //actual X coor
+    int16_t  y;                     //actual Y coor
+    int16_t  center;                //center of object
+    int16_t  last_x[2];             //last X coor on each page
+    int16_t  last_y[2];             //last Y coor on each page
     char used;                  //1=active, 0=not active
     char next;                  //next frame to be shown
     char speed_count;           //count down to movement
@@ -100,13 +102,13 @@ typedef struct{                    //size=256
     char temp4;
     char temp5;
     char hit_thor;
-    int  rand;
+    int16_t  rand;
     char init_dir;
     char pass_value;
     char shot_actor;
     char magic_hit;
     char temp6;
-    int  i1,i2,i3,i4,i5,i6;
+    int16_t  i1,i2,i3,i4,i5,i6;
     char init_health;
     char talk_counter;
     char etype;
@@ -148,77 +150,77 @@ typedef struct {                     //5200
 } ACTOR_DATA;
 
 typedef struct sup{
-    unsigned int  f00 :1;
-    unsigned int  f01 :1;
-    unsigned int  f02 :1;
-    unsigned int  f03 :1;
-    unsigned int  f04 :1;
-    unsigned int  f05 :1;
-    unsigned int  f06 :1;
-    unsigned int  f07 :1;
+    uint16_t  f00 :1;
+    uint16_t  f01 :1;
+    uint16_t  f02 :1;
+    uint16_t  f03 :1;
+    uint16_t  f04 :1;
+    uint16_t  f05 :1;
+    uint16_t  f06 :1;
+    uint16_t  f07 :1;
 
-    unsigned int  f08 :1;
-    unsigned int  f09 :1;
-    unsigned int  f10 :1;
-    unsigned int  f11 :1;
-    unsigned int  f12 :1;
-    unsigned int  f13 :1;
-    unsigned int  f14 :1;
-    unsigned int  f15 :1;
+    uint16_t  f08 :1;
+    uint16_t  f09 :1;
+    uint16_t  f10 :1;
+    uint16_t  f11 :1;
+    uint16_t  f12 :1;
+    uint16_t  f13 :1;
+    uint16_t  f14 :1;
+    uint16_t  f15 :1;
 
-    unsigned int  f16 :1;
-    unsigned int  f17 :1;
-    unsigned int  f18 :1;
-    unsigned int  f19 :1;
-    unsigned int  f20 :1;
-    unsigned int  f21 :1;
-    unsigned int  f22 :1;
-    unsigned int  f23 :1;
+    uint16_t  f16 :1;
+    uint16_t  f17 :1;
+    uint16_t  f18 :1;
+    uint16_t  f19 :1;
+    uint16_t  f20 :1;
+    uint16_t  f21 :1;
+    uint16_t  f22 :1;
+    uint16_t  f23 :1;
 
-    unsigned int  f24 :1;
-    unsigned int  f25 :1;
-    unsigned int  f26 :1;
-    unsigned int  f27 :1;
-    unsigned int  f28 :1;
-    unsigned int  f29 :1;
-    unsigned int  f30 :1;
-    unsigned int  f31 :1;
+    uint16_t  f24 :1;
+    uint16_t  f25 :1;
+    uint16_t  f26 :1;
+    uint16_t  f27 :1;
+    uint16_t  f28 :1;
+    uint16_t  f29 :1;
+    uint16_t  f30 :1;
+    uint16_t  f31 :1;
 
-    unsigned int  f32 :1;
-    unsigned int  f33 :1;
-    unsigned int  f34 :1;
-    unsigned int  f35 :1;
-    unsigned int  f36 :1;
-    unsigned int  f37 :1;
-    unsigned int  f38 :1;
-    unsigned int  f39 :1;
+    uint16_t  f32 :1;
+    uint16_t  f33 :1;
+    uint16_t  f34 :1;
+    uint16_t  f35 :1;
+    uint16_t  f36 :1;
+    uint16_t  f37 :1;
+    uint16_t  f38 :1;
+    uint16_t  f39 :1;
 
-    unsigned int  f40 :1;
-    unsigned int  f41 :1;
-    unsigned int  f42 :1;
-    unsigned int  f43 :1;
-    unsigned int  f44 :1;
-    unsigned int  f45 :1;
-    unsigned int  f46 :1;
-    unsigned int  f47 :1;
+    uint16_t  f40 :1;
+    uint16_t  f41 :1;
+    uint16_t  f42 :1;
+    uint16_t  f43 :1;
+    uint16_t  f44 :1;
+    uint16_t  f45 :1;
+    uint16_t  f46 :1;
+    uint16_t  f47 :1;
 
-    unsigned int  f48 :1;
-    unsigned int  f49 :1;
-    unsigned int  f50 :1;
-    unsigned int  f51 :1;
-    unsigned int  f52 :1;
-    unsigned int  f53 :1;
-    unsigned int  f54 :1;
-    unsigned int  f55 :1;
+    uint16_t  f48 :1;
+    uint16_t  f49 :1;
+    uint16_t  f50 :1;
+    uint16_t  f51 :1;
+    uint16_t  f52 :1;
+    uint16_t  f53 :1;
+    uint16_t  f54 :1;
+    uint16_t  f55 :1;
 
-    unsigned int  f56 :1;
-    unsigned int  f57 :1;
-    unsigned int  f58 :1;
-    unsigned int  f59 :1;
-    unsigned int  f60 :1;
-    unsigned int  f61 :1;
-    unsigned int  f62 :1;
-    unsigned int  f63 :1;
+    uint16_t  f56 :1;
+    uint16_t  f57 :1;
+    uint16_t  f58 :1;
+    uint16_t  f59 :1;
+    uint16_t  f60 :1;
+    uint16_t  f61 :1;
+    uint16_t  f62 :1;
+    uint16_t  f63 :1;
 
     char value[16];
     char junk;
@@ -243,22 +245,22 @@ typedef struct {
 typedef struct{
     char magic;
     char keys;
-    int  jewels;
+    int16_t  jewels;
     char last_area;
     char last_screen;
     char last_icon;
     char last_dir;
-    int  inventory;
+    int16_t  inventory;
     char item;         //currently selected item
     char last_health;
     char last_magic;
-    int  last_jewels;
+    int16_t  last_jewels;
     char last_keys;
     char last_item;
-    int  last_inventory;
+    int16_t  last_inventory;
     char level;         //current level (1,2,3)
-    long score;
-    long last_score;
+    int32_t score;
+    int32_t last_score;
     char object;
     char *object_name;
     char last_object;
@@ -268,8 +270,8 @@ typedef struct{
 } THOR_INFO;
 
 typedef struct{
-    long offset;
-    long length;
+    int32_t offset;
+    int32_t length;
 } HEADER;
 //==========================================================================
 //defines

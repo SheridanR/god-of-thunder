@@ -87,6 +87,21 @@
     <ClCompile Include="..\..\..\src\new\new.c">
       <Filter>Source Files\new</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\RES_INIT.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RES_READ.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RES_FALL.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RES_FIND.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RES_ENCO.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\DEFINE.H">
@@ -97,6 +112,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\new\new.h">
       <Filter>Header Files\new</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\RES_MAN.H">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

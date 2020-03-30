@@ -11,28 +11,28 @@
 
 void check_boss21_hit(void);
 //===========================================================================
-extern int new_level,current_level;
+extern int16_t new_level,current_level;
 extern LEVEL scrn;
 extern ACTOR actor[MAX_ACTORS];
 extern ACTOR *thor;
-extern int thor_x1,thor_y1,thor_x2,thor_y2,thor_real_y1;
+extern int16_t thor_x1,thor_y1,thor_x2,thor_y2,thor_real_y1;
 extern ACTOR *hammer;
-extern int key_fire,key_up,key_down,key_left,key_right,key_magic,key_select;
-extern int lightning_used,tornado_used,hourglass_flag;
-extern unsigned int display_page,draw_page;
+extern int16_t key_fire,key_up,key_down,key_left,key_right,key_magic,key_select;
+extern int16_t lightning_used,tornado_used,hourglass_flag;
+extern uint16_t display_page,draw_page;
 extern THOR_INFO thor_info;
-extern int boss_dead;
-extern int boss_active;
+extern int16_t boss_dead;
+extern int16_t boss_active;
 extern char pge;
 extern ACTOR explosion;
 extern volatile char key_flag[100];
-extern volatile unsigned int timer_cnt;
+extern volatile uint16_t timer_cnt;
 extern SETUP setup;
-extern int rand1,rand2;
+extern int16_t rand1,rand2;
 extern char apple_drop;
 //===========================================================================
-int boss21_movement(ACTOR *actr){    //boss - wraith
-    int d,x1,y1,f,ox,oy;
+int16_t boss21_movement(ACTOR *actr){    //boss - wraith
+    int16_t d,x1,y1,f,ox,oy;
 
     if(boss_dead) return boss_dead21();
     check_boss21_hit();
@@ -167,9 +167,9 @@ skip_move:
     actor[5].next=actr->next;
     actor[6].next=actr->next;
 
-    actor[4].last_dir=d;
-    actor[5].last_dir=d;
-    actor[6].last_dir=d;
+    actor[4].last_dir=(char)d;
+    actor[5].last_dir=(char)d;
+    actor[6].last_dir=(char)d;
 
     actor[4].x=actr->x+16;
     actor[4].y=actr->y;
@@ -202,7 +202,7 @@ done:
 }
 //===========================================================================
 void check_boss21_hit(void){
-    int rep;
+    int16_t rep;
 
     if(actor[3].magic_hit || actor[4].magic_hit ||
         actor[5].magic_hit || actor[6].magic_hit){
@@ -245,8 +245,8 @@ void boss_level21(void){
     apple_drop=0;
 }
 //===========================================================================
-int boss_dead21(void){
-    int rep,n,x,y,r,x1,y1;
+int16_t boss_dead21(void){
+    int16_t rep,n,x,y,r,x1,y1;
 
     hourglass_flag=0;
     if(boss_dead==1){
@@ -258,8 +258,8 @@ int boss_dead21(void){
             n=actor[3+rep].actor_num;
             r=actor[3+rep].rating;
             memcpy(&actor[3+rep],&explosion,sizeof(ACTOR));
-            actor[3+rep].actor_num=n;
-            actor[3+rep].rating=r;
+            actor[3+rep].actor_num=(char)n;
+            actor[3+rep].rating=(char)r;
             actor[3+rep].x=x;
             actor[3+rep].y=y;
             actor[3+rep].last_x[pge]=x1;
@@ -269,7 +269,7 @@ int boss_dead21(void){
             actor[3+rep].used=1;
             actor[3+rep].vunerable=255;
             actor[3+rep].move=6;
-            actor[3+rep].next=rep;
+            actor[3+rep].next=(char)rep;
             actor[3+rep].speed=rnd(3)+6;
             actor[3+rep].num_shots=(10-actor[3+rep].speed)*10;
             actor[3+rep].speed_count=actor[3+rep].speed;
@@ -281,7 +281,7 @@ int boss_dead21(void){
 }
 //===========================================================================
 void closing_sequence21(void){
-    int rep;
+    int16_t rep;
 
     music_play(0,1);
     odin_speaks(1002,0);

@@ -11,13 +11,13 @@
 
 extern SETUP setup;
 extern char AdLibPresent;
-extern volatile unsigned int timer_cnt,vbl_cnt,magic_cnt,extra_cnt;
-extern int music_flag,sound_flag,pcsound_flag;
+extern volatile uint16_t timer_cnt,vbl_cnt,magic_cnt,extra_cnt;
+extern int16_t music_flag,sound_flag,pcsound_flag;
 extern char noal,nosb;
 
 void interrupt (*t0OldService)(void);
-long TimerDivisor,TimerCount;
-volatile long TickCount2,TickCount;
+int32_t TimerDivisor,TimerCount;
+volatile int32_t TickCount2,TickCount;
 //===========================================================================
 void interrupt t0Service(void){
     return; // DEPRECATED
@@ -43,7 +43,7 @@ void interrupt t0Service(void){
 }
 char *SB_DetectAdLib(void);
 //===========================================================================
-int sbfx_init(void){
+int16_t sbfx_init(void){
     return 0; // TODO
 
     /*
@@ -96,7 +96,7 @@ void sbfx_exit(void){
     return; // TODO
 
     /*
-    int i;
+    int16_t i;
 
     if(setup.pc_sound) FX_StopPC();
     if(setup.music) MU_MusicOff();

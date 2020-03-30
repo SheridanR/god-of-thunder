@@ -9,25 +9,25 @@
 #include "proto.h"
 //===========================================================================
 extern ACTOR actor[MAX_ACTORS];
-extern int thor_x1,thor_y1,thor_x2,thor_y2,thor_real_y1;
+extern int16_t thor_x1,thor_y1,thor_x2,thor_y2,thor_real_y1;
 extern ACTOR *thor;
 extern char apple_drop;
 //===========================================================================
-int shot_movement_none(ACTOR *actr);
-int shot_movement_one(ACTOR *actr);
-int shot_movement_two(ACTOR *actr);
-int shot_movement_three(ACTOR *actr);
-int shot_movement_four(ACTOR *actr);
-int shot_movement_five(ACTOR *actr);
-int shot_movement_six(ACTOR *actr);
-int shot_movement_seven(ACTOR *actr);
-int shot_movement_eight(ACTOR *actr);
-int shot_movement_nine(ACTOR *actr);
-int shot_movement_ten(ACTOR *actr);
-int shot_movement_eleven(ACTOR *actr);
-//int shot_movement_twelve(ACTOR *actr);
+int16_t shot_movement_none(ACTOR *actr);
+int16_t shot_movement_one(ACTOR *actr);
+int16_t shot_movement_two(ACTOR *actr);
+int16_t shot_movement_three(ACTOR *actr);
+int16_t shot_movement_four(ACTOR *actr);
+int16_t shot_movement_five(ACTOR *actr);
+int16_t shot_movement_six(ACTOR *actr);
+int16_t shot_movement_seven(ACTOR *actr);
+int16_t shot_movement_eight(ACTOR *actr);
+int16_t shot_movement_nine(ACTOR *actr);
+int16_t shot_movement_ten(ACTOR *actr);
+int16_t shot_movement_eleven(ACTOR *actr);
+//int16_t shot_movement_twelve(ACTOR *actr);
 
-int (*shot_movement_func[]) (ACTOR *actr) =
+int16_t (*shot_movement_func[]) (ACTOR *actr) =
 {
     shot_movement_none,
     shot_movement_one,
@@ -61,7 +61,7 @@ void next_shot_frame(ACTOR *actr){
     }
 }
 //===========================================================================
-int shot_movement_none(ACTOR *actr){   //boss - snake
+int16_t shot_movement_none(ACTOR *actr){   //boss - snake
 
     actr->temp3--;
     if(!actr->temp3){
@@ -73,8 +73,11 @@ int shot_movement_none(ACTOR *actr){   //boss - snake
     return actr->last_dir;
 }
 //===========================================================================
-int shot_movement_one(ACTOR *actr){
-    int d,x1,y1;
+int16_t shot_movement_one(ACTOR *actr){
+    int16_t d,x1,y1;
+
+    x1 = 0;
+    y1 = 0;
 
     d=actr->last_dir;
 
@@ -102,15 +105,18 @@ int shot_movement_one(ACTOR *actr){
     }
     else{
         next_shot_frame(actr);
-        actr->last_dir=d;
+        actr->last_dir=(char)d;
     }
     if(actr->directions==1) return 0;
     if(actr->directions==4 && actr->frames==1) return 0;
     return d;
 }
 //===========================================================================
-int shot_movement_two(ACTOR *actr){
-    int d,x1,y1;
+int16_t shot_movement_two(ACTOR *actr){
+    int16_t d,x1,y1;
+
+    x1 = 0;
+    y1 = 0;
 
     d=actr->last_dir;
 
@@ -138,15 +144,15 @@ int shot_movement_two(ACTOR *actr){
     }
     else{
         next_shot_frame(actr);
-        actr->last_dir=d;
+        actr->last_dir=(char)d;
     }
     if(actr->directions==1) return 0;
     if(actr->directions==4 && actr->frames==1) return 0;
     return d;
 }
 //===========================================================================
-int shot_movement_three(ACTOR *actr){       //serpent fire
-    int d;
+int16_t shot_movement_three(ACTOR *actr){       //serpent fire
+    int16_t d;
 
     d=actr->last_dir;
     actr->x-=2;
@@ -171,14 +177,14 @@ int shot_movement_three(ACTOR *actr){       //serpent fire
     }
     else{
         next_shot_frame(actr);
-        actr->last_dir=d;
+        actr->last_dir=(char)d;
     }
     if(actr->directions==1) return 0;
     return d;
 }
 //===========================================================================
-int shot_movement_four(ACTOR *actr){          //wraith balls
-    int x1,y1,xd,yd,d;
+int16_t shot_movement_four(ACTOR *actr){          //wraith balls
+    int16_t x1,y1,xd,yd,d;
 
     if(actr->temp1){
         actr->temp1--;
@@ -226,7 +232,7 @@ int shot_movement_four(ACTOR *actr){          //wraith balls
         y1+=yd;
         if(check_move3(x1,y1,actr)){
             next_frame(actr);
-            actr->last_dir=d;
+            actr->last_dir=(char)d;
             if(actr->directions==1) return 0;
             return d;
         }
@@ -248,7 +254,7 @@ int shot_movement_four(ACTOR *actr){          //wraith balls
                 if(xd>0) d=3;
                 else d=2;
                 next_frame(actr);
-                actr->last_dir=d;
+                actr->last_dir=(char)d;
                 if(actr->directions==1) return 0;
                 return d;
             }
@@ -260,7 +266,7 @@ int shot_movement_four(ACTOR *actr){          //wraith balls
                 if(yd>0) d=1;
                 else d=0;
                 next_frame(actr);
-                actr->last_dir=d;
+                actr->last_dir=(char)d;
                 if(actr->directions==1) return 0;
                 return d;
             }
@@ -274,7 +280,7 @@ int shot_movement_four(ACTOR *actr){          //wraith balls
                 if(yd>0) d=1;
                 else d=0;
                 next_frame(actr);
-                actr->last_dir=d;
+                actr->last_dir=(char)d;
                 if(actr->directions==1) return 0;
                 return d;
             }
@@ -286,7 +292,7 @@ int shot_movement_four(ACTOR *actr){          //wraith balls
                 if(xd>0) d=3;
                 else d=2;
                 next_frame(actr);
-                actr->last_dir=d;
+                actr->last_dir=(char)d;
                 if(actr->directions==1) return 0;
                 return d;
             }
@@ -294,19 +300,19 @@ int shot_movement_four(ACTOR *actr){          //wraith balls
     }
     check_move3(actr->x,actr->y,actr);
     next_frame(actr);
-    actr->last_dir=d;
+    actr->last_dir=(char)d;
     if(actr->directions==1) return 0;
     return d;
 }
 //===========================================================================
-int shot_movement_five(ACTOR *actr){   //no move, frame cycle
+int16_t shot_movement_five(ACTOR *actr){   //no move, frame cycle
 
     next_shot_frame(actr);
     if(actr->directions==1) return 0;
     return actr->last_dir;
 }
 //===========================================================================
-int shot_movement_six(ACTOR *actr){   //wraith spots
+int16_t shot_movement_six(ACTOR *actr){   //wraith spots
 
     actr->temp1--;
     if(!actr->temp1){
@@ -326,7 +332,7 @@ int shot_movement_six(ACTOR *actr){   //wraith spots
 #define XC actr->i6
 #define IV 100
 #define IC 50
-int shot_movement_seven(ACTOR *actr){   //skull drop
+int16_t shot_movement_seven(ACTOR *actr){   //skull drop
 
     if(actr->temp3){
         actr->temp3--;
@@ -362,8 +368,8 @@ done:
     return actr->last_dir;
 }
 //===========================================================================
-int shot_movement_eight(ACTOR *actr){   //skull bounce
-    int x,y;
+int16_t shot_movement_eight(ACTOR *actr){   //skull bounce
+    int16_t x,y;
 
     x=actr->x;
     y=actr->y;
@@ -413,13 +419,12 @@ int shot_movement_eight(ACTOR *actr){   //skull bounce
     actr->x=x;
     actr->y=y;
 
-done:
     next_shot_frame(actr);
     if(actr->directions==1) return 0;
     return actr->last_dir;
 }
 //===========================================================================
-int shot_movement_nine(ACTOR *actr){   //skull explode
+int16_t shot_movement_nine(ACTOR *actr){   //skull explode
 
     actr->next++;
     if(actr->next==3){
@@ -431,8 +436,8 @@ int shot_movement_nine(ACTOR *actr){   //skull explode
     return actr->last_dir;
 }
 //===========================================================================
-int shot_movement_ten(ACTOR *actr){  //skull - stalagtite
-    int f;
+int16_t shot_movement_ten(ACTOR *actr){  //skull - stalagtite
+    int16_t f;
 
     f=0;
     actr->y+=2;
@@ -459,7 +464,7 @@ int shot_movement_ten(ACTOR *actr){  //skull - stalagtite
 #define DIR actr->i5
 #define CNT actr->i6
 
-void calc_angle(int x1,int y1,int x2,int y2,ACTOR *actr){
+void calc_angle(int16_t x1,int16_t y1,int16_t x2,int16_t y2,ACTOR *actr){
 
     if(x1<x2){
         XA=-2;
@@ -492,8 +497,8 @@ void calc_angle(int x1,int y1,int x2,int y2,ACTOR *actr){
     CNT=0;
 }
 //===========================================================================
-int shot_movement_eleven(ACTOR *actr){  //angle throw
-    int x1,y1;
+int16_t shot_movement_eleven(ACTOR *actr){  //angle throw
+    int16_t x1,y1;
 
     x1=actr->x;
     y1=actr->y;
