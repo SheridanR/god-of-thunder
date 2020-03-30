@@ -12,7 +12,7 @@ char far *res_lzss_buff;
 //==========================================================================
 void res_init(char far *buff){
 
-    // TODO is this necessary?
+    // TODO res_init is this randomize() call necessary?
     //randomize();
     res_fp=0;
     res_active=1;

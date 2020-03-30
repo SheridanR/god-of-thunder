@@ -67,7 +67,7 @@ int16_t sound_init(void){
 }
 //===========================================================================
 void sound_exit(void){
-    return; // TODO
+    return; // TODO sound_exit
     /*
     FX_StopPC();
     while(FX_PCPlaying());
@@ -80,7 +80,7 @@ void sound_exit(void){
 }
 //===========================================================================
 void play_sound(int16_t index, int16_t priority_override){
-    return; // TODO
+    return; // TODO play_sound
     /*
     if(index>=NUM_SOUNDS) return;
     if(setup.pc_sound){
@@ -100,7 +100,7 @@ void play_sound(int16_t index, int16_t priority_override){
 }
 //===========================================================================
 void play_pc_sound(int16_t index, int16_t priority_override){
-    return; // TODO
+    return; // TODO play_pc_sound
 
     /*if(FX_PCPlaying()){
         if((!priority_override) && current_priority<sound_priority[index]) return;
@@ -112,7 +112,7 @@ void play_pc_sound(int16_t index, int16_t priority_override){
 }
 //===========================================================================
 int16_t sound_playing(void){
-    return 0; // TODO
+    return 0; // TODO sound_playing
     /*
     return SB_VOCPlaying();
     */

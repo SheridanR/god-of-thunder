@@ -78,7 +78,7 @@ void xprintx(int16_t x,int16_t y,char *string,uint16_t page,int16_t color){
 }
 //===========================================================================
 void split_screen(void){
-    return; // deprecated
+    return; // TODO split_screen figure out what this function was for (should it be DEPRECATED?)
 
     /*asm{
 
@@ -114,9 +114,7 @@ void split_screen(void){
 }
 //===========================================================================
 int16_t load_palette(void){
-    return 1; // deprecated
-
-    /*int16_t i;
+    int16_t i;
     char r,g,b,n;
 
 #define DAC_READ_INDEX	03c7h
@@ -128,40 +126,45 @@ int16_t load_palette(void){
     for(i=0;i<768;i++) pbuff[i]=pbuff[i] >> 2;
 
     for(i=240;i<244;i++){
-        *(pbuff+((i*3)+0))=0;
-        *(pbuff+((i*3)+1))=0;
-        *(pbuff+((i*3)+2))=0x3b;
+        *(pbuff+(((size_t)i*3)+0))=0;
+        *(pbuff+(((size_t)i*3)+1))=0;
+        *(pbuff+(((size_t)i*3)+2))=0x3b;
     }
     for(i=244;i<248;i++){
-        *(pbuff+((i*3)+0))=0x3b;
-        *(pbuff+((i*3)+1))=0;
-        *(pbuff+((i*3)+2))=0;
+        *(pbuff+(((size_t)i*3)+0))=0x3b;
+        *(pbuff+(((size_t)i*3)+1))=0;
+        *(pbuff+(((size_t)i*3)+2))=0;
     }
-    in.h.al=0x10;
-    in.h.ah=0x10;
+    // TODO load_palette figure out what these magic registers do
+    //in.h.al=0x10;
+    //in.h.ah=0x10;
     for(i=0;i<256;i++){
-        n=i;
+        n=(char)i;
         r=pbuff[i*3];
         g=pbuff[(i*3)+1];
         b=pbuff[(i*3)+2];
+
+        // TODO load_palette don't issue VGA commands directly
+        /*
         asm mov  al,n
-            asm mov  dx,DAC_WRITE_INDEX  // Tell DAC what colour index to
-            asm out  dx,al               // write to
-            asm mov  dx,DAC_DATA
+        asm mov  dx,DAC_WRITE_INDEX  // Tell DAC what colour index to
+        asm out  dx,al               // write to
+        asm mov  dx,DAC_DATA
 
-            asm mov  bl,r
-            asm mov  al,bl              // Set the red component
-            asm out  dx,al
+        asm mov  bl,r
+        asm mov  al,bl              // Set the red component
+        asm out  dx,al
 
-            asm mov  ch,g
-            asm mov  al,ch              // Set the green component
-            asm out  dx,al
+        asm mov  ch,g
+        asm mov  al,ch              // Set the green component
+        asm out  dx,al
 
-            asm mov  cl,b
-            asm mov  al,cl              // Set the blue component
-            asm out  dx,al
+        asm mov  cl,b
+        asm mov  al,cl              // Set the blue component
+        asm out  dx,al
+        */
     }
-    return 1;*/
+    return 1;
 }
 /*=========================================================================*/
 void xbox(int16_t x1,int16_t y1,int16_t x2,int16_t y2,unsigned page,int16_t color){
@@ -218,7 +221,7 @@ void fade_out(void){
 }
 //===========================================================================
 void unsplit_screen(void){
-    return; // deprecated
+    return; // TODO unsplit_screen figure out what this function was for (should it be DEPRECATED?)
 
     /*asm{
 

@@ -44,7 +44,7 @@ void interrupt t0Service(void){
 char *SB_DetectAdLib(void);
 //===========================================================================
 int16_t sbfx_init(void){
-    return 0; // TODO
+    return 0; // TODO sbfx_init
 
     /*
     unsigned speed;
@@ -93,7 +93,7 @@ int16_t sbfx_init(void){
 }
 //===========================================================================
 void sbfx_exit(void){
-    return; // TODO
+    return; // TODO sbfx_exit
 
     /*
     int16_t i;

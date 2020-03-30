@@ -392,7 +392,7 @@ void main(int argc, char *argv[]){
 
         if(cheat){
             if(key_flag[_THREE]){
-                // TODO replace this with something
+                // TODO replace this mysterious asm with something (is this a cheat code?)
                 /*
                 asm	mov	dx,status_Reg1
                 asm	in	al,dx
@@ -423,7 +423,7 @@ void main(int argc, char *argv[]){
 
         if(cheat){
             if(vbl_flag){
-                // TODO replace this with something
+                // TODO replace this mysterious asm with something (is this a cheatcode?)
                 /*
                 asm	mov	dx,status_Reg1
                 asm	in	al,dx
@@ -598,7 +598,7 @@ void main(int argc, char *argv[]){
 extern int16_t SBResetCount;
 //===========================================================================
 void run_gotm(void){
-    return; // deprecated
+    return; // DEPRECATED
     /*
     int16_t num;
     char s[36];

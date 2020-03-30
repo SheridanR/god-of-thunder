@@ -278,20 +278,19 @@ void exit_code(int16_t ex_flag){
 }
 //===========================================================================
 void interrupt keyboard_int(){
-    return; // DEPRECATED
-    /*
+    // TODO keyboard_int figure out a replacement for all these inport() and outport() calls
     char flag;
     int16_t key;
     //static int16_t num=0;
 
-    scan_code=inportb(0x60);
-    byte=inportb(0x61);
+    //scan_code=inportb(0x60);
+    //byte=inportb(0x61);
     byte |= 0x80;
-    outportb(0x61,byte);
+    //outportb(0x61,byte);
     byte &= 0x7f;
-    outportb(0x61,byte);
-    //scanc[num++]=scan_code;
-    //if(scan_code==0xe0) goto done;
+    //outportb(0x61,byte);
+    ///scanc[num++]=scan_code;
+    ///if(scan_code==0xe0) goto done;
 
     if(scan_code==last_scan_code) goto done;
     last_scan_code=scan_code;
@@ -316,8 +315,8 @@ void interrupt keyboard_int(){
     else if(demo) exit_flag=5;
 
 done:
-    outportb(0x20,0x20);
-    */
+    //outportb(0x20,0x20);
+    ;
 }
 //===========================================================================
 void demo_key_set(void){
@@ -629,7 +628,7 @@ void set_palette(void){
         g=pbuff[(i*3)+1];
         b=pbuff[(i*3)+2];
 
-        // TODO replace this or something
+        // TODO replace this set_palette asm with something
         /*
         asm mov  al,n
         asm mov  dx,DAC_WRITE_INDEX  // Tell DAC what colour index to

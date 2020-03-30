@@ -24,59 +24,59 @@ void delay(int16_t ms) {
 }
 //===========================================================================
 void read_joystick(void) {
-    return; // TODO
+    return; // TODO read_joystick
 }
 //===========================================================================
 void xsetmode(void) {
-    return; // TODO
+    return; // TODO xsetmode
 }
 //===========================================================================
 void xshowpage(unsigned page) {
-    return; // TODO
+    return; // TODO xshowpage
 }
 //===========================================================================
 void xfillrectangle(int16_t StartX, int16_t StartY, int16_t EndX, int16_t EndY,
     uint16_t PageBase, int16_t Color) {
-    return; // TODO
+    return; // TODO xfillrectangle
 }
 //===========================================================================
 void xpset(int16_t X, int16_t Y, uint16_t PageBase, int16_t Color) {
-    return; // TODO
+    return; // TODO xpset
 }
 //===========================================================================
 int16_t xpoint(int16_t X, int16_t Y, uint16_t PageBase) {
-    return 0; // TODO
+    return 0; // TODO xpoint
 }
 //===========================================================================
 void xput(int16_t x,int16_t y,uint16_t pagebase,char *buff) {
-    return; // TODO
+    return; // TODO xput
 }
 //===========================================================================
 void xtext(int16_t x,int16_t y,uint16_t pagebase,char *buff,int16_t color) {
-    return; // TODO
+    return; // TODO xtext
 }
 //===========================================================================
 void xtext1(int16_t x,int16_t y,uint16_t pagebase,char *buff,int16_t color) {
-    return; // TODO
+    return; // TODO xtext1
 }
 //===========================================================================
 void xtextx(int16_t x,int16_t y,uint16_t pagebase,char *buff,int16_t color) {
-    return; // TODO
+    return; // TODO xtextx
 }
 //===========================================================================
 void xfput(int16_t x,int16_t y,uint16_t pagebase,char *buff) {
-    return; // TODO
+    return; // TODO xfput
 }
 //===========================================================================
 void xfarput(int16_t x,int16_t y,uint16_t pagebase,char *buff) {
-    return; // TODO
+    return; // TODO xfarput
 }
 //===========================================================================
 void xcopys2d(int16_t SourceStartX, int16_t SourceStartY,
     int16_t SourceEndX, int16_t SourceEndY, int16_t DestStartX,
     int16_t DestStartY, char* SourcePtr, uint16_t DestPageBase,
     int16_t SourceBitmapWidth, int16_t DestBitmapWidth) {
-    return; // TODO
+    return; // TODO xcopys2d
 }
 //===========================================================================
 void xcopyd2d(int16_t SourceStartX, int16_t SourceStartY,
@@ -84,23 +84,23 @@ void xcopyd2d(int16_t SourceStartX, int16_t SourceStartY,
     int16_t DestStartY, uint16_t SourcePageBase,
     uint16_t DestPageBase, int16_t SourceBitmapWidth,
     int16_t DestBitmapWidth) {
-    return; // TODO
+    return; // TODO xcopyd2d
 }
 //===========================================================================
 void xdisplay_actors(ACTOR *act,uint16_t page) {
-    return; // TODO
+    return; // TODO xdisplay_actors
 }
 //===========================================================================
 void xerase_actors(ACTOR *act,uint16_t page) {
-    return; // TODO
+    return; // TODO xerase_actors
 }
 //===========================================================================
 void pal_fade_in(char *buff) {
-    return; // TODO
+    return; // TODO pal_fade_in
 }
 //===========================================================================
 void pal_fade_out(char *buff) {
-    return; // TODO
+    return; // TODO pal_fade_out
 }
 //===========================================================================
 int32_t lzss_decompress(char *src,char *dest) {

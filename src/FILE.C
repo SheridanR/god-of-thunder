@@ -172,7 +172,7 @@ void save_game(void){
     }
     d_restore();
 
-    // TODO
+    // TODO save game
     /*
     if(_dos_open(save_filename,O_RDONLY, &handle)!=0) return;
     _dos_read(handle, buff,32,&total);
@@ -196,7 +196,7 @@ int16_t load_game(int16_t flag){
         }
         d_restore();
     }
-    // TODO
+    // TODO load game
     /*
     if(_dos_open(save_filename,O_RDONLY, &handle)!=0) return 0;
     _dos_read(handle, buff,32,&total);

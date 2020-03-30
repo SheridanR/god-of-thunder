@@ -20,7 +20,7 @@ int16_t music_init(void){
 }
 //=========================================================================
 void music_play(int16_t num,int16_t override){
-    return; // TODO
+    return; // TODO music_play
     /*
     if(!setup.music) return;
     if((num!=music_current) || override){
@@ -32,7 +32,7 @@ void music_play(int16_t num,int16_t override){
 }
 //=========================================================================
 void music_pause(void){
-    return; // TODO
+    return; // TODO music_pause
     /*
     if(!setup.music) return;
     MU_MusicOff();
@@ -40,7 +40,7 @@ void music_pause(void){
 }
 //=========================================================================
 void music_resume(void){
-    return; // TODO
+    return; // TODO music_resume
     /*
     if(!setup.music) return;
     MU_MusicOn();
@@ -48,7 +48,7 @@ void music_resume(void){
 }
 //=========================================================================
 int16_t music_is_on(void){
-    return 0; // TODO
+    return 0; // TODO music_is_on
     /*
     if(!setup.music) return 0;
     return MU_MusicPlaying();
