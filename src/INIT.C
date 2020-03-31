@@ -307,10 +307,10 @@ void interrupt keyboard_int(){
         key=(scan_code &0x7f);
         if(key==key_up || key==key_down || key==key_left || key==key_right ||
             key==key_fire || key==key_magic){
-            if(joystick) tmp_flag[key]=flag;
-            else key_flag[key]=flag;
+            if(joystick && key < sizeof(tmp_flag)) tmp_flag[key]=flag;
+            else if(key < sizeof(key_flag)) key_flag[key]=flag;
         }
-        else key_flag[key]=flag;
+        else if(key < sizeof(key_flag)) key_flag[key]=flag;
     }
     else if(demo) exit_flag=5;
 
