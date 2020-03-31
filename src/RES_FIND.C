@@ -9,9 +9,12 @@ int16_t res_find_name(char *name){
     if(!res_active) return RES_NOT_ACTIVE;
     if(!res_fp) return RES_NOT_OPEN;
 
-    _strupr(name);
+    char buf[9];
+    memcpy(buf, name, 9);
+    buf[8] = '\0';
+    _strupr(buf);
     for(i=0;i<RES_MAX_ENTRIES;i++){
-        if(!strcmp(name,res_header[i].name)) return i;
+        if(!strcmp(buf,res_header[i].name)) return i;
     }
     return RES_ENTRY_NOT_FOUND;
 }
