@@ -8,6 +8,7 @@
 
 #include "define.h"
 #include "proto.h"
+#include "new/new.h"
 //===========================================================================
 extern char text[94][72];
 extern union REGS in,out;
@@ -144,7 +145,11 @@ int16_t load_palette(void){
         g=pbuff[(i*3)+1];
         b=pbuff[(i*3)+2];
 
-        // TODO load_palette don't issue VGA commands directly
+        sdl_palette.colors[i].r = r;
+        sdl_palette.colors[i].g = g;
+        sdl_palette.colors[i].b = b;
+        sdl_palette.colors[i].a = 255;
+
         /*
         asm mov  al,n
         asm mov  dx,DAC_WRITE_INDEX  // Tell DAC what colour index to

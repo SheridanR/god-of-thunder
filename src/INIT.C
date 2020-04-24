@@ -251,6 +251,7 @@ void exit_code(int16_t ex_flag){
     res_close();
     sound_exit();
     sbfx_exit();
+    sdl_exit();
 
     //setvect(0x09,old_keyboard_int);
     if(lzss_buff) farfree(lzss_buff);
@@ -604,6 +605,7 @@ int16_t story_wait(void){
     int16_t key;
 
     while(1){
+        sdl_update();
         story_animate();
         key=get_response();
         if(key){
@@ -627,6 +629,11 @@ void set_palette(void){
         r=pbuff[i*3];
         g=pbuff[(i*3)+1];
         b=pbuff[(i*3)+2];
+
+        sdl_palette.colors[i].r = r * 4;
+        sdl_palette.colors[i].g = g * 4;
+        sdl_palette.colors[i].b = b * 4;
+        sdl_palette.colors[i].a = 255;
 
         // TODO replace this set_palette asm with something
         /*
@@ -671,6 +678,14 @@ void story(void){
     p=tmp_buff;
     pg=0u;
 
+    res_read("STORYPAL",pbuff);
+
+    pbuff[2]=0;
+    pbuff[1]=0;
+    pbuff[0]=0;
+
+    set_palette();
+
     buff=farmalloc(15000u);
     if(!buff) return;
     pg=0u;
@@ -689,14 +704,6 @@ void story(void){
 
     farfree(buff);
     pg=0u;
-
-    res_read("STORYPAL",pbuff);
-
-    pbuff[2]=0;
-    pbuff[1]=0;
-    pbuff[0]=0;
-
-    set_palette();
 
     i=0;
     x=8;

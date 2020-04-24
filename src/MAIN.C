@@ -160,7 +160,7 @@ void xdisplay_actors(ACTOR *act,uint16_t page);
 void xerase_actors(ACTOR *act,uint16_t page);
 void setup_load(void);
 //============================================================================
-void main(int argc, char *argv[]){
+int main(int argc, char *argv[]){
     int16_t err,i;
     char s[21];
     int16_t vbl_flag;

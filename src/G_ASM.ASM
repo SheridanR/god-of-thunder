@@ -16,9 +16,9 @@ GC_INDEX   equ  03ceh   ;Graphics Controller Index register port
 BIT_MASK   equ  08h     ;index in GC of Bit Mask register
 SCREEN_SEG equ  0a000h  ;segment of display memory in mode X
 SCREEN_WIDTH equ 80     ;width of screen in bytes from one scan line
-DAC_READ_INDEX	equ  03c7h
+DAC_READ_INDEX  equ  03c7h
 DAC_WRITE_INDEX equ  03c8h
-DAC_DATA	equ  03c9h
+DAC_DATA        equ  03c9h
 INPUT_STATUS_0  equ  03dah   ;Input status 0 register
 ;----------------------------------------------------------------------------
 mask_image     STRUC
@@ -376,17 +376,17 @@ plp0:
 
 plp1:   mov      al,[bx]
         cmp      al,0
-        je	 pskp
+        je       pskp
         cmp      al,15
         je       pskp
         mov      es:[di],al
-pskp:   inc	 di
-        inc 	 bx
-        dec	 dx
-        jnz	 plp1
+pskp:   inc      di
+        inc      bx
+        dec      dx
+        jnz      plp1
         add      di,80
         sub      di,si
-        loop	 plp0
+        loop     plp0
 
         ret
 xput_plane ENDP
@@ -415,88 +415,88 @@ jaxn02: mov     height,ax
 
         mov      ax,[bx]
         mov      invis_color,ax
-        inc	 bx
-        inc 	 bx
+        inc      bx
+        inc      bx
 
         mov      ax,y           ;calc and store offset
-        cmp	 ax,239
-        jge	 xpdne
-        cmp	 ax,0
+        cmp      ax,239
+        jge      xpdne
+        cmp      ax,0
         jl       xpdne
 
-        mov	 cl,80
-        mul	 cl
+        mov      cl,80
+        mul      cl
         mov      dx,x
-        cmp	 dx,319
-        jge	 xpdne
-        cmp	 dx,0
+        cmp      dx,319
+        jge      xpdne
+        cmp      dx,0
         jl       xpdne
         shr      dx,1
         shr      dx,1
-        add	 ax,dx
+        add      ax,dx
         add      ax,pagebase
-        mov	 off_set,ax
+        mov      off_set,ax
 
         mov      ax,0a000h
-        mov	 es,ax
+        mov      es,ax
         jmp      short xpcnt
 
 xpdne:  jmp      xpdone
 
 xpcnt:  mov      dx,03c4h    ;enable plane 1
-        mov	 al,2
-        out	 dx,al
-        inc	 dx
-        mov	 al,1
-        out	 dx,al
+        mov      al,2
+        out      dx,al
+        inc      dx
+        mov      al,1
+        out      dx,al
 
         mov      si,wid
-        mov	 cx,height
+        mov      cx,height
         mov      di,off_set
         mov      ax,invis_color
-        mov	 ah,al
+        mov      ah,al
         call     xput_plane
 
         mov      dx,03c4h    ;enable plane 2
-        mov	 al,2
-        out	 dx,al
-        inc	 dx
-        mov	 al,2
-        out	 dx,al
+        mov      al,2
+        out      dx,al
+        inc      dx
+        mov      al,2
+        out      dx,al
 
         mov      si,wid
-        mov	 cx,height
+        mov      cx,height
         mov      di,off_set
         mov      ax,invis_color
-        mov	 ah,al
+        mov      ah,al
         call     xput_plane
 
         mov      dx,03c4h    ;enable plane 3
-        mov	 al,2
-        out	 dx,al
-        inc	 dx
-        mov	 al,4
-        out	 dx,al
+        mov      al,2
+        out      dx,al
+        inc      dx
+        mov      al,4
+        out      dx,al
 
         mov      si,wid
-        mov	 cx,height
+        mov      cx,height
         mov      di,off_set
         mov      ax,invis_color
         mov      ah,al
         call     xput_plane
 
         mov      dx,03c4h    ;enable plane 4
-        mov	 al,2
-        out	 dx,al
-        inc	 dx
-        mov	 al,8
-        out	 dx,al
+        mov      al,2
+        out      dx,al
+        inc      dx
+        mov      al,8
+        out      dx,al
 
         mov      si,wid
-        mov	 cx,height
+        mov      cx,height
         mov      di,off_set
         mov      ax,invis_color
-        mov	 ah,al
+        mov      ah,al
         call     xput_plane
 
 xpdone:
@@ -555,30 +555,30 @@ EXTRN main_loop:BYTE
 ; Macro to wait for the vertical retrace leading edge
 
 WaitVsyncStart   macro
-	mov     dx,INPUT_STATUS_0
+        mov     dx,INPUT_STATUS_0
 @@WaitNotVsync:
-	in      al,dx
-	test    al,08h
-	jnz     @@WaitNotVsync
+        in      al,dx
+        test    al,08h
+        jnz     @@WaitNotVsync
 @@WaitVsync:
-	in      al,dx
-	test    al,08h
-	jz      @@WaitVsync
-	endm
+        in      al,dx
+        test    al,08h
+        jz      @@WaitVsync
+        endm
 ;---------------------------------------------------------------------------
 ; Macro to wait for the vertical retrace trailing edge
 
 WaitVsyncEnd    macro
-	mov     dx,INPUT_STATUS_0
+        mov     dx,INPUT_STATUS_0
 @@WaitVsync2:
-	in      al,dx
-	test    al,08h
-	jz     @@WaitVsync2
+        in      al,dx
+        test    al,08h
+        jz     @@WaitVsync2
 @@WaitNotVsync2:
-	in      al,dx
-	test    al,08h
-	jnz      @@WaitNotVsync2
-	endm
+        in      al,dx
+        test    al,08h
+        jnz      @@WaitNotVsync2
+        endm
 ;===========================================================================
 ;change displayed page in mode X
 
@@ -742,20 +742,20 @@ PROC    xsetpal
         PUBLIC xsetpal
         ARG    ColorIndex:byte,R:byte,G:byte,B:byte
 
-	mov  al,ColorIndex
-	mov  dx,DAC_WRITE_INDEX  ; Tell DAC what colour index to
-	out  dx,al               ; write to
-	mov  dx,DAC_DATA
+        mov  al,ColorIndex
+        mov  dx,DAC_WRITE_INDEX  ; Tell DAC what colour index to
+        out  dx,al               ; write to
+        mov  dx,DAC_DATA
 
-	mov  al,R              ; Set the red component
-	out  dx,al
+        mov  al,R              ; Set the red component
+        out  dx,al
         jmp  $+2
-	mov  al,G              ; Set the green component
-	out  dx,al
+        mov  al,G              ; Set the green component
+        out  dx,al
         jmp  $+2
-	mov  al,B              ; Set the blue component
-	out  dx,al
-	ret
+        mov  al,B              ; Set the blue component
+        out  dx,al
+        ret
 xsetpal ENDP
 ;============================================================================
 PROC    xgetpal
@@ -789,16 +789,16 @@ plp0:
         mov        dx,2     ;get width
 
 plp1:   mov        al,[bx]
-        cmp	   al,0
-        je	   pskp
+        cmp        al,0
+        je         pskp
         mov        es:[di],ah
-pskp:   inc	   di
-        inc 	   bx
-        dec	   dx
-        jnz	   plp1
+pskp:   inc        di
+        inc        bx
+        dec        dx
+        jnz        plp1
         add        di,80
         sub        di,2
-        loop	   plp0
+        loop       plp0
         ret
 xtext_plane ENDP
 ;============================================================================
@@ -817,82 +817,82 @@ xtext1  PROC
         mov        ds,ax
         mov        bx,bff
         mov        ax,y           ;calc and store offset
-        cmp	   ax,239
-        jge	   xtdne
-        cmp	   ax,0
+        cmp        ax,239
+        jge        xtdne
+        cmp        ax,0
         jl         xtdne
 
-        mov	   cl,80
-        mul	   cl
+        mov        cl,80
+        mul        cl
         mov        dx,x
-        cmp	   dx,319
-        jge	   xtdne
-        cmp	   dx,0
+        cmp        dx,319
+        jge        xtdne
+        cmp        dx,0
         jl         xtdne
         shr        dx,1
         shr        dx,1
-        add	   ax,dx
+        add        ax,dx
         add        ax,pbase
         add        ax,80
-        mov	   off_set,ax
+        mov        off_set,ax
 
         mov        ax,0a000h
-        mov	   es,ax
+        mov        es,ax
         jmp        short xtcnt
 
 xtdne:  jmp        xtdone
 
 xtcnt:  mov        dx,03c4h    ;enable plane 2
-        mov	   al,2
-        out	   dx,al
-        inc	   dx
-        mov	   al,2
-        out	   dx,al
+        mov        al,2
+        out        dx,al
+        inc        dx
+        mov        al,2
+        out        dx,al
 
-        mov	   cx,9
+        mov        cx,9
         mov        di,off_set
         mov        ax,color
-        mov	   ah,al
+        mov        ah,al
         call       xtext_plane
 
         mov        dx,03c4h    ;enable plane 3
-        mov	   al,2
-        out	   dx,al
-        inc	   dx
-        mov	   al,4
-        out	   dx,al
+        mov        al,2
+        out        dx,al
+        inc        dx
+        mov        al,4
+        out        dx,al
 
-        mov	   cx,9
+        mov        cx,9
         mov        di,off_set
         mov        ax,color
-        mov	   ah,al
+        mov        ah,al
         call       xtext_plane
 
         mov        dx,03c4h    ;enable plane 4
-        mov	   al,2
-        out	   dx,al
-        inc	   dx
-        mov	   al,8
-        out	   dx,al
+        mov        al,2
+        out        dx,al
+        inc        dx
+        mov        al,8
+        out        dx,al
 
-        mov	   cx,9
+        mov        cx,9
         mov        di,off_set
         mov        ax,color
-        mov	   ah,al
+        mov        ah,al
         call       xtext_plane
 
         mov        dx,03c4h    ;enable plane 1
-        mov	   al,2
-        out	   dx,al
-        inc	   dx
-        mov	   al,1
-        out	   dx,al
+        mov        al,2
+        out        dx,al
+        inc        dx
+        mov        al,1
+        out        dx,al
 
-        mov	   cx,9
+        mov        cx,9
         mov        di,off_set
         inc        di
         mov        ax,color
-        mov	   ah,al
+        mov        ah,al
         call       xtext_plane
 
 xtdone:
@@ -917,27 +917,27 @@ xtextx  PROC
         mov        ds,ax
         mov        bx,bff
         mov        ax,y           ;calc and store offset
-        cmp	   ax,239
-        jge	   xtdne
-        cmp	   ax,0
+        cmp        ax,239
+        jge        xtdne
+        cmp        ax,0
         jl         xtdne
 
-        mov	   cl,80
-        mul	   cl
+        mov        cl,80
+        mul        cl
         mov        dx,x
-        cmp	   dx,319
-        jge	   xtdne
-        cmp	   dx,0
+        cmp        dx,319
+        jge        xtdne
+        cmp        dx,0
         jl         xtdne
         shr        dx,1
         shr        dx,1
-        add	   ax,dx
+        add        ax,dx
         add        ax,pbase
 ;        add        ax,80
-        mov	   off_set,ax
+        mov        off_set,ax
 
         mov        ax,0a000h
-        mov	   es,ax
+        mov        es,ax
         jmp        short xtcnt
 
 xtdne:  jmp        xtdone
@@ -952,16 +952,16 @@ xtcnt:  mov        xcntr,4
 
 xtlp1:  mov        xbits,al
         mov        dx,03c4h    ;enable plane
-        mov	   al,2
-        out	   dx,al
-        inc	   dx
-        mov	   al,xbits
-        out	   dx,al
+        mov        al,2
+        out        dx,al
+        inc        dx
+        mov        al,xbits
+        out        dx,al
 
-        mov	   cx,9
+        mov        cx,9
         mov        di,off_set
         mov        ax,color
-        mov	   ah,al
+        mov        ah,al
         call       xtext_plane
 
         dec        xcntr
@@ -1197,81 +1197,81 @@ xtext   PROC
         mov        ds,ax
         mov        bx,bff
         mov        ax,y           ;calc and store offset
-        cmp	   ax,239
-        jge	   x0dne
-        cmp	   ax,0
+        cmp        ax,239
+        jge        x0dne
+        cmp        ax,0
         jl         x0dne
 
-        mov	   cl,80
-        mul	   cl
+        mov        cl,80
+        mul        cl
         mov        dx,x
-        cmp	   dx,319
-        jge	   x0dne
-        cmp	   dx,0
+        cmp        dx,319
+        jge        x0dne
+        cmp        dx,0
         jl         x0dne
         shr        dx,1
         shr        dx,1
-        add	   ax,dx
+        add        ax,dx
         add        ax,pbase
 ;        add        ax,80
-        mov	   off_set,ax
+        mov        off_set,ax
 
         mov        ax,0a000h
-        mov	   es,ax
+        mov        es,ax
         jmp        short x0cnt
 
 x0dne:  jmp        x0done
 
 x0cnt:  mov        dx,03c4h    ;enable plane 1
-        mov	   al,2
-        out	   dx,al
-        inc	   dx
-        mov	   al,1
-        out	   dx,al
+        mov        al,2
+        out        dx,al
+        inc        dx
+        mov        al,1
+        out        dx,al
 
-        mov	   cx,9
+        mov        cx,9
         mov        di,off_set
         mov        ax,color
-        mov	   ah,al
+        mov        ah,al
         call       xtext_plane
 
         mov        dx,03c4h    ;enable plane 2
-        mov	   al,2
-        out	   dx,al
-        inc	   dx
-        mov	   al,2
-        out	   dx,al
+        mov        al,2
+        out        dx,al
+        inc        dx
+        mov        al,2
+        out        dx,al
 
-        mov	   cx,9
+        mov        cx,9
         mov        di,off_set
         mov        ax,color
-        mov	   ah,al
+        mov        ah,al
         call       xtext_plane
 
         mov        dx,03c4h    ;enable plane 3
-        mov	   al,2
-        out	   dx,al
-        inc	   dx
-        mov	   al,4
-        out	   dx,al
+        mov        al,2
+        out        dx,al
+        inc        dx
+        mov        al,4
+        out        dx,al
 
-        mov	   cx,9
+        mov        cx,9
         mov        di,off_set
         mov        ax,color
-        mov	   ah,al
+        mov        ah,al
         call       xtext_plane
 
         mov        dx,03c4h    ;enable plane 4
-        mov	   al,2
-        out	   dx,al
-        inc	   dx
-        mov	   al,8
-        out	   dx,al
+        mov        al,2
+        out        dx,al
+        inc        dx
+        mov        al,8
+        out        dx,al
 
-        mov	   cx,9
+        mov        cx,9
         mov        di,off_set
         mov        ax,color
-        mov	   ah,al
+        mov        ah,al
         call       xtext_plane
 
 x0done:
@@ -1343,17 +1343,17 @@ pfp0:
 
 pfp1:   mov     al,[bx]
         cmp     al,0
-        je	pfkp
+        je      pfkp
         cmp     al,15
-        je	pfkp
+        je      pfkp
         mov     es:[di],al
-pfkp:   inc	di
-        inc 	bx
-        dec	dx
-        jnz	pfp1
+pfkp:   inc     di
+        inc     bx
+        dec     dx
+        jnz     pfp1
         add     di,80
         sub     di,si
-        loop	pfp0
+        loop    pfp0
         pop     ds
         ret
 
@@ -1380,78 +1380,78 @@ PROC    xfput
         mov     height,ax
 
         mov     ax,y           ;calc and store offset
-        cmp	ax,239
-        jge	xfdne
-        cmp	ax,0
+        cmp     ax,239
+        jge     xfdne
+        cmp     ax,0
         jl      xfdne
 
-        mov	cl,80
-        mul	cl
+        mov     cl,80
+        mul     cl
         mov     dx,x
-        cmp	dx,319
-        jge	xfdne
-        cmp	dx,0
+        cmp     dx,319
+        jge     xfdne
+        cmp     dx,0
         jl      xfdne
         shr     dx,1
         shr     dx,1
-        add	ax,dx
+        add     ax,dx
         add     ax,pagebase
-        mov	off_set,ax
+        mov     off_set,ax
 
         mov     ax,0a000h
-        mov	es,ax
+        mov     es,ax
         jmp     short xfcnt
 
 xfdne:  jmp     xfdone
 
 xfcnt:  mov     dx,03c4h    ;enable plane 1
-        mov	al,2
-        out	dx,al
-        inc	dx
-        mov	al,1
-        out	dx,al
+        mov     al,2
+        out     dx,al
+        inc     dx
+        mov     al,1
+        out     dx,al
 
         mov     si,wid
-        mov	cx,height
+        mov     cx,height
         mov     di,off_set
         mov     dx,segm
         call    xfput_plane
 
         mov     dx,03c4h    ;enable plane 2
-        mov	al,2
-        out	dx,al
-        inc	dx
-        mov	al,2
-        out	dx,al
+        mov     al,2
+        out     dx,al
+        inc     dx
+        mov     al,2
+        out     dx,al
 
         mov     si,wid
-        mov	cx,height
+        mov     cx,height
         mov     di,off_set
         mov     dx,segm
         call    xfput_plane
 
         mov     dx,03c4h    ;enable plane 3
-        mov	al,2
-        out	dx,al
-        inc	dx
-        mov	al,4
-        out	dx,al
+        mov     al,2
+        out     dx,al
+        inc     dx
+        mov     al,4
+        out     dx,al
 
         mov     si,wid
-        mov	cx,height
+        mov     cx,height
         mov     di,off_set
         mov     dx,segm
         call    xfput_plane
 
         mov     dx,03c4h    ;enable plane 4
-        mov	al,2
-        out	dx,al
-        inc	dx
-        mov	al,8
-        out	dx,al
+        mov     al,2
+        out     dx,al
+        inc     dx
+        mov     al,8
+        out     dx,al
 
         mov     si,wid
-        mov	cx,height
+        mov     cx,height
         mov     di,off_set
         mov     dx,segm
         call    xfput_plane
@@ -1470,13 +1470,13 @@ pfp0:
 
 pfp1:   mov     al,[bx]
         mov     es:[di],al
-pfkp:   inc	di
-        inc 	bx
-        dec	dx
-        jnz	pfp1
+pfkp:   inc     di
+        inc     bx
+        dec     dx
+        jnz     pfp1
         add     di,80
         sub     di,si
-        loop	pfp0
+        loop    pfp0
         pop     ds
         ret
 
@@ -1506,78 +1506,78 @@ PROC    xfarput
         add     bx,4
 
         mov     ax,y           ;calc and store offset
-        cmp	ax,239
-        jge	xfdne
-        cmp	ax,0
+        cmp     ax,239
+        jge     xfdne
+        cmp     ax,0
         jl      xfdne
 
-        mov	cl,80
-        mul	cl
+        mov     cl,80
+        mul     cl
         mov     dx,x
-        cmp	dx,319
-        jge	xfdne
-        cmp	dx,0
+        cmp     dx,319
+        jge     xfdne
+        cmp     dx,0
         jl      xfdne
         shr     dx,1
         shr     dx,1
-        add	ax,dx
+        add     ax,dx
         add     ax,pagebase
-        mov	off_set,ax
+        mov     off_set,ax
 
         mov     ax,0a000h
-        mov	es,ax
+        mov     es,ax
         jmp     short xfcnt
 
 xfdne:  jmp     xfdone
 
 xfcnt:  mov     dx,03c4h    ;enable plane 1
-        mov	al,2
-        out	dx,al
-        inc	dx
-        mov	al,1
-        out	dx,al
+        mov     al,2
+        out     dx,al
+        inc     dx
+        mov     al,1
+        out     dx,al
 
         mov     si,wid
-        mov	cx,height
+        mov     cx,height
         mov     di,off_set
         mov     dx,segm
         call    xfarput_plane
 
         mov     dx,03c4h    ;enable plane 2
-        mov	al,2
-        out	dx,al
-        inc	dx
-        mov	al,2
-        out	dx,al
+        mov     al,2
+        out     dx,al
+        inc     dx
+        mov     al,2
+        out     dx,al
 
         mov     si,wid
-        mov	cx,height
+        mov     cx,height
         mov     di,off_set
         mov     dx,segm
         call    xfarput_plane
 
         mov     dx,03c4h    ;enable plane 3
-        mov	al,2
-        out	dx,al
-        inc	dx
-        mov	al,4
-        out	dx,al
+        mov     al,2
+        out     dx,al
+        inc     dx
+        mov     al,4
+        out     dx,al
 
         mov     si,wid
-        mov	cx,height
+        mov     cx,height
         mov     di,off_set
         mov     dx,segm
         call    xfarput_plane
 
         mov     dx,03c4h    ;enable plane 4
-        mov	al,2
-        out	dx,al
-        inc	dx
-        mov	al,8
-        out	dx,al
+        mov     al,2
+        out     dx,al
+        inc     dx
+        mov     al,8
+        out     dx,al
 
         mov     si,wid
-        mov	cx,height
+        mov     cx,height
         mov     di,off_set
         mov     dx,segm
         call    xfarput_plane
@@ -1671,24 +1671,24 @@ PROC    xpset
         USES   si,di,es
 
         mov     ax,SCREEN_WIDTH
-        mul     Y       	 ;offset of pixel's scan line in page
+        mul     Y                ;offset of pixel's scan line in page
         mov     bx,X
         shr     bx,1
-        shr     bx,1         	 ;X/4 = offset of pixel in scan line
-        add     bx,ax        	 ;offset of pixel in page
-        add     bx,PageBase 	 ;offset of pixel in display memory
+        shr     bx,1             ;X/4 = offset of pixel in scan line
+        add     bx,ax            ;offset of pixel in page
+        add     bx,PageBase      ;offset of pixel in display memory
         mov     ax,SCREEN_SEG
-        mov     es,ax        	 ;point ES:BX to the pixel's address
+        mov     es,ax            ;point ES:BX to the pixel's address
 
         mov     cl,byte ptr X
-        and     cl,011b      	 ;CL = pixel's plane
+        and     cl,011b          ;CL = pixel's plane
         mov     ax,0100h + MAP_MASK ;AL = index in SC of Map Mask reg
         shl     ah,cl               ;set only bit for the pixel's plane to 1
-        mov     dx,SC_INDEX  	 ;set the Map Mask to enable only the
-        out     dx,ax        	 ;pixel's plane
+        mov     dx,SC_INDEX      ;set the Map Mask to enable only the
+        out     dx,ax            ;pixel's plane
 
         mov     al,byte ptr Color
-        mov     es:[bx],al   	 ;draw the pixel in the desired color
+        mov     es:[bx],al       ;draw the pixel in the desired color
 
         ret
 xpset   ENDP
@@ -1720,18 +1720,18 @@ PROC    xpoint
         ret
 xpoint  ENDP
 ;============================================================================;
-FADE_INCR	equ	2
+FADE_INCR       equ     2
 
 PROC    pal_fade_in
         PUBLIC pal_fade_in
         ARG    PaletteBuffer:DWORD
         USES   ds,si,di,es
 
-	cld
-	mov bl, 0
-	mov bh, FADE_INCR
+        cld
+        mov bl, 0
+        mov bh, FADE_INCR
 
-	jmp PALETTEFADER
+        jmp PALETTEFADER
 
 pal_fade_in endp
 ;============================================================================;
@@ -1740,60 +1740,60 @@ PROC    pal_fade_out
         ARG    PaletteBuffer:WORD
         USES   ds,si,di,es
 
-	cld
-	mov bl, 64
-	mov bh, -FADE_INCR
+        cld
+        mov bl, 64
+        mov bh, -FADE_INCR
 
 PALETTEFADER:
 
-	mov cx, 64/FADE_INCR
-	mov ax, ds
-	mov es, ax
+        mov cx, 64/FADE_INCR
+        mov ax, ds
+        mov es, ax
 
 @@BIGLOOP:
-	push cx
-	add bl, bh
+        push cx
+        add bl, bh
 
 ; SET COLOR LEVELS
-	mov si, [PaletteBuffer]
-	mov di, OFFSET TempPalette
+        mov si, [PaletteBuffer]
+        mov di, OFFSET TempPalette
 
-	mov cx, 768
+        mov cx, 768
 @@LOOPLEV1:
-	lodsb
-	mul bl
-	shr ax, 6
-	stosb
-	dec cx
-	jnz @@LOOPLEV1
+        lodsb
+        mul bl
+        shr ax, 6
+        stosb
+        dec cx
+        jnz @@LOOPLEV1
 
 ; SET PALETTE
-	mov si, OFFSET TempPalette
+        mov si, OFFSET TempPalette
 
-	mov dx, 3C8h
-	xor al, al
-	out dx, al
-	inc dx
+        mov dx, 3C8h
+        xor al, al
+        out dx, al
+        inc dx
 
-;	pushf
-;	cli
+;       pushf
+;       cli
 
 REPT 1
-	mov cx, 768/1
+        mov cx, 768/1
         push    dx
         push    ax
         WaitVsyncStart
         pop     ax
         pop     dx
-	rep outsb
+        rep outsb
 ENDM
 
-;	popf
-	pop cx
-	dec cx
-	jnz @@BIGLOOP
+;       popf
+        pop cx
+        dec cx
+        jnz @@BIGLOOP
 
-	ret
+        ret
 pal_fade_out ENDP
 ;============================================================================;
 PROC    xget_plane
@@ -1807,13 +1807,13 @@ glp0:
 
 glp1:   mov     al,ds:[di]
         mov     es:[bx],al
-        inc	  di
-        inc 	  bx
-        dec	  dx
-        jnz	  glp1
+        inc       di
+        inc       bx
+        dec       dx
+        jnz       glp1
         add     di,80
         sub     di,si
-        loop	  glp0
+        loop      glp0
 
         pop      ds
         ret
@@ -1832,101 +1832,101 @@ PROC    xget
         mov     bx,[buff]
 
         mov     ax,[x2]    ;store width (in bytes)
-        mov	  cx,[x1]
-        cmp	  cx,ax
+        mov       cx,[x1]
+        cmp       cx,ax
         jl      x_ok
-        mov	  dx,ax
-        mov	  ax,cx
-        mov	  cx,dx
+        mov       dx,ax
+        mov       ax,cx
+        mov       cx,dx
 
 x_ok:   sub     ax,cx
-        inc	  ax
+        inc       ax
         shr     ax,1
         shr     ax,1
         mov     es:[bx],ax
         mov     [wid],ax
-        inc	  bx
-        inc 	  bx
+        inc       bx
+        inc       bx
 
         mov     ax,[y2]    ;store height
-        mov	  cx,[y1]
-        cmp	  cx,ax
+        mov       cx,[y1]
+        cmp       cx,ax
         jl      y_ok
-        mov	  dx,ax
-        mov	  ax,cx
-        mov	  cx,dx
+        mov       dx,ax
+        mov       ax,cx
+        mov       cx,dx
 
 y_ok:   sub     ax,cx
-        inc	  ax
+        inc       ax
         mov     es:[bx],ax
         mov     [height],ax
-        inc	  bx
-        inc 	  bx
+        inc       bx
+        inc       bx
 
         mov     ax,[invis]   ;store invisible color
-        mov	es:[bx],ax
+        mov     es:[bx],ax
         inc     bx
-        inc	  bx
+        inc       bx
 
 
         mov     ax,[y1]           ;calc and store offset
-        mov	  cl,80
-        mul	  cl
+        mov       cl,80
+        mul       cl
         mov     dx,[x1]
         shr     dx,1
         shr     dx,1
-        add	  ax,dx
+        add       ax,dx
         add     ax,[pagebase]
-        mov	  [off_set],ax
+        mov       [off_set],ax
 
 ;        mov     ax,0a000h
-;        mov	  es,ax
+;        mov      es,ax
 
         mov     dx,03ceh    ;enable plane 0
-        mov	  al,4
-        out	  dx,al
-        inc	  dx
-        mov	  al,0
-        out	  dx,al
+        mov       al,4
+        out       dx,al
+        inc       dx
+        mov       al,0
+        out       dx,al
 
         mov     si,[wid]
-        mov	  cx,[height]
+        mov       cx,[height]
         mov     di,[off_set]
         call    xget_plane
 
         mov     dx,03ceh    ;enable plane 1
-        mov	  al,4
-        out	  dx,al
-        inc	  dx
-        mov	  al,1
-        out	  dx,al
+        mov       al,4
+        out       dx,al
+        inc       dx
+        mov       al,1
+        out       dx,al
 
         mov     si,[wid]
-        mov	  cx,[height]
+        mov       cx,[height]
         mov     di,[off_set]
         call    xget_plane
 
         mov     dx,03ceh    ;enable plane 2
-        mov	  al,4
-        out	  dx,al
-        inc	  dx
-        mov	  al,2
-        out	  dx,al
+        mov       al,4
+        out       dx,al
+        inc       dx
+        mov       al,2
+        out       dx,al
 
         mov     si,[wid]
-        mov	  cx,[height]
+        mov       cx,[height]
         mov     di,[off_set]
         call    xget_plane
 
         mov     dx,03ceh    ;enable plane 3
-        mov	  al,4
-        out	  dx,al
-        inc	  dx
-        mov	  al,3
-        out	  dx,al
+        mov       al,4
+        out       dx,al
+        inc       dx
+        mov       al,3
+        out       dx,al
 
         mov     si,[wid]
-        mov	  cx,[height]
+        mov       cx,[height]
         mov     di,[off_set]
         call    xget_plane
 

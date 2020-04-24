@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+#include "define.h"
+#include "proto.h"
 #include "res_man.h"
 #include "new/new.h"
 //==========================================================================

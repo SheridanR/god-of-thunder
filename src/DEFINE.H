@@ -2,6 +2,8 @@
 
 #include <stdint.h>
 
+#include "SDL2/SDL.h"
+
 #undef outportb
 #undef inportb
 #pragma pack(push, 1)
